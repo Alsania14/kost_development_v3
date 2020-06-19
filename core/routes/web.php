@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Route;
     });
 
     Route::get('/test',function(){
-        return view('user/dashboard/dashboard');
+        return phpinfo();
     });
 
 // AKHIR
@@ -30,10 +30,19 @@ use Illuminate\Support\Facades\Route;
         /*SELAIN USER TIDAK ADA YANG BISA MENGAKSES HALAMAN INI
         TERMASUK ADNIM SEKALIPUN */
         Route::middleware('userauthentication')->group(function(){
-            Route::get('/dashboard','dashboard\DashboardController@index');
+            // INDEX DASHBOARD
+                Route::get('/dashboard','dashboard\DashboardController@index');
+            // AKHIR
+
+            // HALAMAN PROFILE USER
+                Route::get('/profile','dashboard\ProfileController@index');
+                Route::get('/edit/{id}','dashboard\ProfileController@edit');
+                Route::post('/edit','dashbord\ProfileController@update');
+            // AKHIR
             
             // USER DAPAT LOGOUT SETELAH MASUK KE DALAM SISTEM
-            Route::get('/logout','login\LoginController@logout');
+                Route::get('/logout','login\LoginController@logout');
+            // AKHIR
         });
 
 // AKHIR

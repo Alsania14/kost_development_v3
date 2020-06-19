@@ -1,12 +1,18 @@
 
 function hitungmundur(time){
   var countDownDate = new Date(time).getTime();
-  console.log(time);
+  
   var job = setTimeout(function(){
       var now = new Date().getTime();
-
+    var d = new Date()
+    console.log(d.getHours(),d.getMinutes(),d.getSeconds())
       var distance = countDownDate - now;
 
+      if(parseInt(distance) < parseInt(205480913))
+      {
+          document.getElementById('peringatan').innerHTML="Halo tuan Dimohon untuk segera melakukan pembayaran"
+      }
+    
       var days = Math.floor(distance / (1000 * 60 * 60 * 24));
       var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
       var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));

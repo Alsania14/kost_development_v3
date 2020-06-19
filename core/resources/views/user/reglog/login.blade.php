@@ -23,8 +23,8 @@
             <?php
                 $system = Session::get('system');
                 
-                if($errors->has('username')){
-                    echo '<p class="text-danger text-center">'.$errors->first('username').'</p>';
+                if($errors->has('password')){
+                    echo '<p class="text-danger text-center">'.$errors->first('password').'</p>';
                 }
 
                 if($system == 'false')

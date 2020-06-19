@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Auth;
 
 use App\User;
 
+// MENENTUKAN DATETIME
+date_default_timezone_set("Asia/Makassar");
 class LoginController extends Controller
 {
     public function viewlogin()
@@ -54,11 +56,11 @@ class LoginController extends Controller
                     }
                 }
                 elseif(Auth::user()->role == 'admin')
-                {
-                    return 'selamat datang admin sistem';
+                {   
+                    return date('Y-m-d h:i:s a');
                 }
                 else
-                {
+                {   
                     return redirect()->back()->with(['system' => 'denied']);
                 }
             }

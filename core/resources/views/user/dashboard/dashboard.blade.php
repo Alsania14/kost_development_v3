@@ -13,8 +13,7 @@
     <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
   </ol>
   <div class="carousel-inner">
-    <div class="carousel-item active">
-        
+    <div class="carousel-item active">    
         <img class="d-block w-100" src="{{ asset('vendor_app/img_web/img1.jpg') }}" alt="First slide" style="max-height:300px;">
         <div class="carousel-caption  d-md-block">
         <h5>Tirta Aruna Cottage</h5>
@@ -22,7 +21,6 @@
         </div>
     </div>
     <div class="carousel-item">
-    
         <img class="d-block w-100" src="{{ asset('vendor_app/img_web/img2.jpg') }}" alt="First slide" style="max-height:300px;">
         <div class="carousel-caption  d-md-block">
         <h5>Tirta Aruna Cottage</h5>
@@ -30,7 +28,6 @@
         </div>
     </div>
     <div class="carousel-item">
-    
         <img class="d-block w-100" src="{{ asset('vendor_app/img_web/img3.jpg') }}" alt="First slide" style="max-height:300px;">
         <div class="carousel-caption  d-md-block">
         <h5>Tirta Aruan Cottage</h5>
@@ -47,10 +44,9 @@
     <span class="sr-only">Next</span>
   </a>
 </div>
-
 <h2 class="text-light mb-5">Next Payment</h2>
     <div class="container p-3">
-      <div class="row m-0 mb-5 d-flex justify-content-center">
+      <div class="row m-0 mb-0 d-flex justify-content-center">
         <div class="col-md-2 text-center border-bottom" style="font-size:40pt;">
             <span id="hari">0</span> <span style="font-size:20pt">Hari</span>
         </div>
@@ -64,19 +60,25 @@
         <span id="detik">0</span> <span style="font-size:13pt">Detik</span>
         </div>
       </div>
+      <div class="row mt-3 mb-5">
+        <div class="col-md text-center" id="peringatan">
+          Semoga Sehat selalu !
+        </div>
+      </div>
     </div>
     
     <div class="row bg-warning">
-      <div class="col-md text-center" style="{{ config('global.active') }}">Dibuat dengan bangga oleh Team IT Tirta Aruna Cottage</div>
+      <div class="col-md text-center" style="{{ config('global.active') }}">Team IT Tirta Aruna Cottage</div>
     </div>
     <script type="text/javascript" src="{{ asset('vendor_app/dashboard/dashboard.js') }}"></script>
 
     <!-- FUNGSI HITUNG MUNDUR JAVASCRIPT -->
     <script>
       <?php
+        
         if($kamar->tgl_bayar_selanjutnya != null)
         {
-          echo 'hitungmundur("'.$kamar->tgl_bayar_selanjutnya.'")';
+          echo 'hitungmundur("'.$kamar->tgl_bayar_selanjutnya.' 00:00:00")';
         }
       ?>
     </script>
