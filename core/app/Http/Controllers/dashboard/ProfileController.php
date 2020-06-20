@@ -108,17 +108,17 @@ class ProfileController extends Controller
                             if($user->image == 'default.png')
                             {   
                                 // LANGSUNG SIMPAN
-                                $simpan_image_profile = Storage::putFile('public/image_users',$request->file('image_profile'));
+                                $simpan_image_profile = Storage::putFile('public_html/image_users',$request->file('image_profile'));
                                 $simpan_image_profile = basename($simpan_image_profile);
-                                ImageOptimizer::optimize(storage_path('app/public/image_users/'.$simpan_image_profile));
+                                ImageOptimizer::optimize(storage_path('app/public_html/image_users/'.$simpan_image_profile));
                             }
                             else
                             {
                                 // HAPUS GAMBAR YANG SUDAH ADA
-                                Storage::delete('public/image_users/'.$user->image);
-                                $simpan_image_profile = Storage::putFile('public/image_users',$request->file('image_profile'));
+                                Storage::delete('image_users/'.$user->image);
+                                $simpan_image_profile = Storage::putFile('public_html/image_users',$request->file('image_profile'));
                                 $simpan_image_profile = basename($simpan_image_profile);
-                                ImageOptimizer::optimize(storage_path('app/public/image_users/'.$simpan_image_profile));
+                                ImageOptimizer::optimize(storage_path('app/public_html/image_users/'.$simpan_image_profile));
                             }
 
                             // SIMPAN KE TABLE USERS
@@ -132,17 +132,17 @@ class ProfileController extends Controller
                             if($user->ktp == 'ktp_default.jpg')
                             {
                                 // LANGUSNG SIMPAN
-                                $simpan_image_ktp = Storage::putFile('public/ktp_users',$request->file('ktp'));
+                                $simpan_image_ktp = Storage::putFile('public_html/ktp_users',$request->file('ktp'));
                                 $simpan_image_ktp = basename($simpan_image_ktp);
-                                ImageOptimizer::optimize(storage_path('app/public/ktp_users/'.$simpan_image_ktp));
+                                ImageOptimizer::optimize(storage_path('app/public_html/ktp_users/'.$simpan_image_ktp));
                             }
                             else
                             {
                                 // HAPUS GAMBAR KTP YANG SUDAH ADA
-                                Storage::delete('public/ktp_users',$user->ktp);
-                                $simpan_image_ktp = Storage::putFile('public/ktp_users',$request->file('ktp'));
+                                Storage::delete('ktp_users',$user->ktp);
+                                $simpan_image_ktp = Storage::putFile('public_html/ktp_users',$request->file('ktp'));
                                 $simpan_image_ktp = basename($simpan_image_ktp);
-                                ImageOptimizer::optimize(storage_path('app/public/ktp_users/'.$simpan_image_ktp));
+                                ImageOptimizer::optimize(storage_path('app/public_html/ktp_users/'.$simpan_image_ktp));
                             }
 
                             // SIMPAN KE TABLE USER

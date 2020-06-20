@@ -13,7 +13,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->bind('path.public', function() {
+            return 'C:\xampp\htdocs\kost_development_v3\public_html';
+        });
     }
 
     /**

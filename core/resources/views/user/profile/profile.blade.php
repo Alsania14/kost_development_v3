@@ -10,7 +10,9 @@
 <div class="container">
     <div class="row d-flex justify-content-center">
         <div class="col-md-7 d-flex justify-content-center">
+            <a href="{{ url('storage/image_users',[$user->image]) }}">
             <img src="{{ url('storage/image_users',[$user->image]) }}" alt="Something wrong" style="width:200px;height:200px;border-radius:50%;" class="img-thumbnail">
+            </a>
         </div>
     </div>
 

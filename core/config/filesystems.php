@@ -79,7 +79,7 @@ return [
     */
 
     'links' => [
-        'C:\xampp\htdocs\kost_development_v3\public\storage' => storage_path('app/public'),
+        'C:\xampp\htdocs\kost_development_v3\public_html\storage' => storage_path('app/public_html'),
     ],
 
 ];

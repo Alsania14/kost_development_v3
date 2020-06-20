@@ -1,6 +1,7 @@
 @extends('app_layout/dashboard_layout')
 @section('username',strtoupper($user->username))
 @section('room',$kamar->nomor)
+@section('jumlah','2')
 @section('img_user',url('/storage/image_users',[$user->image]))
 @section('dashboard',config('global.active'))
 @section('header','Dashboard')

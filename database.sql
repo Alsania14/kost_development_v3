@@ -13,8 +13,6 @@ MySQL - 10.1.38-MariaDB : Database - db_kost_development
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
-USE `alindeve_kost_development`;
-
 /*Table structure for table `kamars` */
 
 DROP TABLE IF EXISTS `kamars`;
@@ -34,12 +32,13 @@ CREATE TABLE `kamars` (
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),
   CONSTRAINT `kamars_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 /*Data for the table `kamars` */
 
 insert  into `kamars`(`id`,`user_id`,`nomor`,`tipe_pembayaran`,`tgl_awal_sewa`,`tgl_bayar_selanjutnya`,`status_pembayaran`,`keluhan`,`created_at`,`updated_at`,`deleted_at`) values 
-(1,3,1,'bulan','2020-06-01','2020-07-01','lunas','tidak','2020-06-18 17:44:30','2020-06-18 17:44:34',NULL);
+(1,3,1,'bulan','2020-06-01','2020-06-20','lunas','tidak','2020-06-18 17:44:30','2020-06-18 17:44:34',NULL),
+(2,2,2,'bulan','2020-06-01','2020-07-01','lunas','tidak','2020-06-19 20:53:37','2020-06-19 20:53:40',NULL);
 
 /*Table structure for table `migrations` */
 
@@ -90,6 +89,28 @@ CREATE TABLE `rewards` (
 
 /*Data for the table `rewards` */
 
+/*Table structure for table `tagihans` */
+
+DROP TABLE IF EXISTS `tagihans`;
+
+CREATE TABLE `tagihans` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `kamar_id` int(11) NOT NULL,
+  `tipe_pembayaran` enum('bulan','tahun') DEFAULT NULL,
+  `tgl_awal_sewa` date NOT NULL,
+  `tgl_akhir_sewa` date NOT NULL,
+  `status_tagihan` enum('hutang','lunas') DEFAULT NULL,
+  `tgl_pembayaran` date NOT NULL,
+  `nominal_pembayaran` int(11) NOT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+/*Data for the table `tagihans` */
+
 /*Table structure for table `transaksis` */
 
 DROP TABLE IF EXISTS `transaksis`;
@@ -97,8 +118,7 @@ DROP TABLE IF EXISTS `transaksis`;
 CREATE TABLE `transaksis` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `order_id` varchar(100) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `kamar_id` int(11) NOT NULL,
+  `tagihan_id` int(11) NOT NULL,
   `tgl_awal` date NOT NULL,
   `tgl_akir` date NOT NULL,
   `nominal` int(11) NOT NULL,
@@ -154,6 +174,8 @@ CREATE TABLE `users` (
   `reward` tinyint(4) NOT NULL DEFAULT '0',
   `verify_admin` tinyint(4) DEFAULT '0',
   `image` varchar(200) DEFAULT 'default.png',
+  `nomor_hp` varchar(20) DEFAULT NULL,
+  `ktp` varchar(150) DEFAULT 'ktp_default.jpg',
   `role` enum('user','admin') DEFAULT NULL,
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
@@ -163,10 +185,10 @@ CREATE TABLE `users` (
 
 /*Data for the table `users` */
 
-insert  into `users`(`id`,`name`,`username`,`email`,`password`,`pelaporan`,`kode_invitation`,`reward`,`verify_admin`,`image`,`role`,`created_at`,`updated_at`,`deleted_at`) values 
-(1,'I Putu Alin Winata Gotama','alsan','alingotama14@gmail.com','$2y$10$pbToID5ZL6BED569zaF2F.exM3wkZQlYOb.RwKG1ViNfbClrgUYeG',0,'ip5ga',0,1,'default.png','admin','2020-06-18 03:05:02','2020-06-18 03:05:02',NULL),
-(2,'I Kadek Santa Buana Gotama','santa','santa@gmail.comn','$2y$10$pbToID5ZL6BED569zaF2F.exM3wkZQlYOb.RwKG1ViNfbClrgUYeG',0,'asd12',0,1,'default.png','user','2020-06-18 18:05:33','2020-06-18 18:05:39',NULL),
-(3,'Jamaikan','jamaikan','jamaikan@gmail.com','$2y$10$vXY4jiLbJUGj.5XnCEpNJuiDunWp9J0OpVcB13XFJpfoPBHby/T/O',0,'64uc3',0,1,'default.png','user','2020-06-18 12:55:10','2020-06-18 12:55:10',NULL);
+insert  into `users`(`id`,`name`,`username`,`email`,`password`,`pelaporan`,`kode_invitation`,`reward`,`verify_admin`,`image`,`nomor_hp`,`ktp`,`role`,`created_at`,`updated_at`,`deleted_at`) values 
+(1,'I Putu Alin Winata Gotama','alsan','alingotama14@gmail.com','$2y$10$pbToID5ZL6BED569zaF2F.exM3wkZQlYOb.RwKG1ViNfbClrgUYeG',0,'ip5ga',0,1,'default.png',NULL,'ktp_default.jpg','admin','2020-06-18 03:05:02','2020-06-18 03:05:02',NULL),
+(2,'I Kadek Santa Buana Gotama','santa','santa@gmail.comn','$2y$10$pbToID5ZL6BED569zaF2F.exM3wkZQlYOb.RwKG1ViNfbClrgUYeG',0,'asd12',0,1,'7LyVpPyoOVlUuaI44Xi9e1PcZjAtRcNgNIhBBAvW.jpeg','085568186','ujoUeYwROGVwPPusGW3jujX7twTFc1r8mYk1y5Rf.jpeg','user','2020-06-18 18:05:33','2020-06-20 10:52:38',NULL),
+(3,'Jamaikan','jamaikan','jamaikan@gmail.com','$2y$10$vXY4jiLbJUGj.5XnCEpNJuiDunWp9J0OpVcB13XFJpfoPBHby/T/O',0,'64uc3',0,1,'sbpBNwunRODIS9vwxtmefMakgssrhouExoP5jYdY.jpeg','123124121','lgLF41qIFzU8tzSlSvQVrxclLn7blaRFDuy9sT4Y.jpeg','user','2020-06-18 12:55:10','2020-06-20 10:41:05',NULL);
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
