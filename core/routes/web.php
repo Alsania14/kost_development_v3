@@ -37,7 +37,7 @@ use Illuminate\Support\Facades\Route;
             // HALAMAN PROFILE USER
                 Route::get('/profile','dashboard\ProfileController@index');
                 Route::get('/edit/{id}','dashboard\ProfileController@edit');
-                Route::post('/edit','dashbord\ProfileController@update');
+                Route::put('/edit/{id}','dashboard\ProfileController@update');
             // AKHIR
             
             // USER DAPAT LOGOUT SETELAH MASUK KE DALAM SISTEM

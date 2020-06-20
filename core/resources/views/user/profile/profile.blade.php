@@ -10,7 +10,7 @@
 <div class="container">
     <div class="row d-flex justify-content-center">
         <div class="col-md-7 d-flex justify-content-center">
-            <img src="{{ url('storage/image_users',[$user->image]) }}" alt="Something wrong" style="max-width:200px;max-height:200px;border-radius:50%;" class="img-thumbnail">
+            <img src="{{ url('storage/image_users',[$user->image]) }}" alt="Something wrong" style="width:200px;height:200px;border-radius:50%;" class="img-thumbnail">
         </div>
     </div>
 
@@ -67,13 +67,13 @@
             <div>
                 <?php
                     // JIKA NULL
-                    if(is_null($user->ktp))
+                    if($user->ktp == 'ktp_default.jpg')
                     {
                         echo 'Belum Diatur';
                     }
                     else
                     {
-                        echo '<button class="btn btn-sm btn-info">Lihat</button>';
+                        echo '<a href="'.url('/storage/ktp_users/',[$user->ktp]).'"><button class="badge badge-info">Lihat</button></a>';
                     }
                 ?>
             </div>
@@ -112,6 +112,7 @@
 
 </div>
 <!-- AKHIR CONTAINER -->
-      
-
+@extends('app_layout/modal')
+@section('judul','UPDATE BERHASIL')
+@section('isi','Update berhasil,Pastikan anda memberikan identitas dan dokumen yang valid')
 @endsection

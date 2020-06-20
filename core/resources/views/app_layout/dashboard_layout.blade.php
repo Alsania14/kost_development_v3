@@ -110,9 +110,27 @@
         <h1 class="h2 text-light">@yield('header')</h1>
       </div>
       @yield('content')
+
+      <div class="row">
+      <div class="col-md text-center text-dark" style="{{ config('global.active') }}">Team IT Tirta Aruna Cottage</div>
+      </div>  
     </main>
   </div>
 </div>
         <script src="{{ asset('vendor_app/jquery.js') }}" ></script>
         <script src="{{ asset('vendor_app/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
+        <?php
+            $system = Session::get('system');
+
+            if($system == 'success')
+            {
+                echo "<script>$('#modal').modal('show');</script>";
+            }
+            elseif($system == 'denied')
+
+            {
+                echo "<script>$('#modaldenied').modal('show');</script>";
+            }
+        ?>
+</body>
 </html>

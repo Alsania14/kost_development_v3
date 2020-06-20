@@ -67,9 +67,6 @@
       </div>
     </div>
     
-    <div class="row bg-warning">
-      <div class="col-md text-center" style="{{ config('global.active') }}">Team IT Tirta Aruna Cottage</div>
-    </div>
     <script type="text/javascript" src="{{ asset('vendor_app/dashboard/dashboard.js') }}"></script>
 
     <!-- FUNGSI HITUNG MUNDUR JAVASCRIPT -->

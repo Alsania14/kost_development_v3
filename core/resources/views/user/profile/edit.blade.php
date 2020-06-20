@@ -7,7 +7,8 @@
 @section('content')
 <!-- AWAL CONTAINER -->
 <div class="container">
-<form action="{{ url('') }}" id="myform" enctype="multipart/form-data" method="POST">
+<form action="{{ url('/edit',[Crypt::encryptString($user->id)]) }}" id="myform" enctype="multipart/form-data" method="POST">
+    {{ csrf_field() }}
     {{ method_field('PUT') }}
     <div class="row d-flex justify-content-center">
         <div class="col-md-5 d-flex justify-content-center">
@@ -23,45 +24,121 @@
             <input type="file" class="btn-sm btn-info" name="image_profile" style="color:black;" id="image_profile">
         </div>
     </div>
+    <div class="row">
+        <div class="col-md text-center">
+            <p class="text-danger" style="font-size:15pt;">
+            <?php
+                if($errors->has('image_profile'))
+                {
+                    echo $errors->first('image_profile');
+                }
+            ?>
+            </p>
+        </div>
+    </div>
 
     <div class="row d-flex justify-content-center pt-5">
         <div class="col-md-5 d-flex justify-content-center">
-            <input type="text" class="w-100" style="background:none;outline:none;border:none;border-bottom:1px solid white;font-size:15pt;" placeholder="Nama Lengkap" value="{{ $user->name }}" autocorrect="off" autocapitalize="none" required>
+            <input type="text" class="w-100" style="background:none;outline:none;border:none;border-bottom:1px solid white;font-size:15pt;" placeholder="Nama Lengkap" value="{{ $user->name }}" name="name" autocorrect="off" autocapitalize="none" required minlength="4" maxlength="50">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md text-center">
+            <p class="text-danger" style="font-size:15pt;">
+            <?php
+                if($errors->has('name'))
+                {
+                    echo $errors->first('name');
+                }
+            ?>
+            </p>
         </div>
     </div>
 
     <div class="row d-flex justify-content-center pt-2">
         <div class="col-md-5 d-flex justify-content-center">
-            <input type="text" class="w-100" style="background:none;outline:none;border:none;border-bottom:1px solid white;font-size:15pt;" placeholder="Username" value="{{ $user->username }}" name="username" autocorrect="off" autocapitalize="none" required>
+            <input type="text" class="w-100" style="background:none;outline:none;border:none;border-bottom:1px solid white;font-size:15pt;" placeholder="Username" value="{{ $user->username }}" name="username" autocorrect="off" autocapitalize="none" required minlength="4" maxlength="20">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md text-center">
+            <p class="text-danger" style="font-size:15pt;">
+            <?php
+                if($errors->has('username'))
+                {
+                    echo $errors->first('username');
+                }
+            ?>
+            </p>
         </div>
     </div>
 
     <div class="row d-flex justify-content-center pt-2">
         <div class="col-md-5 d-flex justify-content-center">
-            <input type="text" class="w-100" style="background:none;outline:none;border:none;border-bottom:1px solid white;font-size:15pt;" placeholder="Email" value="{{ $user->email }}" name="email" autocorrect="off" autocapitalize="none" required>
+            <input type="text" class="w-100" style="background:none;outline:none;border:none;border-bottom:1px solid white;font-size:15pt;" placeholder="Email" value="{{ $user->email }}" name="email" autocorrect="off" autocapitalize="none" required minlength="4" maxlength="30">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md text-center">
+            <p class="text-danger" style="font-size:15pt;">
+            <?php
+                if($errors->has('email'))
+                {
+                    echo $errors->first('email');
+                }
+            ?>
+            </p>
         </div>
     </div>
 
     <div class="row d-flex justify-content-center pt-2">
         <div class="col-md-5 d-flex justify-content-center">
-            <input type="text" class="w-100" style="background:none;outline:none;border:none;border-bottom:1px solid white;font-size:15pt;" placeholder="Nomor Handphone" value="{{ $user->nomor_hp }}" name="nomor_hp" autocorrect="off" autocapitalize="none" required>
+            <input type="text" class="w-100" style="background:none;outline:none;border:none;border-bottom:1px solid white;font-size:15pt;" placeholder="Nomor Handphone" value="{{ $user->nomor_hp }}" name="nomor_hp" autocorrect="off" autocapitalize="none" required minlength="4" maxlength="14">
         </div>
     </div>
-
+    <div class="row">
+        <div class="col-md text-center">
+            <p class="text-danger" style="font-size:15pt;">
+            <?php
+                if($errors->has('nomor_hp'))
+                {
+                    echo $errors->first('nomor_hp');
+                }
+            ?>
+            </p>
+        </div>
+    </div>
 
     <div class="row d-flex justify-content-center mt-2">
         <div class="col-md-10 text-center">
             <label>Masukkan Gambar KTP</label>
         </div>
-        <div class="col-md-5">
-                <input type="file" id="capture" class="btn-sm btn-info w-100" accept="image/*" capture>
-                <img src="{{ asset('vendor_app/img_web/ktp.jpg') }}" id="image" alt="Something wrong" class="img-thumbnail mt-3">
+        <div class="col-md-5 text-center">
+                <img src="{{ url('/storage/ktp_users',[$user->ktp]) }}" style="max-height:300px;max-width:300px;" id="image" alt="Something wrong" class="img-thumbnail mt-3">
+                <input type="file" id="capture" name="ktp" class="btn-sm btn-info mt-3 w-75" accept="image/*" capture>
         </div>
+    </div>
+    <div class="row">
+        <div class="col-md text-center">
+            <p class="text-danger" style="font-size:15pt;">
+            <?php
+                if($errors->has('ktp'))
+                {
+                    echo $errors->first('ktp');
+                }
+            ?>
+            </p>
+        </div>
+    
+    </div>
     </div>
 
     <div class="row d-flex justify-content-center mt-5 mb-5">
         <div class="col-md-10 text-center">
-            <button class="btn" style="{{ config('global.active') }}">Submit</button>
+            <a href="{{ url('/profile') }}">
+            <button type="button" class="btn btn-danger mr-5" >Cancel</button>
+            </a>
+            <button type="submit" class="btn" style="{{ config('global.active') }}">Submit</button>
         </div>
     </div>
 </form>
