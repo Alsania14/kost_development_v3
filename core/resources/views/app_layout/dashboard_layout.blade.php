@@ -11,6 +11,8 @@
 
     <!-- Bootstrap core CSS -->
     <link href="{{ asset('vendor_app/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet">
+    <!-- FONT AWESOME -->
+    <script type="text/javascript" src="{{ asset('vendor_app/fontawesome/js/fontawesome.min.js') }}"></script>
 
     <style>
       .bd-placeholder-img {
@@ -71,8 +73,8 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link text-light d-flex justify-content-between" href="#" style="@yield('notifikasi')">
-              Notifikasi<span class="badge badge-info text-dark" style="font-size:9pt;{{ config('global.active') }}">@yield('jumlah')</span>
+            <a class="nav-link text-light d-flex justify-content-between" href="{{ url('/notifikasi') }}" style="@yield('notifikasi')">
+              Notifikasi<span class="badge badge-info text-dark badge-pill" style="font-size:9pt;{{ config('global.active') }}">@yield('jumlah')</span>
             </a>
           </li>
           <li class="nav-item">
@@ -109,10 +111,6 @@
         <h1 class="h2 text-light">@yield('header')</h1>
       </div>
       @yield('content')
-
-      <div class="row">
-      <div class="col-md text-center text-dark" style="{{ config('global.active') }}">Team IT Tirta Aruna Cottage</div>
-      </div>  
     </main>
   </div>
 </div>

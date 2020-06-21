@@ -1,5 +1,6 @@
 @extends('app_layout/dashboard_layout')
 @section('username',strtoupper($user->username))
+@section('jumlah',$notification)
 @section('room',$kamar->nomor)
 @section('img_user',url('/storage/image_users',[$user->image]))
 @section('profile',config('global.active'))
@@ -109,6 +110,42 @@
         </div>
     </div>
 
+    <div class="row d-flex justify-content-center pt-2">
+        <div class="col-md-5 d-flex justify-content-center">
+            <input type="password" class="w-100" style="background:none;outline:none;border:none;border-bottom:1px solid white;font-size:15pt;" placeholder="Password Baru" name="password" autocorrect="off" autocapitalize="none" required minlength="4" maxlength="14">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md text-center">
+            <p class="text-danger" style="font-size:15pt;">
+            <?php
+                if($errors->has('password'))
+                {
+                    echo $errors->first('password');
+                }
+            ?>
+            </p>
+        </div>
+    </div>
+
+    <div class="row d-flex justify-content-center pt-2">
+        <div class="col-md-5 d-flex justify-content-center">
+            <input type="password" class="w-100" style="background:none;outline:none;border:none;border-bottom:1px solid white;font-size:15pt;" placeholder="Konfirmasi Password" name="password_confirmation" autocorrect="off" autocapitalize="none" required minlength="4" maxlength="14">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md text-center">
+            <p class="text-danger" style="font-size:15pt;">
+            <?php
+                if($errors->has('password_confirmation'))
+                {
+                    echo $errors->first('password_confirmation');
+                }
+            ?>
+            </p>
+        </div>
+    </div>
+
     <div class="row d-flex justify-content-center mt-2">
         <div class="col-md-10 text-center">
             <label>Masukkan Gambar KTP</label>
@@ -142,6 +179,11 @@
         </div>
     </div>
 </form>
+
+<!-- FOOTER -->
+<footer class="page-footer w-100 m-0 pt-4">
+      <div class="col-md text-center text-dark" style="{{ config('global.active') }}">Team IT Tirta Aruna Cottage</div>
+</footer>
 </div>
 
 <script>

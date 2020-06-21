@@ -41,4 +41,8 @@ class User extends Authenticatable
     {
         return $this->hasOne('App\Kamar');
     }
+    
+    public function notifications(){
+        return $this->morphMany(UserNotification::class, 'notifiable' )->orderBy('created_at', 'desc');
+    }
 }

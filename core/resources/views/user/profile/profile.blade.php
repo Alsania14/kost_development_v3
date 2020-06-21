@@ -1,5 +1,6 @@
 @extends('app_layout/dashboard_layout')
 @section('username',strtoupper($user->username))
+@section('jumlah',$notification)
 @section('room',$kamar->nomor)
 @section('img_user',url('/storage/image_users',[$user->image]))
 @section('profile',config('global.active'))
@@ -111,9 +112,11 @@
             </a>
         </div>
     </div>
-
 </div>
 <!-- AKHIR CONTAINER -->
+<footer class="page-footer w-100 m-0 pt-4">
+      <div class="col-md text-center text-dark" style="{{ config('global.active') }}">Team IT Tirta Aruna Cottage</div>
+</footer>
 @extends('app_layout/modal')
 @section('judul','UPDATE BERHASIL')
 @section('isi','Update berhasil,Pastikan anda memberikan identitas dan dokumen yang valid')

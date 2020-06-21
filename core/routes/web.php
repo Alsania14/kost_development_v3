@@ -40,6 +40,11 @@ use Illuminate\Support\Facades\Route;
                 Route::put('/edit/{id}','dashboard\ProfileController@update');
             // AKHIR
             
+            // HALAMAN NOTIFIKASI USER
+                Route::get('/notifikasi','dashboard\NotifikasiController@index');
+                Route::patch('/markall/{id}','dashboard\NotifikasiController@markall');
+            // AKHIR
+
             // USER DAPAT LOGOUT SETELAH MASUK KE DALAM SISTEM
                 Route::get('/logout','login\LoginController@logout');
             // AKHIR

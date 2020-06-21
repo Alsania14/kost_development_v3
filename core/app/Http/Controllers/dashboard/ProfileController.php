@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Support\Facades\Validator;
+use App\Notifications\UserNotification;
+use Illuminate\Support\Facades\Hash;
 use ImageOptimizer;
 
 use App\User;
@@ -20,6 +22,7 @@ class ProfileController extends Controller
     {   
         // MENAMPILKAN USER
             $user = Auth::user();
+        // AKHIR
 
         // CEK KAMAR
             $kamar = new \stdClass;
@@ -34,8 +37,16 @@ class ProfileController extends Controller
                 $kamar = $test_kamar;
             }
         // AKHIR
+
+        // CEK NOTIFIKASI USER
+            $notification = $user->unreadNotifications->count();
+            if($notification == 0)
+            {
+                $notification = null;
+            }
+        // AKHIR
     
-            return view('/user/profile/profile',compact('user','kamar'));
+        return view('/user/profile/profile',compact('user','kamar','notification'));
     }
 
     public function edit($id)
@@ -51,9 +62,17 @@ class ProfileController extends Controller
         // MAIN LOGIC
             $user = User::find($decrypted);
             $kamar = $user->kamar()->first();
-        
-            return view('/user/profile/edit',compact('user','kamar'));
         // AKHIR
+
+        // CEK NOTIFIKASI USER
+            $notification = $user->unreadNotifications->count();
+            if($notification == 0)
+            {
+                $notification = null;
+            }
+        // AKHIR
+
+        return view('/user/profile/edit',compact('user','kamar','notification'));
     }
 
     public function update(Request $request,$id)
@@ -75,6 +94,8 @@ class ProfileController extends Controller
                     'min:4',
                     'max:20',
                 ),
+                'password' => 'required|same:password_confirmation|min:4|max:50',
+                'password_confirmation' => 'required|min:4|max:50|',
                 'email' => 'required|email|min:4|max:50',
                 'nomor_hp' => 'required|numeric|digits_between:8,14'
             ],[
@@ -155,16 +176,22 @@ class ProfileController extends Controller
                 }
         // AKHIR
 
-        // MAIN LOGIC
+        // MAIN LOGIC AND NOTIFICATION
             
             $user->name = $request->name;
             $user->username = $request->username;
             $user->email = $request->email;
             $user->nomor_hp = $request->nomor_hp;
+            $user->password = Hash::make($request->password);
             $user->save();
             
-            return redirect('/profile')->with(['system' => 'success']);
+            $text = '{"title" : "Update Profile","text" : "Profile anda telah diperbaharui , pastikan anda memberikan identitas dan dokumen yang valid", "type" : "common"}';
+            
+            $user->notify(new UserNotification($text));
+            
         // AKHIR
+        
+        return redirect('/profile')->with(['system' => 'success']);
 
     }
 }

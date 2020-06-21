@@ -21,6 +21,14 @@ class DashboardController extends Controller
             $test_kamar = $user->kamar()->first();
         // AKHIR
 
+        // CEK NOTIFIKASI USER
+            $notification = $user->unreadNotifications->count();
+            if($notification == 0)
+            {
+                $notification = null;
+            }
+        // AKHIR
+
         // JIKA ADA MAKA V KAMAR DITIMPA TEST KAMAR
             if(!is_null($test_kamar))
             {
@@ -28,6 +36,6 @@ class DashboardController extends Controller
             }
         // AKHIR
         
-        return view('user/dashboard/dashboard',compact('user','kamar'));
+        return view('user/dashboard/dashboard',compact('user','kamar','notification'));
     }
 }

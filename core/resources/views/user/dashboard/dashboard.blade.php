@@ -1,7 +1,7 @@
 @extends('app_layout/dashboard_layout')
 @section('username',strtoupper($user->username))
 @section('room',$kamar->nomor)
-@section('jumlah','2')
+@section('jumlah',$notification)
 @section('img_user',url('/storage/image_users',[$user->image]))
 @section('dashboard',config('global.active'))
 @section('header','Dashboard')
@@ -68,6 +68,10 @@
       </div>
     </div>
     
+    <!-- FOOTER -->
+    <footer class="page-footer w-100 m-0 pt-4">
+      <div class="col-md text-center text-dark" style="{{ config('global.active') }}">Team IT Tirta Aruna Cottage</div>
+    </footer>
     <script type="text/javascript" src="{{ asset('vendor_app/dashboard/dashboard.js') }}"></script>
 
     <!-- FUNGSI HITUNG MUNDUR JAVASCRIPT -->
