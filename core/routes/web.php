@@ -9,7 +9,9 @@ use Illuminate\Support\Facades\Route;
     });
 
     Route::get('/test',function(){
-        return phpinfo();
+        date_default_timezone_set(config('global.timezone'));
+
+        return date('Y-m-d H:i:s');
     });
 
 // AKHIR

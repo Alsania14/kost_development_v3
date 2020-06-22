@@ -77,12 +77,21 @@
               Notifikasi<span class="badge badge-info text-dark badge-pill" style="font-size:9pt;{{ config('global.active') }}">@yield('jumlah')</span>
             </a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link text-light" href="#" style="@yield('pembayaran')">
-              Pembayaran Kost
+          <li class="nav-item" id="dropin" style="height:35px;overflow:hidden;transition:0.5s;" id="atas">
+            <a class="nav-link text-light d-flex justify-content-between" style="@yield('pembayaran');cursor:pointer;" onclick="sentuh()">
+              <span>Pembayaran Kost</span> <span> &#x25BC; </span>
             </a>
+                    <a class="pl-5 nav-link text-light" style="@yield('pembayaran');cursor:pointer;">
+                      Tagihan Anda
+                    </a>
+                    <a class="pl-5 nav-link text-light" style="@yield('pembayaran');cursor:pointer;">
+                      Transaksi
+                    </a>
+                    <a class="pl-5 nav-link text-light" style="@yield('pembayaran');cursor:pointer;">
+                      Panduan Pembayaran
+                    </a>
           </li>
-          <li class="nav-item">
+          <li class="nav-item" id="bawah" >
             <a class="nav-link text-light" href="#" style="@yield('pelaporan')">
               Pelaporan
             </a>
@@ -116,6 +125,29 @@
 </div>
         <script src="{{ asset('vendor_app/jquery.js') }}" ></script>
         <script src="{{ asset('vendor_app/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
+        <script>
+            var drop = document.getElementById("dropin");
+            var atas = document.getElementById("atas");
+            var bawah = document.getElementById("bawah");
+            var status = "open";
+
+            function sentuh()
+            {
+              console.log(status);
+              if(status == "open")
+              {
+                drop.style.height="150px";
+                status = "close";
+              }
+              else if(status == "close")
+              {
+                drop.style.height="35px";
+                status="open";
+              }
+              console.log(status);
+            }
+        </script>
+
         <?php
             $system = Session::get('system');
 
