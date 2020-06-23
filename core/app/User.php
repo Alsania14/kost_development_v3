@@ -5,10 +5,11 @@ namespace App;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\SoftDeletes; 
 
 class User extends Authenticatable
 {
-    use Notifiable;
+    use Notifiable,SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -39,7 +40,12 @@ class User extends Authenticatable
 
     public function kamar()
     {
-        return $this->hasOne('App\Kamar');
+        return $this->hasOne('App\Kamar')->first();
+    }
+
+    public function tagihan()
+    {
+        return $this->hasMany('App\Tagihan')->orderBY('status_tagihan')->orderBy('tgl_awal_sewa','desc')->get();
     }
     
     public function notifications(){

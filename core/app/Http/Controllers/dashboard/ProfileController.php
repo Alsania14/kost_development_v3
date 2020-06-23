@@ -94,8 +94,8 @@ class ProfileController extends Controller
                     'min:4',
                     'max:20',
                 ),
-                'password' => 'required|same:password_confirmation|min:4|max:50',
-                'password_confirmation' => 'required|min:4|max:50|',
+                'password' => 'nullable|same:password_confirmation|min:4|max:50',
+                'password_confirmation' => 'nullable|min:4|max:50|',
                 'email' => 'required|email|min:4|max:50',
                 'nomor_hp' => 'required|numeric|digits_between:8,14'
             ],[
@@ -182,7 +182,12 @@ class ProfileController extends Controller
             $user->username = $request->username;
             $user->email = $request->email;
             $user->nomor_hp = $request->nomor_hp;
-            $user->password = Hash::make($request->password);
+            
+            if($request->password != null)
+            {
+                $user->password = Hash::make($request->password);
+            }
+
             $user->save();
             
             $text = '{"title" : "Update Profile","text" : "Profile anda telah diperbaharui , pastikan anda memberikan identitas dan dokumen yang valid", "type" : "common"}';

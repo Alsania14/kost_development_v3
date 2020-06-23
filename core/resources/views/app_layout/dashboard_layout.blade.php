@@ -33,13 +33,33 @@
       *{
           color:white;
       }
+
+      /* width */
+    ::-webkit-scrollbar {
+      width: 10px;
+    }
+
+    /* Track */
+    ::-webkit-scrollbar-track {
+      background: #f1f1f1;
+    }
+
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+      background: #888;
+    }
+
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+      background: #555;
+    }
     </style>
     <!-- Custom styles for this template -->
     <link href="{{ asset('vendor_app/dashboard/dashboard.css') }}" rel="stylesheet">
   </head>
   <body style="background:#2e2e2e;">
     <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
-  <a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" href="{{ url('/dashboard') }}">Tirta Aruna Cottage</a>
+  <a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" href="{{ url('/dashboard') }}">Tirta Aruna Cottage <sup style="font-size:8pt;" class="badge-pill bg-warning text-dark">Alpha</sup></a>
   <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-toggle="collapse" data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -81,13 +101,13 @@
             <a class="nav-link text-light d-flex justify-content-between" style="@yield('pembayaran');cursor:pointer;" onclick="sentuh()">
               <span>Pembayaran Kost</span> <span> &#x25BC; </span>
             </a>
-                    <a class="pl-5 nav-link text-light" style="@yield('pembayaran');cursor:pointer;">
+                    <a class="pl-5 nav-link text-light" href="{{ url('/tagihan') }}" style="cursor:pointer;">
                       Tagihan Anda
                     </a>
-                    <a class="pl-5 nav-link text-light" style="@yield('pembayaran');cursor:pointer;">
+                    <a class="pl-5 nav-link text-light" style="cursor:pointer;">
                       Transaksi
                     </a>
-                    <a class="pl-5 nav-link text-light" style="@yield('pembayaran');cursor:pointer;">
+                    <a class="pl-5 nav-link text-light" style="cursor:pointer;">
                       Panduan Pembayaran
                     </a>
           </li>
@@ -129,6 +149,7 @@
             var drop = document.getElementById("dropin");
             var atas = document.getElementById("atas");
             var bawah = document.getElementById("bawah");
+
             var status = "open";
 
             function sentuh()

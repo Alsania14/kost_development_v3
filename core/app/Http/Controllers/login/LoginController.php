@@ -36,6 +36,7 @@ class LoginController extends Controller
 
             if($validator->fails())
             {
+                dd($validator->fails());
                 return redirect()->back()->withErrors($validator->errors())->withInput();
             }
         // AKHIR

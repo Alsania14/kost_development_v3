@@ -9,9 +9,7 @@ use Illuminate\Support\Facades\Route;
     });
 
     Route::get('/test',function(){
-        date_default_timezone_set(config('global.timezone'));
-
-        return date('Y-m-d H:i:s');
+        echo 'sukses';
     });
 
 // AKHIR
@@ -45,6 +43,12 @@ use Illuminate\Support\Facades\Route;
             // HALAMAN NOTIFIKASI USER
                 Route::get('/notifikasi','dashboard\NotifikasiController@index');
                 Route::patch('/markall/{id}','dashboard\NotifikasiController@markall');
+            // AKHIR
+
+            // HALAMAN PEMBAYARAN USER
+                Route::get('/tagihan','dashboard\tagihan\TagihanController@index');
+                Route::get('/pilihpembayaran/{id}','dashboard\tagihan\TagihanController@pilihpembayaran');
+                
             // AKHIR
 
             // USER DAPAT LOGOUT SETELAH MASUK KE DALAM SISTEM
