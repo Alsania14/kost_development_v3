@@ -48,7 +48,10 @@ use Illuminate\Support\Facades\Route;
             // HALAMAN PEMBAYARAN USER
                 Route::get('/tagihan','dashboard\tagihan\TagihanController@index');
                 Route::get('/pilihpembayaran/{id}','dashboard\tagihan\TagihanController@pilihpembayaran');
-                
+
+                // PEMBAYARAN ONLIN
+                    // PEMBAYARAN BANK BNI
+                    Route::post('/onlinebni','dashboard\tagihan\online\BniController@charge');
             // AKHIR
 
             // USER DAPAT LOGOUT SETELAH MASUK KE DALAM SISTEM

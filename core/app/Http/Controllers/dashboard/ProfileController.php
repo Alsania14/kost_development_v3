@@ -77,6 +77,7 @@ class ProfileController extends Controller
 
     public function update(Request $request,$id)
     {   
+        
         // SECURITY LAYER
             // LARAVEL VALIDATION ANTI XSS
             $validator = Validator::make($request->all(),[
@@ -97,7 +98,7 @@ class ProfileController extends Controller
                 'password' => 'nullable|same:password_confirmation|min:4|max:50',
                 'password_confirmation' => 'nullable|min:4|max:50|',
                 'email' => 'required|email|min:4|max:50',
-                'nomor_hp' => 'required|numeric|digits_between:8,14'
+                'nomor_hp' => 'numeric|digits_between:8,14'
             ],[
                 'name.not_regex' => 'hanya menerima angka dan huruf',
                 'username.not_regex' => 'hanya menerima angka dan huruf',

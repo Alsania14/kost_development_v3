@@ -63,7 +63,7 @@
 <footer class="row page-footer w-100 m-0 pt-4">
       <div class="col-md text-center text-dark" style="{{ config('global.active') }}">Team IT Tirta Aruna Cottage</div>
 </footer>
-@extends('app_layout/modal')
-@section('judul','Mark All Berhasil')
-@section('isi','Mark All Berhasil Dilakukan')
+@extends('app_layout/modal_denied')
+@section('modal_denied_judul','Charge Gagal')
+@section('modal_denied_isi','Mohon Maaf Charge gagal, kemungkinan sedang terjadi gangguan,  silahkan gunakan metode pembayaran yang lain atau hubungi developer')
 @endsection
