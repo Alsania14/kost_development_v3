@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Route;
     });
 
     Route::get('/test',function(){
-        echo 'sukses';
+        echo date('Y-m-d H:i:s');
     });
 
 // AKHIR
@@ -49,16 +49,30 @@ use Illuminate\Support\Facades\Route;
                 Route::get('/tagihan','dashboard\tagihan\TagihanController@index');
                 Route::get('/pilihpembayaran/{id}','dashboard\tagihan\TagihanController@pilihpembayaran');
 
-                // PEMBAYARAN ONLIN
+                // PEMBAYARAN ONLINE
                     // PEMBAYARAN BANK BNI
-                    Route::post('/onlinebni','dashboard\tagihan\online\BniController@charge');
+                        // CHARGE
+                            Route::post('/onlinebni','dashboard\tagihan\online\BniController@charge');
+                        // AKHIR
+
+                    // AKHIR
+            // AKHIR
+
+            // HALAMAN TRANSAKSI USERS
+                Route::get('/transaksi','dashboard\transaksi\TransaksiController@index');
+                Route::get('/bank_transfer/{id}','dashboard\transaksi\TransaksiController@detailtransaksionline');
             // AKHIR
 
             // USER DAPAT LOGOUT SETELAH MASUK KE DALAM SISTEM
                 Route::get('/logout','login\LoginController@logout');
             // AKHIR
         });
+        // AKHIR
 
+        // MIDTRANS NOTIFICATION HANDLER
+            /*DILETAKKAN DILUAR MIDDLEWARE SUPAYA DAPAT DIAKSES MIDTRANS*/
+            Route::post('/notification','dashboard\transaksi\NotificationController@index');
+        // AKHIR
 // AKHIR
 
         

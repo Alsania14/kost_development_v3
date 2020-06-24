@@ -113,6 +113,7 @@ class Kernel extends ConsoleKernel
                                         $tagihan_baru->tgl_awal_sewa = $kamar->tgl_awal_sewa;
                                         $tagihan_baru->tgl_akhir_sewa = $kamar->tgl_bayar_selanjutnya;
                                         $tagihan_baru->status_tagihan = 'hutang';
+                                        $tagihan_baru->nominal_pembayaran = $kamar->harga;
                                         $tagihan_baru->created_by = 'system';
                                         $tagihan_baru->save();
                                     // AKHIR

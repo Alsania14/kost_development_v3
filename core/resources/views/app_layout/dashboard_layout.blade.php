@@ -11,8 +11,6 @@
 
     <!-- Bootstrap core CSS -->
     <link href="{{ asset('vendor_app/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet">
-    <!-- FONT AWESOME -->
-    <script type="text/javascript" src="{{ asset('vendor_app/fontawesome/js/fontawesome.min.js') }}"></script>
 
     <style>
       .bd-placeholder-img {
@@ -104,7 +102,7 @@
                     <a class="pl-5 nav-link text-light" href="{{ url('/tagihan') }}" style="cursor:pointer;">
                       Tagihan Anda
                     </a>
-                    <a class="pl-5 nav-link text-light" style="cursor:pointer;">
+                    <a class="pl-5 nav-link text-light" href="{{ url('/transaksi') }}" style="cursor:pointer;">
                       Transaksi
                     </a>
                     <a class="pl-5 nav-link text-light" style="cursor:pointer;">
@@ -137,7 +135,7 @@
 
     <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
       <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
-        <h1 class="h2 text-light">@yield('header')</h1>
+        <h1 class="h5 text-light">@yield('header')</h1>
       </div>
       @yield('content')
     </main>

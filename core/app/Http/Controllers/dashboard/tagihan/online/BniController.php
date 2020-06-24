@@ -11,11 +11,16 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Contracts\Encryption\DecryptException;
 
 use App\Tagihan;
+use App\Transaksi;
 
 class BniController extends Controller
 {
     public function charge(Request $request)
-    {
+    {   
+        // MEMASTIKAN MENGGUNAKAN WAKTU WITA
+            date_default_timezone_set (config('global.timezone'));
+        // AKHIR
+
         // SECURITY LAYER
             try {
                 $decrypted = Crypt::decryptString($request->tagihan);
@@ -32,11 +37,12 @@ class BniController extends Controller
             
         // AKHIR
 
-        // MEMBUAT NOMOR ID
+        // MEMBUAT NOMOR ID DAN NOTA
             $statement = DB::select("SHOW TABLE STATUS LIKE 'transaksis'");
             $nextId = $statement[0]->Auto_increment;
 
             $filled_int = sprintf("%05d", $nextId);
+            $nota = config('global.nota').$filled_int;
         // AKHIR
 
 
@@ -45,7 +51,7 @@ class BniController extends Controller
             $payload->payment_type = 'bank_transfer';
             $payload->transaction_details = (object) array(
                 'gross_amount' => $kamar->harga,
-                'order_id' => 'TAC-'.$filled_int,
+                'order_id' => $nota,
             );
             $payload->customer_details = (object) array(
                 'email' => $user->email,
@@ -106,8 +112,28 @@ class BniController extends Controller
                 return redirect('/tagihan')->with(['system' => 'denied']);
             }
         // AKHIR
-
-            dd($response_php);
         
-    }   
+        // PENYIMPANAN DATA TRANSAKSI DENGAN STATUS DARI RESPONSE API
+            $transaksi_new = new Transaksi;
+            $transaksi_new->order_id = $nota;
+            $transaksi_new->tagihan_id = $decrypted;
+            $transaksi_new->tgl_awal = $tagihan->tgl_awal_sewa;
+            $transaksi_new->tgl_akir = $tagihan->tgl_akhir_sewa;
+            $transaksi_new->nominal = $kamar->harga;
+            $transaksi_new->via = 'bank_transfer';
+            $transaksi_new->integration_name = 'bni';
+            $transaksi_new->status_pembayaran = 'proses';
+            $transaksi_new->field_1 = $response_php->va_numbers[0]->va_number;
+            $transaksi_new->developer_information_charge = $response;
+            $transaksi_new->save();
+        // AKHIR
+
+        // USER NOTIFICATION
+            $text = '{"title" : "CHARGE BERHASIL !","text" : "Tagihan dengan Order ID '.$nota.'  telah berhasil di Charge, Seilahkan lanjutkan pembayaran dengan Virtual Account yang telah diberikan","type" : "common"}';
+                
+            $user->notify(new UserNotification($text));
+        // AKHIR
+
+        return redirect('/bank_transfer'.'/'.Crypt::encryptString($transaksi_new->id))->with(['system' => 'success']);
+    }
 }

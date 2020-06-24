@@ -13,6 +13,16 @@ MySQL - 10.1.38-MariaDB : Database - db_kost_development
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
+/*Table structure for table `dummies` */
+
+DROP TABLE IF EXISTS `dummies`;
+
+CREATE TABLE `dummies` (
+  `text` text
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+/*Data for the table `dummies` */
+
 /*Table structure for table `kamars` */
 
 DROP TABLE IF EXISTS `kamars`;
@@ -40,8 +50,8 @@ CREATE TABLE `kamars` (
 /*Data for the table `kamars` */
 
 insert  into `kamars`(`id`,`user_id`,`nomor`,`tipe_pembayaran`,`harga`,`tgl_mulai_sewa`,`tgl_awal_sewa`,`tgl_bayar_selanjutnya`,`status_pembayaran`,`keluhan`,`auto_tagih`,`created_at`,`updated_at`,`deleted_at`) values 
-(1,3,1,'tahun',9800000,'2020-02-29','2020-02-29','2022-02-28','lunas','tidak','on','2020-06-18 17:44:30','2020-06-22 11:40:14',NULL),
-(2,2,2,'bulan',500000,'2020-10-31','2021-02-28','2021-03-31','hutang','tidak','on','2020-06-19 20:53:37','2020-06-22 13:11:31',NULL);
+(1,3,1,'bulan',500000,'2020-01-02','2020-03-02','2020-04-02','hutang','tidak','on','2020-06-18 17:44:30','2020-06-24 21:39:04',NULL),
+(2,2,2,'bulan',500000,'2020-01-31','2020-03-31','2020-04-30','hutang','tidak','on','2020-06-19 20:53:37','2020-06-24 21:39:05',NULL);
 
 /*Table structure for table `migrations` */
 
@@ -120,10 +130,10 @@ CREATE TABLE `tagihans` (
 /*Data for the table `tagihans` */
 
 insert  into `tagihans`(`id`,`user_id`,`kamar_id`,`tipe_pembayaran`,`tgl_awal_sewa`,`tgl_akhir_sewa`,`status_tagihan`,`tgl_pembayaran`,`nominal_pembayaran`,`created_by`,`created_at`,`updated_at`,`deleted_at`) values 
-(1,2,2,'bulan','2020-10-31','2020-11-30','lunas',NULL,NULL,'system','2020-06-22 11:50:31','2020-06-22 11:50:31',NULL),
-(2,2,2,'bulan','2020-11-30','2020-12-31','hutang',NULL,NULL,'system','2020-06-22 11:55:38','2020-06-22 11:55:38',NULL),
-(3,2,2,'bulan','2020-12-31','2021-01-31','hutang',NULL,NULL,'system','2020-06-22 13:02:50','2020-06-22 13:02:50',NULL),
-(4,2,2,'bulan','2021-01-31','2021-02-28','lunas',NULL,NULL,'system','2020-06-22 13:11:30','2020-06-22 13:11:30',NULL);
+(1,2,1,'bulan','2020-01-02','2020-02-02','lunas',NULL,500000,'system','2020-06-24 21:22:15','2020-06-24 13:30:33',NULL),
+(2,3,2,'bulan','2020-01-31','2020-02-29','lunas',NULL,500000,'system','2020-06-24 21:22:15','2020-06-24 13:29:31',NULL),
+(3,3,1,'bulan','2020-02-02','2020-03-02','hutang',NULL,500000,'system','2020-06-24 21:39:04','2020-06-24 21:39:04',NULL),
+(4,2,2,'bulan','2020-02-29','2020-03-31','hutang',NULL,500000,'system','2020-06-24 21:39:04','2020-06-24 21:39:04',NULL);
 
 /*Table structure for table `transaksis` */
 
@@ -138,7 +148,7 @@ CREATE TABLE `transaksis` (
   `nominal` int(11) NOT NULL,
   `via` enum('manual','bank_transfer','kedai') NOT NULL,
   `integration_name` enum('mandiri','bca','permata','bni','indomaret','alfamart','manual') DEFAULT NULL,
-  `status_pembayaran` enum('approved','rejected','pending','expired') NOT NULL,
+  `status_pembayaran` enum('proses','pending','expired','rejected','approved') DEFAULT NULL,
   `bukti_transaksi` varchar(200) DEFAULT NULL,
   `field_1` varchar(100) DEFAULT NULL,
   `field_2` varchar(100) DEFAULT NULL,
@@ -150,9 +160,14 @@ CREATE TABLE `transaksis` (
   `updated_at` datetime DEFAULT NULL,
   `deleted_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 /*Data for the table `transaksis` */
+
+insert  into `transaksis`(`id`,`order_id`,`tagihan_id`,`tgl_awal`,`tgl_akir`,`nominal`,`via`,`integration_name`,`status_pembayaran`,`bukti_transaksi`,`field_1`,`field_2`,`tgl_lunas`,`developer_information_charge`,`developer_information_finish`,`developer_information_last_notification`,`created_at`,`updated_at`,`deleted_at`) values 
+(1,'TAC-ALPHA-00001',1,'2020-01-02','2020-02-02',500000,'bank_transfer','bni','approved',NULL,'9883197474123044',NULL,NULL,'{\"status_code\":\"201\",\"status_message\":\"Success, Bank Transfer transaction is created\",\"transaction_id\":\"27dfa7aa-ea77-43c7-a20e-b70b6d09eebc\",\"order_id\":\"TAC-ALPHA-00001\",\"merchant_id\":\"G356931974\",\"gross_amount\":\"500000.00\",\"currency\":\"IDR\",\"payment_type\":\"bank_transfer\",\"transaction_time\":\"2020-06-24 20:23:15\",\"transaction_status\":\"pending\",\"va_numbers\":[{\"bank\":\"bni\",\"va_number\":\"9883197474123044\"}],\"fraud_status\":\"accept\"}',NULL,NULL,'2020-06-24 21:23:15','2020-06-24 13:30:33',NULL),
+(2,'TAC-ALPHA-00002',2,'2020-01-31','2020-02-29',500000,'bank_transfer','bni','approved',NULL,'9883197451946366',NULL,NULL,'{\"status_code\":\"201\",\"status_message\":\"Success, Bank Transfer transaction is created\",\"transaction_id\":\"003ed1ce-4657-46d5-973d-c4a51498bbd1\",\"order_id\":\"TAC-ALPHA-00002\",\"merchant_id\":\"G356931974\",\"gross_amount\":\"500000.00\",\"currency\":\"IDR\",\"payment_type\":\"bank_transfer\",\"transaction_time\":\"2020-06-24 20:23:52\",\"transaction_status\":\"pending\",\"va_numbers\":[{\"bank\":\"bni\",\"va_number\":\"9883197451946366\"}],\"fraud_status\":\"accept\"}',NULL,NULL,'2020-06-24 21:23:51','2020-06-24 13:24:42',NULL),
+(3,'TAC-ALPHA-00003',2,'2020-01-31','2020-02-29',500000,'bank_transfer','bni','approved',NULL,'9883197479854524',NULL,NULL,'{\"status_code\":\"201\",\"status_message\":\"Success, Bank Transfer transaction is created\",\"transaction_id\":\"7b871cb5-4a4d-4572-9141-a9afbe91968c\",\"order_id\":\"TAC-ALPHA-00003\",\"merchant_id\":\"G356931974\",\"gross_amount\":\"500000.00\",\"currency\":\"IDR\",\"payment_type\":\"bank_transfer\",\"transaction_time\":\"2020-06-24 20:29:02\",\"transaction_status\":\"pending\",\"va_numbers\":[{\"bank\":\"bni\",\"va_number\":\"9883197479854524\"}],\"fraud_status\":\"accept\"}',NULL,NULL,'2020-06-24 21:29:01','2020-06-24 13:29:31',NULL);
 
 /*Table structure for table `user_notifications` */
 
@@ -178,6 +193,7 @@ insert  into `user_notifications`(`id`,`type`,`notifiable_type`,`notifiable_id`,
 ('05eddc7c-54dc-47e5-b147-2665426ef3f4','App\\Notifications\\UserNotification','App\\User',2,'{\"title\" : \"Update Profile\",\"text\" : \"Profile anda telah diperbaharui , pastikan anda memberikan identitas dan dokumen yang valid\", \"type\" : \"common\"}','2020-06-21 13:43:54','2020-06-21 04:35:38','2020-06-21 13:43:54'),
 ('0e8cd7d6-7870-430e-9f70-030d77644dda','App\\Notifications\\UserNotification','App\\User',3,'{\"title\" : \"Update Profile\",\"text\" : \"Profile anda telah diperbaharui , pastikan anda memberikan identitas dan dokumen yang valid\", \"type\" : \"common\"}','2020-06-22 19:25:06','2020-06-22 11:23:05','2020-06-22 19:25:06'),
 ('108c3d0b-7b9a-47c2-9f0c-7bc5e473f8bc','App\\Notifications\\UserNotification','App\\User',3,'{\"title\" : \"Update Profile\",\"text\" : \"Profile anda telah diperbaharui , pastikan anda memberikan identitas dan dokumen yang valid\", \"type\" : \"common\"}','2020-06-22 19:19:12','2020-06-22 11:18:00','2020-06-22 19:19:12'),
+('116f8d3e-4078-4524-8bab-0df303cb6b06','App\\Notifications\\UserNotification','App\\User',2,'{\"title\" : \"Update Profile\",\"text\" : \"Profile anda telah diperbaharui , pastikan anda memberikan identitas dan dokumen yang valid\", \"type\" : \"common\"}','2020-06-23 19:23:20','2020-06-23 11:20:41','2020-06-23 19:23:20'),
 ('13387f6b-8113-431e-ad4f-57b95359f760','App\\Notifications\\UserNotification','App\\User',2,'{\"title\" : \"Update Profile\",\"text\" : \"Profile anda telah diperbaharui , pastikan anda memberikan identitas dan dokumen yang valid\", \"type\" : \"common\"}','2020-06-21 15:13:35','2020-06-21 07:11:59','2020-06-21 15:13:35'),
 ('14b1dcda-82d7-465a-929b-7967d1410785','App\\Notifications\\UserNotification','App\\User',3,'{\"title\" : \"Update Profile\",\"text\" : \"Profile anda telah diperbaharui , pastikan anda memberikan identitas dan dokumen yang valid\", \"type\" : \"common\"}','2020-06-22 19:25:06','2020-06-22 11:23:06','2020-06-22 19:25:06'),
 ('16ff44d0-c6e8-47e1-8d09-fcafb7fdce55','App\\Notifications\\UserNotification','App\\User',3,'{\"title\" : \"Update Profile\",\"text\" : \"Profile anda telah diperbaharui , pastikan anda memberikan identitas dan dokumen yang valid\", \"type\" : \"common\"}','2020-06-22 19:25:06','2020-06-22 11:21:31','2020-06-22 19:25:06'),
@@ -201,9 +217,12 @@ insert  into `user_notifications`(`id`,`type`,`notifiable_type`,`notifiable_id`,
 ('44d76228-f2f6-4b9e-9032-939ddd3c81ab','App\\Notifications\\UserNotification','App\\User',2,'{\"title\" : \"Update Profile\",\"text\" : \"Profile anda telah diperbaharui , pastikan anda memberikan identitas dan dokumen yang valid\", \"type\" : \"common\"}','2020-06-23 10:28:00','2020-06-22 14:19:33','2020-06-23 10:28:00'),
 ('4549ea3e-976f-4f07-884f-249b64f50ad8','App\\Notifications\\UserNotification','App\\User',3,'{\"title\" : \"Update Profile\",\"text\" : \"Profile anda telah diperbaharui , pastikan anda memberikan identitas dan dokumen yang valid\", \"type\" : \"common\"}','2020-06-22 19:17:52','2020-06-22 11:14:57','2020-06-22 19:17:52'),
 ('484da515-ee70-4925-8fbe-61476a063ef6','App\\Notifications\\UserNotification','App\\User',3,'{\"title\" : \"Update Profile\",\"text\" : \"Profile anda telah diperbaharui , pastikan anda memberikan identitas dan dokumen yang valid\", \"type\" : \"common\"}',NULL,'2020-06-22 12:04:03','2020-06-22 12:04:03'),
+('4962ed7c-3025-4163-a387-d767c211a9cc','App\\Notifications\\UserNotification','App\\User',2,'{\"title\" : \"Update Profile\",\"text\" : \"Profile anda telah diperbaharui , pastikan anda memberikan identitas dan dokumen yang valid\", \"type\" : \"common\"}','2020-06-23 19:23:20','2020-06-23 11:21:16','2020-06-23 19:23:20'),
 ('4b96345a-69bf-4983-b053-dbcfaaaa6ca5','App\\Notifications\\UserNotification','App\\User',3,'{\"title\" : \"Update Profile\",\"text\" : \"Profile anda telah diperbaharui , pastikan anda memberikan identitas dan dokumen yang valid\", \"type\" : \"common\"}','2020-06-22 19:25:06','2020-06-22 11:23:06','2020-06-22 19:25:06'),
 ('4dd3574e-405c-40c7-9a93-da2db3ee47e5','App\\Notifications\\UserNotification','App\\User',2,'{\"title\" : \"Update Profile\",\"text\" : \"Profile anda telah diperbaharui , pastikan anda memberikan identitas dan dokumen yang valid\", \"type\" : \"common\"}','2020-06-23 11:22:03','2020-06-23 03:21:30','2020-06-23 11:22:03'),
+('4eedcd67-26d6-435b-8290-2279d2a91fc4','App\\Notifications\\UserNotification','App\\User',2,'{\"title\" : \"Update Profile\",\"text\" : \"Profile anda telah diperbaharui , pastikan anda memberikan identitas dan dokumen yang valid\", \"type\" : \"common\"}','2020-06-23 19:23:20','2020-06-23 11:21:39','2020-06-23 19:23:20'),
 ('507ca45c-3d2e-4297-898a-00d08e65f129','App\\Notifications\\UserNotification','App\\User',3,'{\"title\" : \"Update Profile\",\"text\" : \"Profile anda telah diperbaharui , pastikan anda memberikan identitas dan dokumen yang valid\", \"type\" : \"common\"}','2020-06-22 19:25:06','2020-06-22 11:23:05','2020-06-22 19:25:06'),
+('5315e5fd-28fa-4bad-a1e7-afaed4d0c439','App\\Notifications\\UserNotification','App\\User',2,'{\"title\" : \"CHARGE BERHASIL !\",\"text\" : \"Tagihan dengan Order ID TAC-ALPHA-00001  telah berhasil di Charge, Seilahkan lanjutkan pembayaran dengan Virtual Account yang telah diberikan\",\"type\" : \"common\"}',NULL,'2020-06-24 21:23:15','2020-06-24 21:23:15'),
 ('56490615-d517-4048-8c31-55a8703dcd47','App\\Notifications\\UserNotification','App\\User',3,'{\"title\" : \"Update Profile\",\"text\" : \"Profile anda telah diperbaharui , pastikan anda memberikan identitas dan dokumen yang valid\", \"type\" : \"common\"}','2020-06-22 19:17:52','2020-06-22 11:15:55','2020-06-22 19:17:52'),
 ('57e0c4b1-de5b-48c5-a50a-1815f174499c','App\\Notifications\\UserNotification','App\\User',3,'{\"title\" : \"Update Profile\",\"text\" : \"Profile anda telah diperbaharui , pastikan anda memberikan identitas dan dokumen yang valid\", \"type\" : \"common\"}','2020-06-22 19:25:06','2020-06-22 11:21:31','2020-06-22 19:25:06'),
 ('598d8681-7e14-4f20-9cec-06762b74f041','App\\Notifications\\UserNotification','App\\User',2,'{\"title\" : \"Update Profile\",\"text\" : \"Profile anda telah diperbaharui , pastikan anda memberikan identitas dan dokumen yang valid\", \"type\" : \"common\"}','2020-06-21 16:39:04','2020-06-21 04:35:41','2020-06-21 16:39:04'),
@@ -215,6 +234,8 @@ insert  into `user_notifications`(`id`,`type`,`notifiable_type`,`notifiable_id`,
 ('6c7a72e6-e460-4cf1-b457-b19bcfb1a008','App\\Notifications\\UserNotification','App\\User',3,'{\"title\" : \"Update Profile\",\"text\" : \"Profile anda telah diperbaharui , pastikan anda memberikan identitas dan dokumen yang valid\", \"type\" : \"common\"}','2020-06-22 19:25:06','2020-06-22 11:23:08','2020-06-22 19:25:06'),
 ('76d0abb8-2d2a-4483-96e2-cdf779f558a3','App\\Notifications\\UserNotification','App\\User',3,'{\"title\" : \"Update Profile\",\"text\" : \"Profile anda telah diperbaharui , pastikan anda memberikan identitas dan dokumen yang valid\", \"type\" : \"common\"}','2020-06-22 19:25:06','2020-06-22 11:21:31','2020-06-22 19:25:06'),
 ('77d01677-505d-4001-9224-7f5187db9eb1','App\\Notifications\\UserNotification','App\\User',3,'{\"title\" : \"Update Profile\",\"text\" : \"Profile anda telah diperbaharui , pastikan anda memberikan identitas dan dokumen yang valid\", \"type\" : \"common\"}','2020-06-22 19:25:38','2020-06-22 11:25:17','2020-06-22 19:25:38'),
+('78ed26c9-dca8-4f4b-b1ff-3702b3151b37','App\\Notifications\\UserNotification','App\\User',2,'{\"title\" : \"CHARGE BERHASIL !\",\"text\" : \"Tagihan dengan Order ID TAC-SAND-BOX-ALPHA-00020  telah berhasil di Charge, Seilahkan lanjutkan pembayaran dengan Virtual Account yang telah diberikan\",\"type\" : \"common\"}','2020-06-24 21:21:33','2020-06-24 21:07:26','2020-06-24 21:21:33'),
+('7b08db19-66e5-4581-9d4e-47baf0498091','App\\Notifications\\UserNotification','App\\User',2,'{\"title\" : \"Update Profile\",\"text\" : \"Profile anda telah diperbaharui , pastikan anda memberikan identitas dan dokumen yang valid\", \"type\" : \"common\"}','2020-06-23 19:23:20','2020-06-23 11:23:00','2020-06-23 19:23:20'),
 ('7ed894e6-f849-47ef-8fac-23bd716d70ac','App\\Notifications\\UserNotification','App\\User',2,'{\"title\" : \"Pembayaran Succes\",\"text\" : \"Pembayaran secara manual berhasil dilakukan, silahkan tunggu verifikasi admin\", \"type\" : \"special\"}','2020-06-21 16:39:04','2020-06-21 04:07:10','2020-06-21 16:39:04'),
 ('8248a050-5ae6-4064-a0dc-026179b87d66','App\\Notifications\\UserNotification','App\\User',3,'{\"title\" : \"Update Profile\",\"text\" : \"Profile anda telah diperbaharui , pastikan anda memberikan identitas dan dokumen yang valid\", \"type\" : \"common\"}','2020-06-22 19:25:06','2020-06-22 11:23:07','2020-06-22 19:25:06'),
 ('8480010a-f065-4828-9180-da3d9f457c78','App\\Notifications\\UserNotification','App\\User',3,'{\"title\" : \"Update Profile\",\"text\" : \"Profile anda telah diperbaharui , pastikan anda memberikan identitas dan dokumen yang valid\", \"type\" : \"common\"}','2020-06-22 19:17:52','2020-06-22 10:57:47','2020-06-22 19:17:52'),
@@ -227,6 +248,7 @@ insert  into `user_notifications`(`id`,`type`,`notifiable_type`,`notifiable_id`,
 ('9fd572cf-72f0-494c-886d-7acccd2cd264','App\\Notifications\\UserNotification','App\\User',3,'{\"title\" : \"Update Profile\",\"text\" : \"Profile anda telah diperbaharui , pastikan anda memberikan identitas dan dokumen yang valid\", \"type\" : \"common\"}','2020-06-22 19:19:57','2020-06-22 11:19:28','2020-06-22 19:19:57'),
 ('a15ca2a5-7721-4c4e-a3a6-3f15cfdb00bd','App\\Notifications\\UserNotification','App\\User',2,'{\"title\" : \"Update Profile\",\"text\" : \"Profile anda telah diperbaharui , pastikan anda memberikan identitas dan dokumen yang valid\", \"type\" : \"common\"}','2020-06-21 16:39:04','2020-06-21 07:12:12','2020-06-21 16:39:04'),
 ('a1a9b664-2fb6-41ce-851e-24b1e57f4cfd','App\\Notifications\\UserNotification','App\\User',3,'{\"title\" : \"Update Profile\",\"text\" : \"Profile anda telah diperbaharui , pastikan anda memberikan identitas dan dokumen yang valid\", \"type\" : \"common\"}','2020-06-22 19:25:06','2020-06-22 11:23:05','2020-06-22 19:25:06'),
+('a1c63235-f2a4-46f5-88cd-488e35f9d203','App\\Notifications\\UserNotification','App\\User',2,'{\"title\" : \"Update Profile\",\"text\" : \"Profile anda telah diperbaharui , pastikan anda memberikan identitas dan dokumen yang valid\", \"type\" : \"common\"}','2020-06-23 19:23:20','2020-06-23 11:20:05','2020-06-23 19:23:20'),
 ('a7f6d55e-0cc7-4cb5-bcaf-50ecf417a5e9','App\\Notifications\\UserNotification','App\\User',3,'{\"title\" : \"Update Profile\",\"text\" : \"Profile anda telah diperbaharui , pastikan anda memberikan identitas dan dokumen yang valid\", \"type\" : \"common\"}','2020-06-22 19:17:52','2020-06-22 11:17:45','2020-06-22 19:17:52'),
 ('ac764343-47f0-49af-be95-517a70091956','App\\Notifications\\UserNotification','App\\User',2,'{\"title\" : \"Update Profile\",\"text\" : \"Profile anda telah diperbaharui , pastikan anda memberikan identitas dan dokumen yang valid\", \"type\" : \"common\"}','2020-06-23 10:28:00','2020-06-23 02:05:28','2020-06-23 10:28:00'),
 ('b40b08e0-65ad-400d-b59c-0fc7d4e3bb3e','App\\Notifications\\UserNotification','App\\User',3,'{\"title\" : \"Update Profile\",\"text\" : \"Profile anda telah diperbaharui , pastikan anda memberikan identitas dan dokumen yang valid\", \"type\" : \"common\"}','2020-06-22 19:17:52','2020-06-22 11:02:44','2020-06-22 19:17:52'),
@@ -234,11 +256,14 @@ insert  into `user_notifications`(`id`,`type`,`notifiable_type`,`notifiable_id`,
 ('b750c3cb-8b61-4442-837d-265b81578396','App\\Notifications\\UserNotification','App\\User',3,'{\"title\" : \"Update Profile\",\"text\" : \"Profile anda telah diperbaharui , pastikan anda memberikan identitas dan dokumen yang valid\", \"type\" : \"common\"}','2020-06-22 19:25:06','2020-06-22 11:23:06','2020-06-22 19:25:06'),
 ('b8cd343f-a3b0-4fd7-aa52-957a0affe7a7','App\\Notifications\\UserNotification','App\\User',3,'{\"title\" : \"Update Profile\",\"text\" : \"Profile anda telah diperbaharui , pastikan anda memberikan identitas dan dokumen yang valid\", \"type\" : \"common\"}','2020-06-22 19:19:57','2020-06-22 11:19:29','2020-06-22 19:19:57'),
 ('b9206997-3e90-4470-b253-c2727df2e6f2','App\\Notifications\\UserNotification','App\\User',2,'{\"title\" : \"Update Profile\",\"text\" : \"Profile anda telah diperbaharui , pastikan anda memberikan identitas dan dokumen yang valid\", \"type\" : \"common\"}','2020-06-23 11:16:53','2020-06-23 03:00:15','2020-06-23 11:16:53'),
+('b9e1f0a5-d629-4b6a-a9c2-2c91adfb57e5','App\\Notifications\\UserNotification','App\\User',3,'{\"title\" : \"CHARGE BERHASIL !\",\"text\" : \"Tagihan dengan Order ID TAC-ALPHA-00002  telah berhasil di Charge, Seilahkan lanjutkan pembayaran dengan Virtual Account yang telah diberikan\",\"type\" : \"common\"}',NULL,'2020-06-24 21:23:51','2020-06-24 21:23:51'),
 ('ba115736-8461-4ed2-8272-b89d9b83730d','App\\Notifications\\UserNotification','App\\User',3,'{\"title\" : \"Update Profile\",\"text\" : \"Profile anda telah diperbaharui , pastikan anda memberikan identitas dan dokumen yang valid\", \"type\" : \"common\"}','2020-06-22 19:25:06','2020-06-22 11:21:32','2020-06-22 19:25:06'),
 ('bb676016-b3fa-431b-a5a5-61136c99135c','App\\Notifications\\UserNotification','App\\User',3,'{\"title\" : \"Update Profile\",\"text\" : \"Profile anda telah diperbaharui , pastikan anda memberikan identitas dan dokumen yang valid\", \"type\" : \"common\"}','2020-06-22 19:17:52','2020-06-22 11:02:53','2020-06-22 19:17:52'),
+('c2305356-fc1d-4beb-bab5-189fe8b947cf','App\\Notifications\\UserNotification','App\\User',3,'{\"title\" : \"CHARGE BERHASIL !\",\"text\" : \"Tagihan dengan Order ID TAC-ALPHA-00003  telah berhasil di Charge, Seilahkan lanjutkan pembayaran dengan Virtual Account yang telah diberikan\",\"type\" : \"common\"}',NULL,'2020-06-24 21:29:01','2020-06-24 21:29:01'),
 ('c516221d-a11d-439a-abc9-d9f2eb4ff14b','App\\Notifications\\UserNotification','App\\User',2,'{\"title\" : \"Update Profile\",\"text\" : \"Profile anda telah diperbaharui , pastikan anda memberikan identitas dan dokumen yang valid\", \"type\" : \"common\"}','2020-06-21 16:39:04','2020-06-21 04:28:00','2020-06-21 16:39:04'),
 ('c517960c-e946-4259-b9b5-1f10192750f5','App\\Notifications\\UserNotification','App\\User',3,'{\"title\" : \"Update Profile\",\"text\" : \"Profile anda telah diperbaharui , pastikan anda memberikan identitas dan dokumen yang valid\", \"type\" : \"common\"}','2020-06-22 19:17:52','2020-06-22 11:02:44','2020-06-22 19:17:52'),
 ('c7798fb6-7ce0-4141-9c70-f4ed3667b115','App\\Notifications\\UserNotification','App\\User',2,'{\"title\" : \"Update Profile\",\"text\" : \"Profile anda telah diperbaharui , pastikan anda memberikan identitas dan dokumen yang valid\", \"type\" : \"common\"}','2020-06-21 16:39:04','2020-06-21 04:27:38','2020-06-21 16:39:04'),
+('cb2c54bf-c167-43fa-91a6-d37a3770c53c','App\\Notifications\\UserNotification','App\\User',2,'{\"title\" : \"Update Profile\",\"text\" : \"Profile anda telah diperbaharui , pastikan anda memberikan identitas dan dokumen yang valid\", \"type\" : \"common\"}','2020-06-23 19:23:20','2020-06-23 05:01:21','2020-06-23 19:23:20'),
 ('cba497fa-82a9-4b36-94b2-0285e5b6df72','App\\Notifications\\UserNotification','App\\User',3,'{\"title\" : \"Update Profile\",\"text\" : \"Profile anda telah diperbaharui , pastikan anda memberikan identitas dan dokumen yang valid\", \"type\" : \"common\"}','2020-06-22 19:19:57','2020-06-22 11:19:29','2020-06-22 19:19:57'),
 ('ccfb9296-fd68-47f0-8a20-169d61b71e0d','App\\Notifications\\UserNotification','App\\User',3,'{\"title\" : \"Update Profile\",\"text\" : \"Profile anda telah diperbaharui , pastikan anda memberikan identitas dan dokumen yang valid\", \"type\" : \"common\"}','2020-06-22 19:25:06','2020-06-22 11:24:54','2020-06-22 19:25:06'),
 ('cd7f25ca-6db3-4f89-8dde-8487ced93f3b','App\\Notifications\\UserNotification','App\\User',3,'{\"title\" : \"Update Profile\",\"text\" : \"Profile anda telah diperbaharui , pastikan anda memberikan identitas dan dokumen yang valid\", \"type\" : \"common\"}','2020-06-22 19:25:06','2020-06-22 11:21:31','2020-06-22 19:25:06'),

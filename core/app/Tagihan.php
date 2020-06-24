@@ -19,4 +19,9 @@ class Tagihan extends Model
     {
         return $this->belongsTo('App\Kamar','kamar_id')->withTrashed()->first();
     }
+
+    public function transaksi()
+    {
+        return $this->hasMany('App\Transaksi','tagihan_id')->withTrashed()->get();
+    }
 }

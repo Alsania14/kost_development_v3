@@ -27,7 +27,7 @@
                         <td>{{ ($index+1) }}</td>
                         <td style="min-width:100px;">{{ 'Kamar '.$tagihan->kamar()->nomor }}</td>
                         <td style="min-width:250px;">{{ $tagihan->tgl_awal_sewa.' s/d '.$tagihan->tgl_akhir_sewa }}</td>
-                        <td style="min-width:150px;">{{ 'Rp. '.number_format($tagihan->kamar()->harga,0,'.','.') }}</td>
+                        <td style="min-width:150px;">{{ 'Rp. '.number_format($tagihan->nominal_pembayaran,0,'.','.') }}</td>
                         <td>{{ $tagihan->status_tagihan }}</td>
                         <?php
                         if($tagihan->status_tagihan == 'hutang')
@@ -63,6 +63,11 @@
 <footer class="row page-footer w-100 m-0 pt-4">
       <div class="col-md text-center text-dark" style="{{ config('global.active') }}">Team IT Tirta Aruna Cottage</div>
 </footer>
+@extends('app_layout/modal')
+@section('judul','Charge Gagal')
+@section('isi','Charge Berhasil Silahkan lanjutkan ke tahap selanjutnya')
+
+
 @extends('app_layout/modal_denied')
 @section('modal_denied_judul','Charge Gagal')
 @section('modal_denied_isi','Mohon Maaf Charge gagal, kemungkinan sedang terjadi gangguan,  silahkan gunakan metode pembayaran yang lain atau hubungi developer')
