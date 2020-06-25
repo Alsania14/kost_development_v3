@@ -50,7 +50,7 @@
     </span>
     <p class="text-light">Charge pembayaran kost berhasil dilakukan, silahkan lanjutkan untuk melakukan pembayaran menggunakan nomor VA diatas. Anda bebas untuk meninggalkan halaman ini, informasi diatas dapat anda lihat kembali pada halaman pembayaran kost -> transaksi</p>
     <p class="lead">
-        <a class="btn btn-primary btn-lg" href="#" role="button">Halaman Transaksi</a>
+        <a class="btn btn-primary btn-lg" href="{{ url('/transaksi') }}" role="button">Halaman Transaksi</a>
     </p>
     </div>
 

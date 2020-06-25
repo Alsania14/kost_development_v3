@@ -18,7 +18,7 @@ class DashboardController extends Controller
             $kamar->nomor = 'Belum Memiliki kamar';
             $kamar->tgl_bayar_selanjutnya = null;
             $user = Auth::user();
-            $test_kamar = $user->kamar()->first();
+            $test_kamar = $user->kamar();
         // AKHIR
 
         // CEK NOTIFIKASI USER

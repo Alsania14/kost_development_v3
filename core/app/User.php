@@ -40,12 +40,27 @@ class User extends Authenticatable
 
     public function kamar()
     {
-        return $this->hasOne('App\Kamar')->first();
+        return $this->hasOne('App\Kamar')->withTrashed()->first();
     }
 
     public function tagihan()
     {
-        return $this->hasMany('App\Tagihan')->orderBY('status_tagihan')->orderBy('tgl_awal_sewa','desc')->get();
+        return $this->hasMany('App\Tagihan')
+                    ->withTrashed()
+                    ->orderBY('status_tagihan')
+                    ->orderBy('tgl_awal_sewa','desc')
+                    ->where('deleted_by_user',0)
+                    ->get();
+    }
+
+    public function tagihanarsip()
+    {
+        return $this->hasMany('App\Tagihan')
+                    ->withTrashed()
+                    ->orderBY('status_tagihan')
+                    ->orderBy('tgl_awal_sewa','desc')
+                    ->where('deleted_by_user',1)
+                    ->get();
     }
     
     public function notifications(){

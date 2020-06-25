@@ -116,6 +116,7 @@ class BniController extends Controller
         // PENYIMPANAN DATA TRANSAKSI DENGAN STATUS DARI RESPONSE API
             $transaksi_new = new Transaksi;
             $transaksi_new->order_id = $nota;
+            $transaksi_new->transaction_id = $response_php->transaction_id;
             $transaksi_new->tagihan_id = $decrypted;
             $transaksi_new->tgl_awal = $tagihan->tgl_awal_sewa;
             $transaksi_new->tgl_akir = $tagihan->tgl_akhir_sewa;

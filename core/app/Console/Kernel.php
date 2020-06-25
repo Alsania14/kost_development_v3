@@ -33,12 +33,12 @@ class Kernel extends ConsoleKernel
     {   
         // MEMASTIKAN ZONA WAKTU YANG DIGUNAKAN ASIA MAKASSAR (WITA)
             date_default_timezone_set(config('global.timezone'));
-
+        // AKHIR
         $schedule->call(function()
         {   
             
             // MENGAMBIL WAKTU SEKARANG
-            $current_date = date_create('2021-03-01');
+                $current_date = date_create('2021-03-01');
             // AKHIR
             
             // MENGAMBIL SEMUA KAMAR DAN MEMBANDINGKANNYA
@@ -110,8 +110,8 @@ class Kernel extends ConsoleKernel
                                         $tagihan_baru->user_id = $kamar->user_id;
                                         $tagihan_baru->kamar_id = $kamar->id;
                                         $tagihan_baru->tipe_pembayaran = $kamar->tipe_pembayaran;
-                                        $tagihan_baru->tgl_awal_sewa = $kamar->tgl_awal_sewa;
-                                        $tagihan_baru->tgl_akhir_sewa = $kamar->tgl_bayar_selanjutnya;
+                                        $tagihan_baru->tgl_awal_sewa = $kamar->tgl_bayar_selanjutnya;
+                                        $tagihan_baru->tgl_akhir_sewa = $kamar_tgl_bayar_selanjutnya;
                                         $tagihan_baru->status_tagihan = 'hutang';
                                         $tagihan_baru->nominal_pembayaran = $kamar->harga;
                                         $tagihan_baru->created_by = 'system';

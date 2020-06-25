@@ -4,20 +4,19 @@
 @section('jumlah',$notification)
 @section('img_user',url('/storage/image_users',[$user->image]))
 @section('pembayaran',config('global.active'))
-@section('header','Pembayaran Kost \ Transaksi')
+@section('header','Pembayaran Kost \ Transaksi \ Arsip')
 @section('content')
 <!-- AWAL CONTAINER -->
 <div class="container-fluid p-0" style="min-height:550px;">
-  <div class="row m-0 justify-content-end">
+<div class="row m-0 justify-content-end">
     <div class="btn-group" role="group" aria-label="Basic example">
-      <a href="{{ url('/dashboard') }}" type="button" class="btn btn-primary">Kembali</a>
-      <a href="{{ url('/arsiptransaksi') }}" type="button" class="btn btn-primary">Lihat Arsip</a>
+      <a href="{{ url('/transaksi') }}" type="button" class="btn btn-primary">Kembali</a>
     </div>
   </div>
-<p class="text-info mt-1">Hai {{ $user->username }}, Halaman ini memuat semua transaksi anda</p>
+<p class="text-info">Hai {{ $user->username }}, Halaman ini memuat semua transaksi anda</p>
       <div class="table-responsive">
-      <table class="table table-striped table-sm text-light" style="border-bottom:3px solid #e39414">
-          <thead style="{{ config('global.active') }}">
+      <table class="table table-striped table-sm text-light" style="border-bottom:3px solid rgb(58,83,180);">
+          <thead style="{{ config('global.arsip') }}">
             <tr>
               <th>Nomor</th>
               <th>Order ID</th>
@@ -48,28 +47,10 @@
                         <a href="{{ url('/bank_transfer',[$encrypt]) }}">
                           <button class="btn-sm btn-info" style="display:inline-block;">Detail</button>
                         </a>
-                        <form action="{{ url('/refresh',[$encrypt]) }}" class="m-0" style="display:inline-block;" method="POST">
-                          {{ csrf_field() }}
-                          {{ method_field('PUT') }}
-<?php
-                            if($transaksi->status_pembayaran == 'approved')
-                            {
-?>
-                                  <input class="btn-sm btn-secondary" type="submit" value="Refresh" disabled>
-<?php
-                            }
-                            else
-                            {
-?>
-                                  <input class="btn-sm btn-primary" type="submit" value="Refresh">
-<?php
-                            }
-?>
-                          </form>
-                          <form action="{{ url('/arsiptransaksi',[$encrypt]) }}" class="m-0" style="display:inline-block;" method="POST">
+                          <form action="{{ url('/keluarkanarsiptransaksi',[$encrypt]) }}" class="m-0" style="display:inline-block;" method="POST">
                             {{ csrf_field() }}
                             {{ method_field('put') }}
-                            <input class="btn-sm btn-danger" type="submit" value="Arsip">
+                            <input class="btn-sm btn-danger" type="submit" value="Keluarkan arsip">
                           </form>
 <?php
                       }

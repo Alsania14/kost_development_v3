@@ -54,13 +54,41 @@ use Illuminate\Support\Facades\Route;
                         // CHARGE
                             Route::post('/onlinebni','dashboard\tagihan\online\BniController@charge');
                         // AKHIR
-
                     // AKHIR
+                // AKHIR
+
+                // AKSI HALAMAN TAGIHAN
+                    Route::get('/arsiptagihan','dashboard\tagihan\TagihanController@indexarsip');
+                    Route::put('/arsiptagihan/{id}','dashboard\tagihan\TagihanController@arsiptagihan');
+                // AKHIR
+
+                // HLAMAN INDEX ARSIP TAGIHAN
+                    // AKSI KELUARKAN TAGIHAN
+                        Route::put('/keluarkanarsiptagihan/{id}','dashboard\tagihan\TagihanController@keluarkanarsip');
+                    // AKHIR
+                // AKHIR
             // AKHIR
 
-            // HALAMAN TRANSAKSI USERS
-                Route::get('/transaksi','dashboard\transaksi\TransaksiController@index');
-                Route::get('/bank_transfer/{id}','dashboard\transaksi\TransaksiController@detailtransaksionline');
+            // TRANSAKSI USERS
+                // HALAMAN INDEX TRANSAKSI 
+                    // BANK TRANSFER
+                        Route::get('/transaksi','dashboard\transaksi\TransaksiController@index');
+                        Route::get('/bank_transfer/{id}','dashboard\transaksi\TransaksiController@detailtransaksionline');
+                    // AKHIR
+
+                    // AKSI HALAMAN TRANSAKSI
+                        Route::get('/arsiptransaksi','dashboard\transaksi\TransaksiController@indexarsip');
+                        Route::put('/refresh/{id}','dashboard\transaksi\TransaksiController@refreshtransaksi');
+                        Route::put('/arsiptransaksi/{id}','dashboard\transaksi\TransaksiController@arsiptransaksi');
+                    // AKHIR
+                // AKHIR
+
+                // HALAMAN INDEX ARSIP TRANSAKSI
+                    // AKSI HALAMAN INDEX ARSIP TRANSAKSI
+                        Route::put('/keluarkanarsiptransaksi/{id}','dashboard\transaksi\TransaksiController@keluarkanarsip');
+                    // AKHIR
+                // AKHIR
+                
             // AKHIR
 
             // USER DAPAT LOGOUT SETELAH MASUK KE DALAM SISTEM

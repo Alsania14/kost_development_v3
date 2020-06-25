@@ -26,7 +26,7 @@ class NotifikasiController extends Controller
         // CEK KAMAR
             $kamar = new \stdClass;
             $kamar->nomor = 'Belum Memiliki kamar';
-            $test_kamar = $user->kamar()->first();
+            $test_kamar = $user->kamar();
             
             if(!is_null($test_kamar))
             {

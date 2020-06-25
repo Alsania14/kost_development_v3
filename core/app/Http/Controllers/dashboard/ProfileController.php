@@ -28,7 +28,7 @@ class ProfileController extends Controller
             $kamar = new \stdClass;
             $kamar->nomor = 'Belum Memiliki kamar';
             $kamar->tgl_bayar_selanjutnya = null;
-            $test_kamar = $user->kamar()->first();
+            $test_kamar = $user->kamar();
         // AKHIR
 
         // JIKA ADA MAKA V KAMAR DITIMPA TEST KAMAR
@@ -61,7 +61,7 @@ class ProfileController extends Controller
 
         // MAIN LOGIC
             $user = User::find($decrypted);
-            $kamar = $user->kamar()->first();
+            $kamar = $user->kamar();
         // AKHIR
 
         // CEK NOTIFIKASI USER
