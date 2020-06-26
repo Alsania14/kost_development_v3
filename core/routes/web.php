@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Route;
     });
 
     Route::get('/test',function(){
-        echo date('Y-m-d H:i:s');
+        return view('user/pembayaran/tagihan/struk');
     });
 
 // AKHIR
@@ -53,6 +53,9 @@ use Illuminate\Support\Facades\Route;
                     // PEMBAYARAN BANK BNI
                         // CHARGE
                             Route::post('/onlinebni','dashboard\tagihan\online\BniController@charge');
+                            Route::post('/onlinebca','dashboard\tagihan\online\BcaController@charge');
+                            Route::post('/onlinemandiri','dashboard\tagihan\online\MandiriController@charge');
+                            Route::post('/onlinepermata','dashboard\tagihan\online\PermataController@charge');
                         // AKHIR
                     // AKHIR
                 // AKHIR
@@ -60,6 +63,7 @@ use Illuminate\Support\Facades\Route;
                 // AKSI HALAMAN TAGIHAN
                     Route::get('/arsiptagihan','dashboard\tagihan\TagihanController@indexarsip');
                     Route::put('/arsiptagihan/{id}','dashboard\tagihan\TagihanController@arsiptagihan');
+                    Route::get('/struk/{id}','dashboard\tagihan\StructController@index');
                 // AKHIR
 
                 // HLAMAN INDEX ARSIP TAGIHAN

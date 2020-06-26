@@ -34,9 +34,9 @@
                  <tr>
                     <td>{{ ($index+1) }}</td>
                     <td style="min-width:200px;">{{ $transaksi->order_id }}</td>
-                    <td>{{ $transaksi->integration_name }}</td>
+                    <td>{{ strtoupper($transaksi->integration_name) }}</td>
                     <td style="min-width:150px;">{{ 'Rp. '.number_format($transaksi->nominal,0,'.','.') }}</td>
-                    <td>{{ $transaksi->status_pembayaran }}</td>
+                    <td>{{ strtoupper($transaksi->status_pembayaran) }}</td>
                     <td>
 
 <?php 

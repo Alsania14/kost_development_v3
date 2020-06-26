@@ -13,9 +13,4 @@ class Transaksi extends Model
     {
         return $this->belongsTo('App\Tagihan')->withTrashed();
     }
-
-    public function user()
-    {
-        return $this->belongsTo('App\User')->withTrashed();
-    }
 }

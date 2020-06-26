@@ -1,6 +1,7 @@
 @extends('app_layout/dashboard_layout')
 @section('username',strtoupper($user->username))
 @section('room',$kamar->nomor)
+@section('jumlah',$notification)
 @section('img_user',url('/storage/image_users',[$user->image]))
 @section('pembayaran',config('global.active'))
 @section('header','Pembayaran Kost \ Tagihan Anda \ Pilih Pembayaran \ Charge Success')
@@ -23,26 +24,32 @@
     ONLINE PAYMENT BANK TRANSFER : <br> virtual account bank {{$transaksi->integration_name}} <br><br>
 
     <b>RANGKUMAN PEMBAYARAN</b><br>
-    KAMAR NOMOR {{ $nomor }} <br> QTY 1 <br> HARGA {{ 'Rp. '.number_format($transaksi->nominal,0,'.','.') }} <br><br>
+    KAMAR NOMOR {{ $nomor }} <br> QTY 1 <br> TANGGAL SEWA {{ $transaksi->tgl_awal }} S/D {{ $transaksi->tgl_akir }} <br>
+    HARGA {{ 'Rp. '.number_format($transaksi->nominal,0,'.','.') }}
+    <br><br>
     TOTAL {{ 'Rp. '.number_format($transaksi->nominal,0,'.','.') }} <br><br>
     
-    <?php
+<?php
         if($transaksi->integration_name != 'mandiri')
-        {?>
+        {
+?>
             <div class="border-top border-bottom" style="font-size:20pt;">
                 <b>VIRTUAL ACCOUNT</b><br>
                 VIRTUAL ACCOUNT : {{ $transaksi->field_1 }}
             </div>
-    <?php
+<?php
         }
         else
-        {?>
-            <div class="border-top" style="font-size:20pt;">
+        {
+?>
+            <div class="border-top border-bottom" style="font-size:20pt;">
                 <b>BILL CODE</b><br>
-                BILL CODE : {{ $transaksi->field_1 }}
+                BILL KEY : {{ $transaksi->field_1 }} <br>
+                BILLER CODE : {{ $transaksi->field_2 }}
             </div>
-    <?php
-        }?>
+<?php
+        }
+?>
     
 
     </p>
@@ -60,11 +67,6 @@
       <div class="col-md text-center text-dark" style="{{ config('global.active') }}">Team IT Tirta Aruna Cottage</div>
 </footer>
 @extends('app_layout/modal')
-@section('judul','Charge Gagal')
+@section('judul','Charge Berhasil')
 @section('isi','Charge Berhasil Silahkan lanjutkan ke tahap selanjutnya')
-
-
-@extends('app_layout/modal_denied')
-@section('modal_denied_judul','Charge Gagal')
-@section('modal_denied_isi','Mohon Maaf Charge gagal, kemungkinan sedang terjadi gangguan,  silahkan gunakan metode pembayaran yang lain atau hubungi developer')
 @endsection

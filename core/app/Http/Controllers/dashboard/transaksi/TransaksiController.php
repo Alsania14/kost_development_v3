@@ -151,7 +151,7 @@ class TransaksiController extends Controller
                     $tagihan->save();
 
                 }
-                elseif($response_php->transaction_status == 'expired')
+                elseif($response_php->transaction_status == 'expire')
                 {
                     $transaksi->status_pembayaran = 'expired';
                 }

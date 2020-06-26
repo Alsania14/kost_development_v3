@@ -64,6 +64,10 @@ class BniController extends Controller
                 'quantity' => 1,
                 'name' => 'Tirta Aruna Cottage = Kamar '.$kamar->nomor,
             );
+            $payload->custom_expiry = (object) array(
+                'expiry_duration' => 1,
+                'unit' => 'minute',
+            );
             $free_text = new class{};
             $free_text->inquiry[] = (object) array(
                 'id' => 'Payment Tirta Aruna Cottage',

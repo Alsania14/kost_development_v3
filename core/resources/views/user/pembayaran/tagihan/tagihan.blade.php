@@ -53,8 +53,8 @@
                         {
 ?>
                             <td>
-                              <a href="{{ url('#') }}">
-                                  <button class="btn btn-sm btn-success m-0" style="display:inline-block;">Struct</button>
+                              <a href="{{ url('/struk',[$encrypt]) }}">
+                                  <button class="btn btn-sm btn-success m-0" style="display:inline-block;">Struk</button>
                               </a>
                               <form action="{{ url('/arsiptagihan',[$encrypt]) }}" class="m-0" style="display:inline-block;" method="POST">
                                 {{ csrf_field() }}

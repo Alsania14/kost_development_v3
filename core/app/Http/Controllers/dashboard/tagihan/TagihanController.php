@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Contracts\Encryption\DecryptException;;
+use Illuminate\Contracts\Encryption\DecryptException;
 use App\Notifications\UserNotification;
 
 use App\User;

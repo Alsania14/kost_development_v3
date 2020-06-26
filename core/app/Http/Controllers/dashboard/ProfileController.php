@@ -9,10 +9,10 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Support\Facades\Validator;
-use App\Notifications\UserNotification;
 use Illuminate\Support\Facades\Hash;
 use ImageOptimizer;
 
+use App\Notifications\UserNotification;
 use App\User;
 use App\Kamar;
 

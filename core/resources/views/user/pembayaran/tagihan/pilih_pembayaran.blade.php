@@ -1,6 +1,7 @@
 @extends('app_layout/dashboard_layout')
 @section('username',strtoupper($user->username))
 @section('room',$kamar->nomor)
+@section('jumlah',$notification)
 @section('img_user',url('/storage/image_users',[$user->image]))
 @section('pembayaran',config('global.active'))
 @section('header','Pembayaran Kost \ Tagihan Anda \ Pilih Pembayaran')
@@ -32,10 +33,9 @@
             <div class="card-body">
                 <h5 class="card-title">BANK BCA</h5>
                 <p class="card-text">Pembayaran Menggunakan Virtual Account BCA, transaksi akan langsung terdeteksi sistem tanpa memerlukan verifikasi admin</p>
-                <form action="#" method="post">
+                <form action="{{ url('/onlinebca') }}" method="POST">
                 {{ csrf_field() }}
-                <input type="hidden" name="metode" value="online">
-                <input type="hidden" name="bank" value="permata">
+                <input type="hidden" name="tagihan" value="{{$id}}">
                  <input type="submit" class="btn mt-2 font-weight-bold" value="CHARGE" style="{{ config('global.active') }}">
                 </form>
             </div>
@@ -47,10 +47,9 @@
             <div class="card-body">
                 <h5 class="card-title">BANK MANDIRI</h5>
                 <p class="card-text">Pembayaran menggunakan Billing Code dan Bill Key Bank Mandiri. Transaksi akan langsung terdeteksi tanpa verifikasi admin</p>
-                <form action="#" method="post">
+                <form action="{{ url('/onlinemandiri') }}" method="post">
                 {{ csrf_field() }}
-                <input type="hidden" name="metode" value="online">
-                <input type="hidden" name="bank" value="permata">
+                <input type="hidden" name="tagihan" value="{{$id}}">
                  <input type="submit" class="btn mt-2 font-weight-bold" value="CHARGE" style="{{ config('global.active') }}">
                 </form>
             </div>
@@ -58,14 +57,13 @@
         </div>
         <div class="col-sm-3 mt-4 d-flex justify-content-center">
             <div class="card " style="max-width:300px;background:#c23917;">
-            <img class="card-img-top" src="{{ asset('vendor_app\img_web\PERMATA.PNG') }}" alt="Card image cap" style="height:150px;">
+            <img class="card-img-top" src="{{ asset('vendor_app\img_web\PERMATA.png') }}" alt="Card image cap" style="height:150px;">
             <div class="card-body">
                 <h5 class="card-title">BANK PERMATA</h5>
                 <p class="card-text">Pempabayaran menggunakan Virtual Account Bank Permata yang akan langsung terdeteksi sistem tanpa perlu verifikasi admin</p>
-                <form action="#" method="post">
+                <form action="{{ url('/onlinepermata') }}" method="post">
                 {{ csrf_field() }}
-                <input type="hidden" name="metode" value="online">
-                <input type="hidden" name="bank" value="permata">
+                <input type="hidden" name="tagihan" value="{{ $id }}">
                  <input type="submit" class="btn mt-2 font-weight-bold" value="CHARGE" style="{{ config('global.active') }}">
                 </form>
             </div>
