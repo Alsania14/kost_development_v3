@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Route;
     });
 
     Route::get('/test',function(){
-        return view('user/pembayaran/tagihan/struk');
+        return date('Y-m-d H:i:s');
     });
 
 // AKHIR
@@ -58,6 +58,19 @@ use Illuminate\Support\Facades\Route;
                             Route::post('/onlinepermata','dashboard\tagihan\online\PermataController@charge');
                         // AKHIR
                     // AKHIR
+
+                    // PEMBAYARAN INDOMARET DAN ALFAMART
+                        // CHARGE
+                            Route::post('/tokoindomaret','dashboard\tagihan\toko\IndomaretController@charge');
+                            Route::post('/tokoalfamart','dashboard\tagihan\toko\AlfamartController@charge');
+                        // AKHIR
+                    // AKHIR
+
+                    // PEMBAYARAN MANUAL
+                        // CHARGE
+                            Route::post('/manual','dashboard\tagihan\manual\ManualController@charge');
+                        // AKHIR
+                    // AKHIR
                 // AKHIR
 
                 // AKSI HALAMAN TAGIHAN
@@ -75,9 +88,18 @@ use Illuminate\Support\Facades\Route;
 
             // TRANSAKSI USERS
                 // HALAMAN INDEX TRANSAKSI 
+                    Route::get('/transaksi','dashboard\transaksi\TransaksiController@index');
                     // BANK TRANSFER
-                        Route::get('/transaksi','dashboard\transaksi\TransaksiController@index');
                         Route::get('/bank_transfer/{id}','dashboard\transaksi\TransaksiController@detailtransaksionline');
+                    // AKHIR
+
+                    // MERCHANT PAYMENT
+                        Route::get('/kedai/{id}','dashboard\tagihan\toko\IndomaretController@detailtransakitoko');
+                    // AKHIR
+
+                    // MANUAL PAYMENT
+                        Route::get('/manual/{id}','dashboard\tagihan\manual\ManualController@detailtransaksimanual');
+                        Route::post('/uploadbukti/{id}','dashboard\tagihan\manual\ManualController@uploadbukti');
                     // AKHIR
 
                     // AKSI HALAMAN TRANSAKSI

@@ -32,9 +32,7 @@ class BniController extends Controller
         // MENDAPATKAN DATA USER DAN TAGIHAN
             $user = Auth::user();
             $tagihan = Tagihan::find($decrypted);
-            $kamar = $user->kamar();
-
-            
+            $kamar = $tagihan->kamar();
         // AKHIR
 
         // MEMBUAT NOMOR ID DAN NOTA

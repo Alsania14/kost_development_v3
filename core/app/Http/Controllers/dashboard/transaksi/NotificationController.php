@@ -13,12 +13,12 @@ class NotificationController extends Controller
     public function index(Request $request)
     {   
         // MEMASTIKAN MENGGUNAKAN ZONA WAKTU WITA
-            date_default_timezone_set("Asia/Makassar");
+            date_default_timezone_set(config('global.timezone'));
         // AKHIR
 
         // SECURITY LAYER
             /* MENGAMBIL DATA YANG MEMILIKI TRANSACTION_ID VALID DARI MIDTRANS
-            DAN ORDER ID YANG SAMA DENGAN YANG DIKELUARKAN SISTEM */
+            DAN ORDER ID YANG SAMA DENGAN YANG DIKELUARKAN SISTEM MEMBUAT SIGNATURE KEY*/
             $transaksi = Transaksi::where('order_id',$request->order_id)
             ->where('transaction_id',$request->transaction_id)
             ->first();

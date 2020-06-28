@@ -34,34 +34,35 @@
 ?>
                     <tr>
                         <td>{{ ($index+1) }}</td>
-                        <td style="min-width:100px;">{{ 'Kamar '.$tagihan->kamar()->nomor }}</td>
+                        <td style="min-width:100px;">{{ 'KAMAR '.$tagihan->kamar()->nomor }}</td>
                         <td style="min-width:250px;">{{ $tagihan->tgl_awal_sewa.' s/d '.$tagihan->tgl_akhir_sewa }}</td>
                         <td style="min-width:150px;">{{ 'Rp. '.number_format($tagihan->nominal_pembayaran,0,'.','.') }}</td>
-                        <td>{{ $tagihan->status_tagihan }}</td>
 <?php
                         if($tagihan->status_tagihan == 'hutang')
                         {
-?>
-                            <td>
+?>                          
+                        <td>BELUM LUNAS</td>
+                        <td>
                                 <a href="{{ url('/pilihpembayaran',[$encrypt]) }}">
                                     <button class="btn btn-sm btn-info">Charge</button>
                                 </a>
-                            </td>
+                        </td>
 <?php
                         }
-                        elseif($tagihan->status_tagihan == 'lunas')
+                        else
                         {
 ?>
-                            <td>
+                        <td>LUNAS</td>
+                        <td>
                               <a href="{{ url('/struk',[$encrypt]) }}">
                                   <button class="btn btn-sm btn-success m-0" style="display:inline-block;">Struk</button>
                               </a>
-                              <form action="{{ url('/arsiptagihan',[$encrypt]) }}" class="m-0" style="display:inline-block;" method="POST">
+                              <form action="{{ url('/arsiptagihan',[$encrypt]) }}" class="m-0 p-0" style="display:inline-block;" method="POST">
                                 {{ csrf_field() }}
                                 {{ method_field('put') }}
                                 <input class="btn-sm btn-danger" type="submit" value="Arsip">
                               </form>
-                            </td>
+                        </td>
 <?php
                         }
 ?>

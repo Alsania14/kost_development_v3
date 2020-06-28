@@ -40,14 +40,33 @@
                     <td>
 
 <?php 
-                      if($transaksi->via = 'bank_transaksi')
                       $encrypt = Crypt::encryptString($transaksi->id);
+                      if($transaksi->via == 'bank_transfer')
                       {
 ?>
 
                         <a href="{{ url('/bank_transfer',[$encrypt]) }}">
-                          <button class="btn-sm btn-info" style="display:inline-block;">Detail</button>
+                          <button class="btn-sm btn-info" style="display:inline-block;">Detail Bank Transfer</button>
                         </a>
+<?php
+                      }
+                      elseif($transaksi->via == 'kedai')
+                      {
+?>
+                        <a href="{{ url('/kedai',[$encrypt]) }}">
+                          <button class="btn-sm btn-info" style="display:inline-block;">Detail Toko Transfer</button>
+                        </a>
+<?php
+                      }
+                      elseif($transaksi->via == 'manual')
+                      {
+?>
+                        <a href="{{ url('/manual',[$encrypt]) }}">
+                          <button class="btn-sm btn-info" style="display:inline-block;">Detail Manual Transfer</button>
+                        </a>
+<?php
+                      }
+?>
                         <form action="{{ url('/refresh',[$encrypt]) }}" class="m-0" style="display:inline-block;" method="POST">
                           {{ csrf_field() }}
                           {{ method_field('PUT') }}
@@ -70,13 +89,7 @@
                             {{ csrf_field() }}
                             {{ method_field('put') }}
                             <input class="btn-sm btn-danger" type="submit" value="Arsip">
-                          </form>
-<?php
-                      }
-?>
-
-
-                    
+                          </form>                    
                     </td>
                  </tr>   
 <?php

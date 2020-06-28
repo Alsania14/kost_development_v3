@@ -6,6 +6,7 @@ use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use Illuminate\Support\Facades\DB;
 
+use App\Notifications\UserNotification;
 use App\Kamar;
 use App\Tagihan;
 
@@ -38,7 +39,7 @@ class Kernel extends ConsoleKernel
         {   
             
             // MENGAMBIL WAKTU SEKARANG
-                $current_date = date_create('2021-03-01');
+                $current_date = date_create('2020-05-01');
             // AKHIR
             
             // MENGAMBIL SEMUA KAMAR DAN MEMBANDINGKANNYA
@@ -69,6 +70,10 @@ class Kernel extends ConsoleKernel
                                     $array_tanggal[2] = $array_tanggal_awal_sewa[2];
                                 // AKHIR
 
+                                // MENGAMBIL USER KAMAR
+                                    $user = $kamar->user();
+                                // AKHIR
+
                                 if($kamar->tipe_pembayaran == 'bulan')
                                 {
                                     // BULAN SEKARANG DI TAMBAH 1 DAN APABILA BULAN 12, TAHUN DITAMBAH SATU JUGA DAN BULAN JADI 1
@@ -86,7 +91,7 @@ class Kernel extends ConsoleKernel
                                 }
                                 elseif($kamar->tipe_pembayaran == 'tahun')
                                 {
-                                    // TAHUNAN SIMPLE TINGGAL TAMBAH 1
+                                    // TAHUNAN SIMPLE TINGGAL TAMBAH 1 PADA TAHUN
                                         $array_tanggal[0] += 1;
                                     // AKHIR
                                 }
@@ -99,7 +104,6 @@ class Kernel extends ConsoleKernel
                                             $array_tanggal[2] -= 1;
                                         }
                                     // AKHIR
-
                                 
                                     // PROSES MENGUBAH ARRAY_TANGGAL KE BENTUK STRING DAN AKAN DISIMPAN PADA TABLE KAMAR
                                         $kamar_tgl_bayar_selanjutnya = implode("-",$array_tanggal);
@@ -123,6 +127,12 @@ class Kernel extends ConsoleKernel
                                         $kamar->tgl_bayar_selanjutnya = $kamar_tgl_bayar_selanjutnya;
                                         $kamar->status_pembayaran = 'hutang';
                                         $kamar->save();
+                                    // AKHIR
+                                    
+                                    // MEMBERIKAN NOTIFIKASI KEPADA USERS
+                                        $text = '{"title" : "Tagihan Kamar","text" : "Tagihan Kamar anda telah dibuat silahkan melakukan pembayaran", "type" : "common"}';
+            
+                                        $user->notify(new UserNotification($text));
                                     // AKHIR
                             }
                         }

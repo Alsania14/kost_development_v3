@@ -6,9 +6,11 @@ return [
 
     'timezone' => "Asia/Makassar",
     
-    'nota' => 'TAC-ALPHA-V-',
+    'nota' => 'TAC-ALPHA-VIII-',
 
     'url_midtrans' => "https://api.sandbox.midtrans.com/v2/charge",
-    'url_midtrans_base' => 'https://api.sandbox.midtrans.com/v2/', 
+
+    'url_midtrans_base' => 'https://api.sandbox.midtrans.com/v2/',
+
     'key_midtrans' => "Basic U0ItTWlkLXNlcnZlci0wOExVLU5INEtwTGxRNGVrNXA4X29HNHo=",
 ];

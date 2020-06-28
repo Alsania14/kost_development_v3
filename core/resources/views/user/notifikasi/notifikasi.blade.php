@@ -29,7 +29,7 @@
         >
             <div class="d-flex w-100 justify-content-between">
             <h5 class="mb-1">{{ $notif->full_data->title }}</h5>
-            <small>{{ $notif->created_at }}</small>
+            <small class="text-right">{{ $notif->created_at }}</small>
             </div>
             <p class="mb-4">{{ $notif->full_data->text }}.</p>
             <small class="mt-3">System Tirta Aruna Cottage</small>

@@ -124,8 +124,7 @@ class TagihanController extends Controller
             }
         // AKHIR
 
-        return view('/user/pembayaran/transaksi/arsiptagihan',compact('user','kamar','notification','tagihans'));
-
+        return view('/user/pembayaran/tagihan/arsiptagihan',compact('user','kamar','notification','tagihans'));
     }
 
     public function arsiptagihan($id)

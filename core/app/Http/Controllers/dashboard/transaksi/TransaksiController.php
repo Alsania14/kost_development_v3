@@ -62,28 +62,27 @@ class TransaksiController extends Controller
             }
         // AKHIR
         
-         // MENGAMBIL DATA TRANSAKSI 
+        // MENGAMBIL DATA TRANSAKSI 
             $transaksi = Transaksi::withTrashed()->find($decrypted);
-            
-         // AKHIR
- 
-         // MENGAMBIL TAGIHAN TRANSAKSI UNTUK MENDAPATKAN KAMAR YANG DIBAYARKAN
-             $tagihan = $transaksi->tagihan()->first();
-             $nomor = $tagihan->kamar()->nomor;
-         // AKHIR
-         
-         // MENGAMBIL DATA USER
-             $user = Auth::user();
-             $kamar = $user->kamar();
-         // AKHIR
- 
-         // CEK NOTIFIKASI USER
-             $notification = $user->unreadNotifications->count();
-             if($notification == 0)
-             {
-                 $notification = null;
-             }
-         // AKHIR
+        // AKHIR
+
+        // MENGAMBIL TAGIHAN TRANSAKSI UNTUK MENDAPATKAN KAMAR YANG DIBAYARKAN
+            $tagihan = $transaksi->tagihan()->first();
+            $nomor = $tagihan->kamar()->nomor;
+        // AKHIR
+        
+        // MENGAMBIL DATA USER
+            $user = Auth::user();
+            $kamar = $user->kamar();
+        // AKHIR
+
+        // CEK NOTIFIKASI USER
+            $notification = $user->unreadNotifications->count();
+            if($notification == 0)
+            {
+                $notification = null;
+            }
+        // AKHIR
          
         return view('/user/pembayaran/transaksi/detailonline',compact('user','kamar','notification','transaksi','tagihan','nomor'));
     }

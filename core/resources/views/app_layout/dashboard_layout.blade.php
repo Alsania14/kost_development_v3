@@ -95,10 +95,10 @@
               Notifikasi<span class="badge badge-info text-dark badge-pill" style="font-size:9pt;{{ config('global.active') }}">@yield('jumlah')</span>
             </a>
           </li>
-          <li class="nav-item" id="dropin" style="height:35px;overflow:hidden;transition:0.5s;" id="atas">
+          <li class="nav-item" id="dropin" style="height:35px;overflow:hidden;transition:0.5s" id="atas">
             <a class="nav-link text-light d-flex justify-content-between" style="@yield('pembayaran');cursor:pointer;" onclick="sentuh()">
               <span>Pembayaran Kost</span> <span> &#x25BC; </span>
-            </a>
+            </a>  
                     <a class="pl-5 nav-link text-light" href="{{ url('/tagihan') }}" style="cursor:pointer;">
                       Tagihan Anda
                     </a>
@@ -106,7 +106,7 @@
                       Transaksi
                     </a>
                     <a class="pl-5 nav-link text-light" style="cursor:pointer;">
-                      Panduan Pembayaran
+                      Panduan
                     </a>
           </li>
           <li class="nav-item" id="bawah" >
