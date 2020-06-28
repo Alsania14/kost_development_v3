@@ -16,6 +16,10 @@ use App\Notifications\UserNotification;
 use App\User;
 use App\Kamar;
 
+// MEMASTIKAN MENGGUNAKAN WAKTU WITA
+    date_default_timezone_set(config('global.timezone'));
+// AKHIR
+
 class ProfileController extends Controller
 {
     public function index()
@@ -137,7 +141,7 @@ class ProfileController extends Controller
                             else
                             {
                                 // HAPUS GAMBAR YANG SUDAH ADA
-                                Storage::delete('image_users/'.$user->image);
+                                Storage::delete('public_html/image_users/'.$user->image);
                                 $simpan_image_profile = Storage::putFile('public_html/image_users',$request->file('image_profile'));
                                 $simpan_image_profile = basename($simpan_image_profile);
                                 ImageOptimizer::optimize(storage_path('app/public_html/image_users/'.$simpan_image_profile));
@@ -161,7 +165,7 @@ class ProfileController extends Controller
                             else
                             {
                                 // HAPUS GAMBAR KTP YANG SUDAH ADA
-                                Storage::delete('ktp_users',$user->ktp);
+                                Storage::delete('public_html/ktp_users/'.$user->ktp);
                                 $simpan_image_ktp = Storage::putFile('public_html/ktp_users',$request->file('ktp'));
                                 $simpan_image_ktp = basename($simpan_image_ktp);
                                 ImageOptimizer::optimize(storage_path('app/public_html/ktp_users/'.$simpan_image_ktp));

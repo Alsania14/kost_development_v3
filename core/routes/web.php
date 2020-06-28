@@ -99,7 +99,7 @@ use Illuminate\Support\Facades\Route;
 
                     // MANUAL PAYMENT
                         Route::get('/manual/{id}','dashboard\tagihan\manual\ManualController@detailtransaksimanual');
-                        Route::post('/uploadbukti/{id}','dashboard\tagihan\manual\ManualController@uploadbukti');
+                        Route::post('/uploadbukti','dashboard\tagihan\manual\ManualController@uploadbukti');
                     // AKHIR
 
                     // AKSI HALAMAN TRANSAKSI

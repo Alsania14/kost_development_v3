@@ -13,14 +13,14 @@ use Illuminate\Contracts\Encryption\DecryptException;
 use App\Tagihan;
 use App\Transaksi;
 
+// MEMASTIKAN MENGGUNAKAN WAKTU WITA
+    date_default_timezone_set(config('global.timezone'));
+// AKHIR
+
 class IndomaretController extends Controller
 {
     public function charge(Request $request)
     {
-        // MEMASTIKAN MENGGUNAKAN WAKTU WITA
-            date_default_timezone_set(config('global.timezone'));
-        // AKHIR
-
         // SECURITY LAYER
             try {
                 $decrypted = Crypt::decryptString($request->tagihan);

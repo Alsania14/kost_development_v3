@@ -10,8 +10,6 @@ use App\Notifications\UserNotification;
 use App\Kamar;
 use App\Tagihan;
 
-// MEMASTIKAN MENGGUNAKAN WAKTU WITA
-
 class Kernel extends ConsoleKernel
 {
     

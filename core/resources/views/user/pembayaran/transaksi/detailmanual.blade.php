@@ -33,28 +33,72 @@
         <p style="font-size:20pt;"><b>BUKTI PEMBAYARAN  :</p> </b>
         <div class="w-100 d-flex justify-content-center">
 <?php
-            if($transaksi->bukti_transaksi == null)
+            if($transaksi->bukti_transaksi == null && $transaksi->status_pembayaran != 'approved')
             {
 ?>
         <img src="{{ url('storage/bukti_pembayaran/noimage.png') }}" alt="belum ada bukti pembayaran" style="max-width:300px;" id="img_bukti">
         </div>
         
-            <form action="{{ url('/uploadbukti',[$id]) }}" method="post" enctype="multipart/form-data" class="d-flex justify-content-center flex-wrap">
+            <form action="{{ url('/uploadbukti') }}" method="post" enctype="multipart/form-data" class="d-flex justify-content-center flex-wrap">
                 {{ csrf_field() }}
                 <label for="inputan" class="btn-sm mt-3 btn-light">Select Image</label>
                 <input class="btn-sm text-light w-100" style="visibility:hidden;" type="file" name="bukti" onchange="ganti()" accept="image/*" id="inputan" required>
+                <input type="hidden" name="tagihan" value="{{ $id }}">
                 <input class="btn-light btn-sm text-dark mt-3" type="submit" value="kirim" style="max-height:30px;">
             </form>
         
 <?php       }
-            elseif($transaksi->bukti_pembayaran != null)
+            elseif($transaksi->bukti_transaksi != null && $transaksi->status_pembayaran == 'pending')
             {
-?>
-                <img src="{{ url('storage/bukti_pembayaran',[$transaksi->bukti_pembayaran]) }}" alt="belum ada bukti pembayaran" style="max-width:200px;">
+?>          
+            <a href="{{ url('storage/bukti_pembayaran',[$transaksi->bukti_transaksi]) }}">
+            <img src="{{ url('storage/bukti_pembayaran',[$transaksi->bukti_transaksi]) }}" alt="belum ada bukti pembayaran" style="max-width:300px;" id="img_bukti"></a>
+            </div>
+        
+            <form action="{{ url('/uploadbukti') }}" method="post" enctype="multipart/form-data" class="d-flex justify-content-center flex-wrap">
+                {{ csrf_field() }}
+                <label for="inputan" class="btn-sm mt-3 btn-light">Ganti Gambar Bukti</label>
+                <input class="btn-sm text-light w-100" style="visibility:hidden;" type="file" name="bukti" onchange="ganti()" accept="image/*" id="inputan" required>
+                <input type="hidden" name="tagihan" value="{{ $id }}">
+                <input class="btn-light btn-sm text-dark mt-3" type="submit" value="kirim Ulang" style="max-height:30px;">
+            </form>
 <?php
             }
+            elseif($transaksi->bukti_transaksi != null && $transaksi->status_pembayaran == 'approved')
+            {
 ?>
-         
+            <a href="{{ url('storage/bukti_pembayaran',[$transaksi->bukti_transaksi]) }}">
+            <img src="{{ url('storage/bukti_pembayaran',[$transaksi->bukti_transaksi]) }}" alt="belum ada bukti pembayaran" style="max-width:300px;" id="img_bukti"></a>
+            <p class="position-absolute h1" style="left:50%px;font-weight:1000; border-top:5px solid green;color:green;border-bottom:5px solid green;margin-top:150px;">APPROVED</p>
+            </div>
+            <div class="w-100 mt-5 mb-5 text-center">
+            <input type="submit" class="bg-success" value="APPROVED BY ADMIN" disabled>
+            </div>
+<?php
+            }
+            elseif($transaksi->status_pembayaran == 'expired')
+            {
+?>         
+            <p class="position-absolute text-danger h1" style="left:50%px;font-weight:bold;">EXPIRED</p>
+            </div>
+            <div class="w-100 mt-5 mb-5 text-center">
+            <p>Anda tidak mengupload bukti pembayaran hingga pukul 00.00 malam. Tolong ulangi proses charge pembayaran dan upload bukti setelahnya</p>
+            <input type="submit" class="bg-danger" value="EXPIRED" disabled>
+            </div>
+<?php
+            }
+            elseif($transaksi->status_pembayaran == 'rejected')
+            {
+?>
+             <p class="position-absolute text-danger h1" style="left:50%px;font-weight:bold;">REJECTED</p>
+            </div>
+            <div class="w-100 mt-5 mb-5 text-center">
+            <p>Dimohon untuk melakukan pembayaran secara valid dan sesuai dengan arahan yang diberikan. tolong hubungi admin jika terjadi masalah teknis</p>
+            <input type="submit" class="bg-danger" value="REJECTED" disabled>
+            </div>
+<?php
+            }
+?>  
     </div>
     </p>
     <hr class="my-4">
@@ -82,6 +126,11 @@
 
 
 @extends('app_layout/modal')
-@section('judul','Charge Berhasil')
-@section('isi','Charge Berhasil Silahkan lanjutkan ke tahap selanjutnya')
+@section('judul','Berhasil')
+@section('isi','Silahkan Lanjutkan ke langkah selanjutnya')
+
+@extends('app_layout/modal_denied')
+@section('modal_denied_judul','Upload bukti gagal')
+@section('modal_denied_isi','Format salah atau ukuran gambar terlalu besar')
+
 @endsection

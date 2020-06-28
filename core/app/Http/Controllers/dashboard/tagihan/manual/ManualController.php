@@ -4,12 +4,15 @@ namespace App\Http\Controllers\dashboard\tagihan\manual;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Notifications\UserNotification;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Contracts\Encryption\DecryptException;
+use ImageOptimizer;
 
+use App\Notifications\UserNotification;
 use App\Tagihan;
 use App\Transaksi;
 
@@ -48,7 +51,7 @@ class ManualController extends Controller
             $transaksi_new->nominal = $kamar->harga;
             $transaksi_new->via = 'manual';
             $transaksi_new->integration_name = 'manual';
-            $transaksi_new->status_pembayaran = 'pending';
+            $transaksi_new->status_pembayaran = 'proses';
             $transaksi_new->save();
         // AKHIR
         
@@ -96,16 +99,58 @@ class ManualController extends Controller
         return view('/user/pembayaran/transaksi/detailmanual',compact('user','kamar','notification','transaksi','tagihan','nomor','id'));
     }
 
-    public function uploadbukti($id)
-    {
+    public function uploadbukti(Request $request)
+    {   
         // SECURITY LAYER
             try {
-                $decrypted = Crypt::decryptString($id);
+                $decrypted = Crypt::decryptString($request->tagihan);
             } catch (DecryptException $e) {
-                return redirect('/transaksi');
+                return redirect()->back()->with(['system' => 'denied']);
+            }
+
+            $validator = Validator::make($request->all(),[
+                'bukti' => 'required|image|mimes:jpeg,png,jpg,svg|max:4096',
+            ]);
+            
+            if($validator->fails())
+            {
+                return redirect()->back()->with(['system' => 'denied']);
             }
         // AKHIR
         
         // MAIN LOGIC
+            // MENCARI TRANSAKSI DENGAN ID YANG TELAH DI DECRYPT
+                $transaksi  = Transaksi::find($decrypted);
+            // AKHIR
+            
+            //MENYIMPAN FILE BUKTI PADA SERVER
+                    /*APABILA BUKTI MASIH KOSONG MAKA LANGSUNG DISIMPAN */
+                    if($transaksi->bukti_transaksi == null)
+                    {   
+                        
+                        $simpan = Storage::putFile('public_html/bukti_pembayaran',$request->file('bukti'));
+                        $nama_file = basename($simpan);
+                        ImageOptimizer::optimize(storage_path('app/public_html/bukti_pembayaran/'.$nama_file));
+                    }
+                    elseif($transaksi->bukti_transaksi != null)
+                    {   
+                        
+                        Storage::delete('public_html/bukti_pembayaran/'.$transaksi->bukti_transaksi);
+                        $simpan = Storage::putFile('public_html/bukti_pembayaran',$request->file('bukti'));
+                        $nama_file = basename($simpan);
+                        ImageOptimizer::optimize(storage_path('app/public_html/bukti_pembayaran/'.$nama_file));
+                    }
+            // AKHIR
+                    
+
+            // SIMPAN DATA KE DALAM TABLE TRANSAKSI
+                    $transaksi->bukti_transaksi = $nama_file;
+                    $transaksi->status_pembayaran = 'pending';
+                    $transaksi->save();
+            // AKHIR
+
+        // AKHIR
+
+        return redirect()->back()->with(['system' => 'success']);
     }
 }
