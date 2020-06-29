@@ -129,39 +129,4 @@ class IndomaretController extends Controller
 
         return redirect('/kedai'.'/'.Crypt::encryptString($transaksi_new->id))->with(['system' => 'success']);
     }
-
-    public function detailtransakitoko($id)
-    {
-        // SECURITY LAYER
-            try {
-                $decrypted = Crypt::decryptString($id);
-            } catch (DecryptException $e) {
-                return redirect('/transaksi');
-            }
-        // AKHIR
-        
-        // MENGAMBIL DATA TRANSAKSI 
-            $transaksi = Transaksi::withTrashed()->find($decrypted);
-        // AKHIR
-
-        // MENGAMBIL TAGIHAN TRANSAKSI UNTUK MENDAPATKAN KAMAR YANG DIBAYARKAN
-            $tagihan = $transaksi->tagihan()->first();
-            $nomor = $tagihan->kamar()->nomor;
-        // AKHIR
-        
-        // MENGAMBIL DATA USER
-            $user = Auth::user();
-            $kamar = $user->kamar();
-        // AKHIR
-
-        // CEK NOTIFIKASI USER
-            $notification = $user->unreadNotifications->count();
-            if($notification == 0)
-            {
-                $notification = null;
-            }
-        // AKHIR
-         
-        return view('/user/pembayaran/transaksi/detailkedai',compact('user','kamar','notification','transaksi','tagihan','nomor'));
-    }
 }

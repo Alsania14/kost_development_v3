@@ -16,11 +16,7 @@ use App\Transaksi;
 class BniController extends Controller
 {
     public function charge(Request $request)
-    {   
-        // MEMASTIKAN MENGGUNAKAN WAKTU WITA
-            date_default_timezone_set (config('global.timezone'));
-        // AKHIR
-
+    {  
         // SECURITY LAYER
             try {
                 $decrypted = Crypt::decryptString($request->tagihan);
@@ -87,7 +83,7 @@ class BniController extends Controller
             $curl = curl_init();
             
             curl_setopt_array($curl, array(
-                CURLOPT_URL => config('global.url_midtrans'),
+                CURLOPT_URL => config('global.url_midtrans_base').'charge',
                 CURLOPT_RETURNTRANSFER => true,
                 CURLOPT_ENCODING => "",
                 CURLOPT_MAXREDIRS => 10,
@@ -106,7 +102,7 @@ class BniController extends Controller
             $err = curl_error($curl);
             curl_close($curl);
         // AKHIR
-            
+
         // JIKA TERJADI ERROR MAKA REDIRECT BACK DENGAN INFORMASI
             $response_php = json_decode($response);
             if($err != "" || $response_php->status_code != 201 )
@@ -114,6 +110,7 @@ class BniController extends Controller
                 return redirect('/tagihan')->with(['system' => 'denied']);
             }
         // AKHIR
+        
         
         // PENYIMPANAN DATA TRANSAKSI DENGAN STATUS DARI RESPONSE API
             $transaksi_new = new Transaksi;
@@ -136,7 +133,7 @@ class BniController extends Controller
                 
             $user->notify(new UserNotification($text));
         // AKHIR
-
+            
         return redirect('/bank_transfer'.'/'.Crypt::encryptString($transaksi_new->id))->with(['system' => 'success']);
     }
 }

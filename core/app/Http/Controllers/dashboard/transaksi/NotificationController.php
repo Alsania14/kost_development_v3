@@ -18,7 +18,21 @@ class NotificationController extends Controller
 
         // SECURITY LAYER
             /* MENGAMBIL DATA YANG MEMILIKI TRANSACTION_ID VALID DARI MIDTRANS
-            DAN ORDER ID YANG SAMA DENGAN YANG DIKELUARKAN SISTEM MEMBUAT SIGNATURE KEY*/
+            DAN ORDER ID YANG SAMA DENGAN YANG DIKELUARKAN SISTEM MEMBUAT SIGNATURE KEY
+            DAN MENGGUNAKAN SIGNATURE KEY MIDTRANS UNTUK KEAMANAN BERLAPIS*/
+
+            $security_order_id = $request->order_id;
+            $security_status_code = $request->status_code;
+            $security_gross_amount = $request->gross_amount;
+            $security_server_key = config('global.security_key_midtrans');
+            $security_input = $security_order_id.$security_status_code.$security_gross_amount.$security_server_key;
+            $signature_key = \openssl_digest($security_input, 'sha512');
+
+            if($signature_key != $request->signature_key)
+            {
+                return response()->json(['status_code' => 500],500);
+            }
+
             $transaksi = Transaksi::where('order_id',$request->order_id)
             ->where('transaction_id',$request->transaction_id)
             ->first();
@@ -81,6 +95,6 @@ class NotificationController extends Controller
             $transaksi->save();
         // AKHIR
 
-            return \response('oke',200);
+            return response()->json(['status_code' => 200],200);
     }
 }

@@ -30,7 +30,7 @@
     TOTAL {{ 'Rp. '.number_format($transaksi->nominal,0,'.','.') }} <br><br>
     
 <?php
-        if($transaksi->integration_name != 'mandiri')
+        if($transaksi->status_pembayaran == 'pending' || $transaksi->status_pembayaran == 'proses')
         {
 ?>
             <div class="border-top border-bottom" style="font-size:20pt;">
@@ -39,13 +39,33 @@
             </div>
 <?php
         }
-        else
+        elseif($transaksi->status_pembayaran == 'expired')
         {
 ?>
             <div class="border-top border-bottom" style="font-size:20pt;">
-                <b>BILL CODE</b><br>
-                BILL KEY : {{ $transaksi->field_1 }} <br>
-                BILLER CODE : {{ $transaksi->field_2 }}
+                <b>STATUS PEMBAYARAN</b><br>
+                <div class="w-100 text-center justify-content-center d-flex flex-column flex-wrap">
+                <p class="text-danger w-100 h1">EXPIRED</p>
+                <p style="font-size:12pt;">Transaksi yang anda buat telah kedaluarsa, apabila anda belum menyelesaikan pembayaran, dimohon untuk melakukan charge kembali dan segera melakukan pembayaran setelahnya</p>
+                <div class="d-flex justify-content-center flex-column">
+                    <label class="bg-danger btn text-light">EXPIRED</label>
+                </div>
+                </div>
+            </div>
+<?php
+        }
+        elseif($transaksi->status_pembayaran == 'rejected')
+        {
+?>
+            <div class="border-top border-bottom" style="font-size:20pt;">
+                <b>STATUS PEMBAYARAN</b><br>
+                <div class="w-100 text-center justify-content-center d-flex flex-wrap">
+                <p class="text-danger w-100 h1">REJECTED</p>
+                <p style="font-size:12pt;">Transaksi yang anda lakukan telah direject oleh sistem. Dimohon untuk melakukan pembayaran sesuai dengan procedure yang diberikan</p>
+                <div class="d-flex justify-content-center">
+                    <label class="bg-danger btn text-light">EXPIRED</label>
+                </div>
+                </div>
             </div>
 <?php
         }

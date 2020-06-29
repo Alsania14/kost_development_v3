@@ -41,7 +41,7 @@ class TransaksiController extends Controller
             }
         // AKHIR
 
-         // CEK NOTIFIKASI USER
+        // CEK NOTIFIKASI USER
             $notification = $user->unreadNotifications->count();
             if($notification == 0)
             {
@@ -68,7 +68,7 @@ class TransaksiController extends Controller
 
         // MENGAMBIL TAGIHAN TRANSAKSI UNTUK MENDAPATKAN KAMAR YANG DIBAYARKAN
             $tagihan = $transaksi->tagihan()->first();
-            $nomor = $tagihan->kamar()->nomor;
+            $nomor = $tagihan->nomor_kamar;
         // AKHIR
         
         // MENGAMBIL DATA USER
@@ -85,6 +85,41 @@ class TransaksiController extends Controller
         // AKHIR
          
         return view('/user/pembayaran/transaksi/detailonline',compact('user','kamar','notification','transaksi','tagihan','nomor'));
+    }
+
+    public function detailtransakitoko($id)
+    {
+        // SECURITY LAYER
+            try {
+                $decrypted = Crypt::decryptString($id);
+            } catch (DecryptException $e) {
+                return redirect('/transaksi');
+            }
+        // AKHIR
+        
+        // MENGAMBIL DATA TRANSAKSI 
+            $transaksi = Transaksi::withTrashed()->find($decrypted);
+        // AKHIR
+
+        // MENGAMBIL TAGIHAN TRANSAKSI UNTUK MENDAPATKAN KAMAR YANG DIBAYARKAN
+            $tagihan = $transaksi->tagihan()->first();
+            $nomor = $tagihan->nomor_kamar;
+        // AKHIR
+        
+        // MENGAMBIL DATA USER
+            $user = Auth::user();
+            $kamar = $user->kamar();
+        // AKHIR
+
+        // CEK NOTIFIKASI USER
+            $notification = $user->unreadNotifications->count();
+            if($notification == 0)
+            {
+                $notification = null;
+            }
+        // AKHIR
+         
+        return view('/user/pembayaran/transaksi/detailkedai',compact('user','kamar','notification','transaksi','tagihan','nomor'));
     }
 
     public function refreshtransaksi($id)
@@ -106,7 +141,7 @@ class TransaksiController extends Controller
             $curl = curl_init();
             
             curl_setopt_array($curl, array(
-                CURLOPT_URL => config('global.url_midtrans_base').'/'.$transaksi->order_id.'/status',
+                CURLOPT_URL => config('global.url_midtrans_base').$transaksi->order_id.'/status',
                 CURLOPT_RETURNTRANSFER => true,
                 CURLOPT_ENCODING => "",
                 CURLOPT_MAXREDIRS => 10,
@@ -133,6 +168,20 @@ class TransaksiController extends Controller
                     return redirect('/transaksi')->with(['system' => 'denied']);
                 }
                 
+            // AKHIR
+
+            // SECURITY LAYER 2
+                $security_order_id = $response_php->order_id;
+                $security_status_code = $response_php->status_code;
+                $security_gross_amount = $response_php->gross_amount;
+                $security_server_key = config('global.security_key_midtrans');
+                $security_input = $security_order_id.$security_status_code.$security_gross_amount.$security_server_key;
+                $signature_key = \openssl_digest($security_input, 'sha512');
+
+                if($signature_key != $response_php->signature_key)
+                {
+                    return redirect('/transaksi')->with(['system' => 'denied']);
+                }
             // AKHIR
 
             // MENYESUAIKAN FORMAT MIDTRANS DENGAN FORMAT STATUS SISTEM
@@ -171,7 +220,7 @@ class TransaksiController extends Controller
             // AKHIR
 
         // AKHIR
-
+                
         return redirect('/transaksi')->with(['system' => 'success']);
     }
 

@@ -36,16 +36,16 @@
             if($transaksi->bukti_transaksi == null && $transaksi->status_pembayaran != 'approved')
             {
 ?>
-        <img src="{{ url('storage/bukti_pembayaran/noimage.png') }}" alt="belum ada bukti pembayaran" style="max-width:300px;" id="img_bukti">
-        </div>
-        
-            <form action="{{ url('/uploadbukti') }}" method="post" enctype="multipart/form-data" class="d-flex justify-content-center flex-wrap">
-                {{ csrf_field() }}
-                <label for="inputan" class="btn-sm mt-3 btn-light">Select Image</label>
-                <input class="btn-sm text-light w-100" style="visibility:hidden;" type="file" name="bukti" onchange="ganti()" accept="image/*" id="inputan" required>
-                <input type="hidden" name="tagihan" value="{{ $id }}">
-                <input class="btn-light btn-sm text-dark mt-3" type="submit" value="kirim" style="max-height:30px;">
-            </form>
+            <img src="{{ url('storage/bukti_pembayaran/noimage.png') }}" alt="belum ada bukti pembayaran" style="max-width:300px;" id="img_bukti">
+            </div>
+            
+                <form action="{{ url('/uploadbukti') }}" method="post" enctype="multipart/form-data" class="d-flex justify-content-center flex-wrap">
+                    {{ csrf_field() }}
+                    <label for="inputan" class="btn-sm mt-3 btn-light">Select Image</label>
+                    <input class="btn-sm text-light w-100" style="visibility:hidden;" type="file" name="bukti" onchange="ganti()" accept="image/*" id="inputan" required>
+                    <input type="hidden" name="tagihan" value="{{ $id }}">
+                    <input class="btn-light btn-sm text-dark mt-3" type="submit" value="kirim" style="max-height:30px;">
+                </form>
         
 <?php       }
             elseif($transaksi->bukti_transaksi != null && $transaksi->status_pembayaran == 'pending')

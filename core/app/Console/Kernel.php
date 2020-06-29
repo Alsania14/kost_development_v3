@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 use App\Notifications\UserNotification;
 use App\Kamar;
 use App\Tagihan;
+use App\Setting;
 
 class Kernel extends ConsoleKernel
 {
@@ -30,14 +31,11 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {   
-        // MEMASTIKAN ZONA WAKTU YANG DIGUNAKAN ASIA MAKASSAR (WITA)
-            date_default_timezone_set(config('global.timezone'));
-        // AKHIR
         $schedule->call(function()
         {   
             
             // MENGAMBIL WAKTU SEKARANG
-                $current_date = date_create('2020-05-01');
+                $current_date = date_create('2020-12-01');
             // AKHIR
             
             // MENGAMBIL SEMUA KAMAR DAN MEMBANDINGKANNYA
@@ -45,8 +43,10 @@ class Kernel extends ConsoleKernel
                 PROGRAM AKAN MENGUBAH BAYAR SELANJUTNYA KE TANGGAL YANG SAMA BULAN DEPAN UNTUK KOST
                 BULANAN DAN TAHUN DEPAN TANGGAL YANG SAMA TAHUN DEPAN*/
                 
-                // GET SEMUA DATA KAMAR DAN MEMBANDINGKAN
+                // GET SEMUA DATA KAMAR DAN MEMBANDINGKAN, SERTA MENGAMBIL DATA TABLE SETTING
                     $kamars = Kamar::whereNotNull('user_id')->orderBy('id')->get();
+                    $setting_penagihan = Setting::where('name_setting','hari_penagihan')->first();
+                    echo "setting ".$setting_penagihan->value."\n";
                     
                     foreach ($kamars as $index => $kamar)
                     {
@@ -59,7 +59,7 @@ class Kernel extends ConsoleKernel
                             /*JIKA DIFF ATAU JARAK LEBIH KECIL DARI 0 MAKA SISTEM AKAN
                             MEMBUAT INVOICE ATAU TAGIHAN PADA TABLE TAGIHANS DATABASE
                             */
-                            if($diff < 0 )
+                            if($diff < $setting_penagihan->value)
                             {   
                                 // MENGAMBIL TANGGAL BAYAR TERAKHIR PENYEWA KOS DAN MEMECAH MENJADI ARRAY
                                     $array_tanggal_awal_sewa = array_map('intval', explode("-",$kamar->tgl_mulai_sewa));
@@ -111,6 +111,7 @@ class Kernel extends ConsoleKernel
                                         $tagihan_baru = new tagihan;
                                         $tagihan_baru->user_id = $kamar->user_id;
                                         $tagihan_baru->kamar_id = $kamar->id;
+                                        $tagihan_baru->nomor_kamar = $kamar->nomor; 
                                         $tagihan_baru->tipe_pembayaran = $kamar->tipe_pembayaran;
                                         $tagihan_baru->tgl_awal_sewa = $kamar->tgl_bayar_selanjutnya;
                                         $tagihan_baru->tgl_akhir_sewa = $kamar_tgl_bayar_selanjutnya;

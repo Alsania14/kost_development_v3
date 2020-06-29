@@ -30,7 +30,7 @@
     TOTAL {{ 'Rp. '.number_format($transaksi->nominal,0,'.','.') }} <br><br>
     
 <?php
-        if($transaksi->integration_name != 'mandiri')
+        if($transaksi->integration_name != 'mandiri' && ($transaksi->status_pembayaran == 'pending' || $transaksi->status_pembayaran == 'proses'))
         {
 ?>
             <div class="border-top border-bottom" style="font-size:20pt;">
@@ -39,7 +39,7 @@
             </div>
 <?php
         }
-        else
+        elseif($transaksi->integration_name == 'mandiri' && ($transaksi->status_pembayaran == 'pending' || $transaksi->status_pembayaran == 'proses'))
         {
 ?>
             <div class="border-top border-bottom" style="font-size:20pt;">
@@ -49,13 +49,54 @@
             </div>
 <?php
         }
+        elseif($transaksi->status_pembayaran == 'approved')
+        {
 ?>
-    
+            <div class="border-top border-bottom" style="font-size:20pt;">
+                <b>STATUS PEMBAYARAN</b><br>
+                <div class="w-100 text-center justify-content-center d-flex flex-wrap">
+                <p class="h1 text-success w-100 font-weight-bold">APPROVED</p>
+                <label class="bg-success btn-sm text-light">APPROVED</label>
+                </div>
+            </div>
+<?php
+        }
+        elseif($transaksi->status_pembayaran == 'expired')
+        {
+?>
+            <div class="border-top border-bottom" style="font-size:20pt;">
+                <b>STATUS PEMBAYARAN</b><br>
+                <div class="w-100 text-center justify-content-center d-flex flex-wrap">
+                <p class="text-danger w-100 h1">EXPIRED</p>
+                <p style="font-size:12pt;">Transaksi yang anda buat telah kedaluarsa, apabila anda belum menyelesaikan pembayaran, dimohon untuk melakukan charge kembali dan segera melakukan pembayaran setelahnya</p>
+                <div class="d-flex justify-content-center">
+                    <label class="bg-danger btn text-light">EXPIRED</label>
+                </div>
+                </div>
+            </div>
+<?php
+        }
+        elseif($transaksi->status_pembayaran == 'rejected')
+        {
+?>
+            <div class="border-top border-bottom" style="font-size:20pt;">
+                <b>STATUS PEMBAYARAN</b><br>
+                <div class="w-100 text-center justify-content-center d-flex flex-wrap">
+                <p class="text-danger w-100 h1">REJECTED</p>
+                <p style="font-size:12pt;">Transaksi yang anda lakukan telah direject oleh sistem. Dimohon untuk melakukan pembayaran sesuai dengan procedure yang diberikan</p>
+                <div class="d-flex justify-content-center">
+                    <label class="bg-danger btn text-light">REJECTED</label>
+                </div>
+                </div>
+            </div>
+<?php
+        }
+?>
 
     </p>
     <hr class="my-4">
     </span>
-    <p class="text-light">Charge pembayaran kost berhasil dilakukan, silahkan lanjutkan untuk melakukan pembayaran menggunakan nomor VA diatas. Anda bebas untuk meninggalkan halaman ini, informasi diatas dapat anda lihat kembali pada halaman pembayaran kost -> transaksi</p>
+    <p class="text-light">Charge pembayaran kost berhasil dilakukan, silahkan lanjutkan untuk melakukan pembayaran menggunakan nomor VA atau BILL KEY (untuk bank mandiri) diatas. Anda bebas untuk meninggalkan halaman ini, informasi diatas dapat anda lihat kembali pada halaman pembayaran kost -> transaksi</p>
     <p class="lead">
         <a class="btn btn-primary btn-lg" href="{{ url('/transaksi') }}" role="button">Halaman Transaksi</a>
     </p>

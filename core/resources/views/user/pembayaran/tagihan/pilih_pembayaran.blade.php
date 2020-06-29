@@ -19,10 +19,10 @@
             <div class="card-body">
                 <h5 class="card-title">BANK BNI</h5>
                 <p class="card-text">Pembayaran menggunakan Virtual Account Bank BNI, Transaksi akan langsung terdeteksi sistem tanpa menunggu verifikasi admin</p>
-                <form action="{{ url('/onlinebni') }}" method="post">
+                <form action="{{ url('/onlinebni') }}" method="post" onsubmit="document.getElementById('button1').disabled=true;">
                 {{ csrf_field() }}
                 <input type="hidden" name="tagihan" value="{{$id}}">
-                <input type="submit" class="btn mt-2 font-weight-bold" value="CHARGE" style="{{ config('global.active') }}">
+                <button type="submit" class="btn mt-2 font-weight-bold" id="button1" style="{{ config('global.active') }}">CHARGE</button>
                 </form>
             </div>
             </div>
@@ -33,10 +33,10 @@
             <div class="card-body">
                 <h5 class="card-title">BANK BCA</h5>
                 <p class="card-text">Pembayaran Menggunakan Virtual Account BCA, transaksi akan langsung terdeteksi sistem tanpa memerlukan verifikasi admin</p>
-                <form action="{{ url('/onlinebca') }}" method="POST">
+                <form action="{{ url('/onlinebca') }}" method="POST" onsubmit="document.getElementById('button2').disabled=true;">
                 {{ csrf_field() }}
                 <input type="hidden" name="tagihan" value="{{$id}}">
-                 <input type="submit" class="btn mt-2 font-weight-bold" value="CHARGE" style="{{ config('global.active') }}">
+                 <button type="submit" class="btn mt-2 font-weight-bold" id="button2" style="{{ config('global.active') }}">CHARGE</button>
                 </form>
             </div>
             </div>
@@ -47,10 +47,10 @@
             <div class="card-body">
                 <h5 class="card-title">BANK MANDIRI</h5>
                 <p class="card-text">Pembayaran menggunakan Billing Code dan Bill Key Bank Mandiri. Transaksi akan langsung terdeteksi tanpa verifikasi admin</p>
-                <form action="{{ url('/onlinemandiri') }}" method="post">
+                <form action="{{ url('/onlinemandiri') }}" method="post" onsubmit="document.getElementById('button3').disabled=true;">
                 {{ csrf_field() }}
                 <input type="hidden" name="tagihan" value="{{$id}}">
-                 <input type="submit" class="btn mt-2 font-weight-bold" value="CHARGE" style="{{ config('global.active') }}">
+                <button type="submit" class="btn mt-2 font-weight-bold" id="button3" style="{{ config('global.active') }}">CHARGE</button>
                 </form>
             </div>
             </div>
@@ -61,10 +61,10 @@
             <div class="card-body">
                 <h5 class="card-title">BANK PERMATA</h5>
                 <p class="card-text">Pempabayaran menggunakan Virtual Account Bank Permata yang akan langsung terdeteksi sistem tanpa perlu verifikasi admin</p>
-                <form action="{{ url('/onlinepermata') }}" method="post">
+                <form action="{{ url('/onlinepermata') }}" method="post" onsubmit="document.getElementById('button4').disabled=true;">
                 {{ csrf_field() }}
                 <input type="hidden" name="tagihan" value="{{ $id }}">
-                 <input type="submit" class="btn mt-2 font-weight-bold" value="CHARGE" style="{{ config('global.active') }}">
+                <button type="submit" class="btn mt-2 font-weight-bold" id="button4" style="{{ config('global.active') }}">CHARGE</button>
                 </form>
             </div>
             </div>
@@ -85,10 +85,10 @@
             <div class="card-body">
                 <h5 class="card-title">INDOMARET</h5>
                 <p class="card-text">Pembayaran melalui toko indomaret terdekat, dengan memberikan indomaret Payment Code untuk validasi pembayaran</p>
-                <form action="{{ url('/tokoindomaret') }}" method="post">
+                <form action="{{ url('/tokoindomaret') }}" method="post" onsubmit="document.getElementById('button5').disabled=true;">
                 {{ csrf_field() }}
                 <input type="hidden" name="tagihan" value="{{ $id }}">
-                <input type="submit" class="btn btn-secondary mt-2" value="CHARGE">
+                <button type="submit" class="btn mt-2 font-weight-bold" id="button5" style="{{ config('global.active') }}">CHARGE</button>
                 </form>
             </div>
             </div>
@@ -99,10 +99,10 @@
             <div class="card-body">
                 <h5 class="card-title">ALFAMART</h5>
                 <p class="card-text">Pembayaran melalui toko alfamart terdekat, dengan memberikan alfamart Payment Code untuk validasi pembayaran</p>
-                <form action="{{ url('/tokoalfamart') }}" method="post">
+                <form action="{{ url('/tokoalfamart') }}" method="post" onsubmit="document.getElementById('button6').disabled=true;">
                 {{ csrf_field() }}
                 <input type="hidden" name="tagihan" value="{{$id}}">
-                <input type="submit" class="btn btn-secondary mt-2" value="CHARGE">
+                <button type="submit" class="btn mt-2 font-weight-bold" id="button6" style="{{ config('global.active') }}">CHARGE</button>
                 </form>
             </div>
             </div>
@@ -120,10 +120,10 @@
             <div class="card-body">
                 <h5 class="card-title">MANUAL PAYMENT</h5>
                 <p class="card-text">Pembayaran dengan metode upload bukti pembayaran sehingga diperlukan waktu untuk memproses bukti yang dikirim valid atau tidak oleh admin sistem</p>
-                <form action="{{ url('/manual') }}" method="post">
+                <form action="{{ url('/manual') }}" method="post" onsubmit="document.getElementById('button7').disabled=true;">
                 {{ csrf_field() }}
                 <input type="hidden" name="tagihan" value="{{ $id }}">
-                <input type="submit" class="btn btn-secondary mt-2" value="CHARGE" style="{{ config('global.active') }}">
+                <button type="submit" class="btn btn-secondary mt-2" id="button7" style="{{ config('global.active') }}">CHARGE</button>
                 </form>
             </div>
             </div>

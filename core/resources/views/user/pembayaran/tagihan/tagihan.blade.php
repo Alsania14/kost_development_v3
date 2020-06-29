@@ -34,7 +34,7 @@
 ?>
                     <tr>
                         <td>{{ ($index+1) }}</td>
-                        <td style="min-width:100px;">{{ 'KAMAR '.$tagihan->kamar()->nomor }}</td>
+                        <td style="min-width:100px;">{{ 'KAMAR '.$tagihan->nomor_kamar }}</td>
                         <td style="min-width:250px;">{{ $tagihan->tgl_awal_sewa.' s/d '.$tagihan->tgl_akhir_sewa }}</td>
                         <td style="min-width:150px;">{{ 'Rp. '.number_format($tagihan->nominal_pembayaran,0,'.','.') }}</td>
 <?php
@@ -46,6 +46,8 @@
                                 <a href="{{ url('/pilihpembayaran',[$encrypt]) }}">
                                     <button class="btn btn-sm btn-info">Charge</button>
                                 </a>
+                                <button class="btn btn-sm btn-secondary m-0" style="display:inline-block;" disabled>Struk</button>
+                                <button class="btn btn-sm btn-secondary m-0" style="display:inline-block;" disabled>Arsip</button>
                         </td>
 <?php
                         }
@@ -54,13 +56,15 @@
 ?>
                         <td>LUNAS</td>
                         <td>
-                              <a href="{{ url('/struk',[$encrypt]) }}">
-                                  <button class="btn btn-sm btn-success m-0" style="display:inline-block;">Struk</button>
-                              </a>
+                              <button class="btn btn-sm btn-secondary" disabled>Charge</button>
+                              <form action="{{ url('/struk',[$encrypt]) }}" class="m-0 p-0" style="display:inline-block;" method="POST">
+                                {{ csrf_field() }}
+                                <button class="btn btn-sm btn-success m-0" type="submit" style="display:inline-block;">Struk</button>
+                              </form>
                               <form action="{{ url('/arsiptagihan',[$encrypt]) }}" class="m-0 p-0" style="display:inline-block;" method="POST">
                                 {{ csrf_field() }}
                                 {{ method_field('put') }}
-                                <input class="btn-sm btn-danger" type="submit" value="Arsip">
+                                <button class="btn-sm btn-danger" type="submit">Arsip</button>
                               </form>
                         </td>
 <?php

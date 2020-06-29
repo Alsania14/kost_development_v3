@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Route;
     });
 
     Route::get('/test',function(){
-        return date('Y-m-d H:i:s');
+        return response()->json(['status_code' => 200],200);
     });
 
 // AKHIR
@@ -76,7 +76,7 @@ use Illuminate\Support\Facades\Route;
                 // AKSI HALAMAN TAGIHAN
                     Route::get('/arsiptagihan','dashboard\tagihan\TagihanController@indexarsip');
                     Route::put('/arsiptagihan/{id}','dashboard\tagihan\TagihanController@arsiptagihan');
-                    Route::get('/struk/{id}','dashboard\tagihan\StructController@index');
+                    Route::post('/struk/{id}','dashboard\tagihan\StructController@index');
                 // AKHIR
 
                 // HLAMAN INDEX ARSIP TAGIHAN
@@ -94,7 +94,7 @@ use Illuminate\Support\Facades\Route;
                     // AKHIR
 
                     // MERCHANT PAYMENT
-                        Route::get('/kedai/{id}','dashboard\tagihan\toko\IndomaretController@detailtransakitoko');
+                        Route::get('/kedai/{id}','dashboard\transaksi\TransaksiController@detailtransakitoko');
                     // AKHIR
 
                     // MANUAL PAYMENT

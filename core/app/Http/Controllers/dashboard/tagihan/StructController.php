@@ -28,13 +28,13 @@ class StructController extends Controller
             $tagihan = Tagihan::find($decrypted);
             $transaksi = $tagihan->transaksi()->where('status_pembayaran','approved')->first();
             $user = $tagihan->user();
-            $kamar = $tagihan->kamar();
+            $nomor = $tagihan->nomor_kamar;
         // AKIHIR
 
         // MAIN LOGIC
             $data['name'] = $user->name;
             $data['username'] = $user->username;
-            $data['kamar'] = $kamar->nomor;
+            $data['kamar'] = $nomor;
             $data['tanggal'] = $tagihan->tgl_pembayaran;
             $data['order_id'] = $transaksi->order_id;
             $data['tgl_awal_sewa'] = $tagihan->tgl_awal_sewa;
