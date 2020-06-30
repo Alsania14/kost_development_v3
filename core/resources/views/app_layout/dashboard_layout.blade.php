@@ -110,7 +110,7 @@
                     </a>
           </li>
           <li class="nav-item" id="bawah" >
-            <a class="nav-link text-light" href="#" style="@yield('pelaporan')">
+            <a class="nav-link text-light" href="{{ url('/laporan') }}" style="@yield('pelaporan')">
               Pelaporan
             </a>
           </li>
