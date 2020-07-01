@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
 
 use App\Laporan;
+use App\User;
+use App\Mail\LaporanAdmin;
 
 class PelaporanController extends Controller
 {
@@ -64,8 +66,15 @@ class PelaporanController extends Controller
                     'max:200',
                 ),
                 'laporan' => 'nullable|mimes:jpeg,bmp,jpg,png|max:2000',
+            ],[
+                'keluhan.not_regex' => 'Tidak diperbolehkan menggunakan simbol',
             ]);
         // AKHIR
+
+        if($validator->fails())
+        {
+            return redirect()->back()->withErrors($validator->errors());
+        }
 
         // MENDAPATKAN DATA USER
             $user = Auth::user();
@@ -93,6 +102,26 @@ class PelaporanController extends Controller
         // UPDATE TABLE USER SET KUOTA LAPORAN MENJADI 1
             $user->pelaporan = 1;
             $user->save();
+        // AKHIR
+        
+        // MENYIAPKAN DATA YANG AKAN DIKIRIM KE ADMIN
+            $data = [
+                'name' => $user->name,
+                'kamar' => $kamar->nomor,
+                'keluhan' => $request->keluhan,
+            ];
+            if(isset($simpan)){
+                $data['image'] = $simpan;
+            }
+            else
+            {
+                $data['image'] = null;
+            }
+
+        // KIRIM KE EMAIL ADMIN SEBAGAI NOTIFIKASI
+            $admin = User::where('role','admin')->first();
+
+            \Mail::to($admin->email)->send(new LaporanAdmin($data));
         // AKHIR
 
         return redirect()->back()->with(['system' => 'success']);

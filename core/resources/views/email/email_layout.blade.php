@@ -10,7 +10,7 @@
             left:50%;
             transform:translateX(-50%);
             width:700px;
-            height:1000px;
+            height:auto;
             border:3px solid black;
             padding:10px;
         }

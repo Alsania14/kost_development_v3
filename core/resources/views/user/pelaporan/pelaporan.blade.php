@@ -23,9 +23,16 @@
                         <label for="inputan" class="btn btn-info" style="width:200px;">MASUKKAN GAMBAR</label>
                         <input type="file" id="inputan" accept="image/*" name="laporan" style="display:none;">
                         <input type="submit" id="submit" style="display:none;">
-                    </form>
-                    </div>
-                    <textarea name="keluhan" class="w-75 mt-3" form="myform" style="resize:none;color:black;border-radius:8px;border-top:3px solid orange;height:100px;" placeholder="Jelaskan kerusakan properti" maxlength="200"></textarea>
+                        </form>
+                        </div>
+                        <textarea name="keluhan" class="w-75 mt-3" form="myform" style="resize:none;color:black;border-radius:8px;border-top:3px solid orange;height:100px;" placeholder="Jelaskan kerusakan properti" maxlength="200"></textarea>
+<?php   if($errors->has('keluhan'))
+        {
+?>
+                        <p class="text-danger lead">{{ $errors->first('keluhan') }}</p>
+<?php
+        }
+?>
                     <div>
                     <label for="submit" class="btn mt-5" style="{{ config('global.active') }}">SUBMIT</label>
                     </div>
@@ -60,7 +67,11 @@
                 <div class="list-group-item list-group-item-action flex-column align-items-start bg-info shadow-lg">
                     <div class="d-flex w-100 justify-content-between">
                     <h5 class="mb-1">Laporan</h5>
-                    <button class="text-light btn btn-sm btn-danger">X</button>
+                    <form action="{{ url('/delete') }}" method="post">
+                    {{ csrf_field() }}
+                    <input type="hidden" name="laporan_id" value="{{ Crypt::encryptString($laporan->id) }}">
+                    <button type="submit" class="text-light btn btn-sm btn-danger">X</button>
+                    </form>
                     </div>
                 </div>
                 <div class="list-group-item list-group-item-action flex-column align-items-start bg-dark shadow-lg">
@@ -116,5 +127,7 @@
 <?php
         }
 ?>
-
+@extends('app_layout/modal')
+@section('judul','LAPORAN BERHASIL')
+@section('isi','Terimakasih sudah melaporkan keluhan anda, dimohon untuk menunggu balasan dari admin ya, saat ada balasan sistem akan memberikan email kepada anda')
 @endsection

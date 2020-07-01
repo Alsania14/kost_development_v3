@@ -120,8 +120,17 @@ use Illuminate\Support\Facades\Route;
             // AKHIR
 
             // HALAMAN PELAPORAN
-                Route::get('/laporan','dashboard\PelaporanController@index');
-                Route::post('/laporan','dashboard\PelaporanController@create');
+                // INDEX
+                    Route::get('/laporan','dashboard\PelaporanController@index');
+                // AKHIR
+
+                // CREATE
+                    Route::post('/laporan','dashboard\PelaporanController@create'); 
+                // AKHIR
+
+                // DELETE BY ADMIN
+                    Route::post('/delete','dashboard\PelaporanController@create');
+                // AKHIR
             // AKHIR
 
             // USER DAPAT LOGOUT SETELAH MASUK KE DALAM SISTEM
