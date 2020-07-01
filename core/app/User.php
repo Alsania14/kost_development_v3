@@ -53,6 +53,11 @@ class User extends Authenticatable
                     ->get();
     }
 
+    public function pelaporan()
+    {
+        return $this->hasMany('App\Laporan');
+    }
+
     public function tagihanarsip()
     {
         return $this->hasMany('App\Tagihan')

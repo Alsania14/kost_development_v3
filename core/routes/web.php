@@ -121,6 +121,7 @@ use Illuminate\Support\Facades\Route;
 
             // HALAMAN PELAPORAN
                 Route::get('/laporan','dashboard\PelaporanController@index');
+                Route::post('/laporan','dashboard\PelaporanController@create');
             // AKHIR
 
             // USER DAPAT LOGOUT SETELAH MASUK KE DALAM SISTEM

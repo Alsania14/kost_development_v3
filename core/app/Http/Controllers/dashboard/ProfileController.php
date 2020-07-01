@@ -172,7 +172,8 @@ class ProfileController extends Controller
                             }
 
                             // SIMPAN KE TABLE USER
-                            $user->ktp = $simpan_image_ktp;
+                                $user->ktp = $simpan_image_ktp;
+                            // AKHIR
                         }   
                 }
                 else
