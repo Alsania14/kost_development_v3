@@ -36,9 +36,9 @@ class Kernel extends ConsoleKernel
     {   
         $schedule->call(function()
         {   
-            // MENGAMBIL WAKTU SEKARANG
-         $current_date = date_create(date('Y-m-d'));
-         // AKHIR
+        // MENGAMBIL WAKTU SEKARANG
+             $current_date = date_create(date('Y-m-d'));
+        // AKHIR
          
          // MENGAMBIL SEMUA KAMAR DAN MEMBANDINGKANNYA
              /* APABILA ADA KAMAR YANG TANGGAL 'BAYAR SELANJUTNYA' MELEWATI HARI INI MAKA

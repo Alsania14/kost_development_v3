@@ -30,14 +30,18 @@ class TransaksiController extends Controller
                                         GROUP BY transaksis.`id`",array($user->id));
         // AKHIR
 
-        // CEK KAMAR
+        // JIKA ADA MAKA V KAMAR DITIMPA TEST KAMAR, JIKA TIDAK USER DIBERIKAN VIEW DENIED HALAMAN TAGIHAN// CEK KAMAR
             $kamar = new \stdClass;
             $kamar->nomor = 'Belum Memiliki kamar';
             $test_kamar = $user->kamar();
             
-            if(!is_null($test_kamar))
+            if(!is_null($test_kamar) && $user->ktp != 'ktp_default.jpg' && $user->nomor_hp != null && $user->verified_email_at != null)
             {
                 $kamar = $test_kamar;
+            }
+            else
+            {   
+                return view('user/denied/denied');
             }
         // AKHIR
 
@@ -73,7 +77,21 @@ class TransaksiController extends Controller
         
         // MENGAMBIL DATA USER
             $user = Auth::user();
-            $kamar = $user->kamar();
+        // AKHIR
+
+         // JIKA ADA MAKA V KAMAR DITIMPA TEST KAMAR, JIKA TIDAK USER DIBERIKAN VIEW DENIED HALAMAN TAGIHAN// CEK KAMAR
+            $kamar = new \stdClass;
+            $kamar->nomor = 'Belum Memiliki kamar';
+            $test_kamar = $user->kamar();
+            
+            if(!is_null($test_kamar) && $user->ktp != 'ktp_default.jpg' && $user->nomor_hp != null && $user->verified_email_at != null)
+            {
+                $kamar = $test_kamar;
+            }
+            else
+            {   
+                return view('user/denied/denied');
+            }
         // AKHIR
 
         // CEK NOTIFIKASI USER
@@ -108,7 +126,21 @@ class TransaksiController extends Controller
         
         // MENGAMBIL DATA USER
             $user = Auth::user();
-            $kamar = $user->kamar();
+        // AKHIR
+
+         // JIKA ADA MAKA V KAMAR DITIMPA TEST KAMAR, JIKA TIDAK USER DIBERIKAN VIEW DENIED HALAMAN TAGIHAN// CEK KAMAR
+            $kamar = new \stdClass;
+            $kamar->nomor = 'Belum Memiliki kamar';
+            $test_kamar = $user->kamar();
+            
+            if(!is_null($test_kamar) && $user->ktp != 'ktp_default.jpg' && $user->nomor_hp != null && $user->verified_email_at != null)
+            {
+                $kamar = $test_kamar;
+            }
+            else
+            {   
+                return view('user/denied/denied');
+            }
         // AKHIR
 
         // CEK NOTIFIKASI USER
@@ -228,7 +260,6 @@ class TransaksiController extends Controller
     {
         // MENGAMBIL DATA TRANSAKSI USER
             $user = Auth::user();
-            $kamar = $user->kamar();
         // AKHIIR
 
         // MENGAMBIL DATA TRANSAKSI (HARD SEKALI MENGGUNAKAN ELOQUENT MAKANYA PAKEK RAW)
@@ -239,14 +270,18 @@ class TransaksiController extends Controller
                                         GROUP BY transaksis.`id`",array($user->id));
         // AKHIR
 
-        // CEK KAMAR
+        // JIKA ADA MAKA V KAMAR DITIMPA TEST KAMAR, JIKA TIDAK USER DIBERIKAN VIEW DENIED HALAMAN TAGIHAN// CEK KAMAR
             $kamar = new \stdClass;
             $kamar->nomor = 'Belum Memiliki kamar';
             $test_kamar = $user->kamar();
             
-            if(!is_null($test_kamar))
+            if(!is_null($test_kamar) && $user->ktp != 'ktp_default.jpg' && $user->nomor_hp != null && $user->verified_email_at != null)
             {
                 $kamar = $test_kamar;
+            }
+            else
+            {   
+                return view('user/denied/denied');
             }
         // AKHIR
 

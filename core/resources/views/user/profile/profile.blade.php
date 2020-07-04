@@ -33,7 +33,20 @@
     <div class="row d-flex justify-content-center mt-5">
         <div class="col-md-6 d-flex justify-content-between border-bottom">
             <div>
-                Email
+<?php
+        if($user->verified_email_at == null)
+        {
+?>
+            Email <span class="bg-danger badge">BELUM DIVERFIKASI</span>
+<?php
+        }
+        else
+        {
+?>
+            Email <span class="bg-success badge">TERVERIFIKASI</span>
+<?php
+        }
+?>
             </div>
             <div>
                 {{ $user->email }}
@@ -47,7 +60,7 @@
                 Nomor HP
             </div>
             <div>
-                <?php
+<?php
                     // JIKA NULL
                         if($user->nomor_hp == null)
                         {
@@ -58,7 +71,7 @@
                             echo $user->nomor_hp;
                         }
                     // AKHIR
-                ?>
+?>
             </div>
         </div>
     </div>
@@ -108,6 +121,20 @@
 
     <div class="row d-flex justify-content-center pt-5 mb-5">
         <div class="col-md-6 d-flex justify-content-center">
+<?php
+        if($user->verified_email_at == null)
+        {
+?>        
+            <a href="{{ url('/verifikasiintern',[Crypt::encryptString($user->email)]) }}" class="btn mr-4 btn-info">Verifikasi Email</a>
+<?php
+        }
+        else
+        {
+?>
+            <button class="btn mr-4 btn-secondary" disabled>Diverifikasi</button>
+<?php
+        }
+?>
             <a href="{{ url('/edit',[Crypt::encryptString($user->id)]) }}">
             <button class="btn" style="{{ config('global.active') }}">Edit Profile</button>
             </a>
@@ -121,5 +148,10 @@
 </footer>
 @extends('app_layout/modal')
 @section('judul','UPDATE BERHASIL')
-@section('isi','Update berhasil,Pastikan anda memberikan identitas dan dokumen yang valid')
+@section('isi','Update berhasil,Pastikan anda memberikan identitas dan dokumen yang valid, apabila anda melakukan perbuhan pada email mohon untuk melakukan verifikasi kembali')
+
+
+@extends('app_layout/modal_denied')
+@section('modal_denied_judul','VERIFIKASI EMAIL')
+@section('modal_denied_isi','EMAIL VERIFIKASI TELAH DIKIRIMKAN KE EMAIL ANDA MOHON UNTUK MEMBUKA EMAIL ANDA DAN MENEKAN LINK YANG DIBERIKAN')
 @endsection

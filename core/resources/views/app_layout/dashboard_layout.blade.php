@@ -120,7 +120,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link text-light" href="#" style="@yield('Wifi')">
+            <a class="nav-link text-light" href="{{ url('/wifi') }}" style="@yield('wifi')">
               Wifi
             </a>
           </li>

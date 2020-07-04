@@ -37,13 +37,13 @@ class TagihanController extends Controller
         // AKHIR
 
         // JIKA ADA MAKA V KAMAR DITIMPA TEST KAMAR, JIKA TIDAK USER DIBERIKAN VIEW DENIED HALAMAN TAGIHAN
-            if(!is_null($test_kamar))
+            if(!is_null($test_kamar) && $user->ktp != 'ktp_default.jpg' && $user->nomor_hp != null && $user->verified_email_at != null)
             {
                 $kamar = $test_kamar;
             }
             else
-            {
-                return view('user/denied',compact('user','kamar','notification'));
+            {   
+                return view('user/denied/denied');
             }
         // AKHIR
 
@@ -72,10 +72,14 @@ class TagihanController extends Controller
             $test_kamar = $user->kamar();
         // AKHIR
 
-         // JIKA ADA MAKA V KAMAR DITIMPA TEST KAMAR
-            if(!is_null($test_kamar))
+         // JIKA ADA MAKA V KAMAR DITIMPA TEST KAMAR, JIKA TIDAK USER DIBERIKAN VIEW DENIED HALAMAN TAGIHAN
+            if(!is_null($test_kamar) && $user->ktp != 'ktp_default.jpg' && $user->nomor_hp != null && $user->verified_email_at != null)
             {
                 $kamar = $test_kamar;
+            }
+            else
+            {   
+                return view('user/denied/denied');
             }
         // AKHIR
 
@@ -114,13 +118,13 @@ class TagihanController extends Controller
         // AKHIR
 
         // JIKA ADA MAKA V KAMAR DITIMPA TEST KAMAR, JIKA TIDAK USER DIBERIKAN VIEW DENIED HALAMAN TAGIHAN
-            if(!is_null($test_kamar))
+            if(!is_null($test_kamar) && $user->ktp != 'ktp_default.jpg' && $user->nomor_hp != null && $user->verified_email_at != null)
             {
                 $kamar = $test_kamar;
             }
             else
-            {
-                return view('user/denied',compact('user','kamar','notification'));
+            {   
+                return view('user/denied/denied');
             }
         // AKHIR
 

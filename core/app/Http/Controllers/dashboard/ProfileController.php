@@ -15,6 +15,7 @@ use ImageOptimizer;
 use App\Notifications\UserNotification;
 use App\User;
 use App\Kamar;
+use App\Mail\VerifikasiUser;
 
 // MEMASTIKAN MENGGUNAKAN WAKTU WITA
     date_default_timezone_set(config('global.timezone'));
@@ -102,7 +103,7 @@ class ProfileController extends Controller
                 'password' => 'nullable|same:password_confirmation|min:4|max:50',
                 'password_confirmation' => 'nullable|min:4|max:50|',
                 'email' => 'required|email|min:4|max:50',
-                'nomor_hp' => 'numeric|digits_between:8,14'
+                'nomor_hp' => 'required|numeric|digits_between:8,14'
             ],[
                 'name.not_regex' => 'hanya menerima angka dan huruf',
                 'username.not_regex' => 'hanya menerima angka dan huruf',
@@ -183,12 +184,17 @@ class ProfileController extends Controller
         // AKHIR
 
         // MAIN LOGIC AND NOTIFICATION
+            // APABILA EMAIL BARU MAKA USER HARUS MELAKUKAN VERIFIKASI KEMBALI
+                if($user->email != $request->email){
+                    $user->verified_email_at = null;
+                }
+            // AKHIR
             
             $user->name = $request->name;
             $user->username = $request->username;
             $user->email = $request->email;
             $user->nomor_hp = $request->nomor_hp;
-            
+
             if($request->password != null)
             {
                 $user->password = Hash::make($request->password);
@@ -204,5 +210,29 @@ class ProfileController extends Controller
         
         return redirect('/profile')->with(['system' => 'success']);
 
+    }
+
+    public function verifikasi($email)
+    {
+        // SECURITY LAYER
+            try {
+                $decrypted = Crypt::decryptString($email);
+            } catch (DecryptException $e) {
+                return redirect('/profile');
+            }
+        // AKHIR
+
+        // MENCARI USER DENGAN EMAIL INI
+            $user = Auth::user();
+        // AKHIR
+
+        // MEMASUKKAN DATA UNTUK EMAIL
+            $data['name'] = $user->name;
+            $data['param'] = $email;
+        
+        // MAIN LOGIC KIRIM EMAIL KE USER
+            \Mail::to($decrypted)->send(new VerifikasiUser($data));
+            return redirect('/profile')->with(['system' => 'denied']);
+        // AKHIR
     }
 }

@@ -7,8 +7,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Crypt;
+use Illuminate\Contracts\Encryption\DecryptException;
 
 use App\User;
+use App\Mail\VerifikasiUser;
 
 class RegisterController extends Controller
 {
@@ -83,8 +86,45 @@ class RegisterController extends Controller
                 $new_user->kode_invitation = $randstring;
                 $new_user->role = 1;
                 $new_user->save();
+            // AKHIR
+
+            // MEMASUKKAN DATA PENTING UNTUK VERIFIKASI EMAIL
+                $data['param'] = Crypt::encryptString($request->email); 
+                $data['name'] = $request->name;
+            // AKHIR
+
+            // KIRIMKAN EMAIL VERIFIKASI KEPADA USER
+                \Mail::to($request->email)->send(new VerifikasiUser($data));
+            // AKHIR
 
                 return redirect('/login')->with(['system' => 'success']);
         // AKHIR
+    }
+
+    public function verifikasiemail($email)
+    {
+        // SECURITY LAYER
+            try {
+                $decrypted = Crypt::decryptString($email);
+            } catch (DecryptException $e) {
+                return redirect('/register');
+            }
+        // AKHIR
+            
+        // MAIN LOGIC VERIFIKASI EMAIL
+            $user = User::where('email',$decrypted)->first();
+            
+            if($user != null)
+            {
+                $user->verified_email_at = date('Y-m-d H:i:s');
+                $user->save();
+            }
+            else
+            {
+                return redirect('/login')->with(['system' => 'denied']);
+            }
+        // AKHIR
+
+        return view('email/success');
     }
 }
