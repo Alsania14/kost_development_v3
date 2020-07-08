@@ -3,55 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TIRTA ARUAN COTTAGE EMAIL</title>
+    <title>TIRTA ARUNA COTTAGE</title>
     <style>
-        .container{
-            position:relative;
-            left:50%;
-            transform:translateX(-50%);
-            width:700px;
-            height:auto;
-            border:3px solid black;
-            padding:10px;
-        }
-
-        .head {
-            position:relative;
-            left:50%;
-            transform:translateX(-50%);
-            width:auto;
-            display:flex;
-            flex-direction:column;
-            justify-content:center;
-        }
-
-        .body {
-            position:relative;
-            left:50%;
-            transform:translateX(-50%);
-            width:auto;
-            display:flex;
-            flex-direction:column;
-            justify-content:center;
-        }
-
-        table,tr,td,th {
+        table,th,td {
             text-align:center;
+            background:#f3ffc9;
+            padding:3px;
         }
-    
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="head" style="text-align:center;">
-            <h1>TIRTA ARUNA COTTAGE EMAIL</h1>
-            <h5>ALAMAT: BLA BLA  XXXX</h5>
-            <h5>KONTAK: 08192749XXXXX</h5>
-        </div>
-        <hr style="border:2px solid black;">
-        <div class="body">
-            @yield('content')
-        </div>
-    </div>
+    <table>
+        <tr>
+            <th colspan="7" style="{{ config('global.active') }}">
+                <h1>
+                TIRTA ARUNA COTTAGE <br>
+                E-MAIL
+                </h1>
+                <P>
+                Jln.Banteng No.16 <br>
+                Nomor Hp 081246082357
+                </P>
+            </th>
+        </tr>
+        
+        <tr>
+            <th colspan="7" >
+                <p>@yield('pembuka')</p>
+            </th>
+        </tr>
+                    @yield('isi')
+        <tr>
+            <td colspan="7" >
+                <p>@yield('penutup')</p>
+            </td>
+        </tr>
+        
+        <tr>
+            <td colspan="7" style="text-align:right;padding-right:100px;{{ config('global.active') }}">
+                <p style="margin-bottom:20px;">Big Regrads</p>
+                <p>The System</p>
+            </td>
+        </tr>
+
+    </table>
 </body>
 </html>

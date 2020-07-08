@@ -1,12 +1,10 @@
-@extends('email/email_layout')
-@section('content')
-<h4>SUBJECT : LAPORAN PEMBERIAN TAGIHAN</h4>
-<h4>Hai Admin,</h4>
-<p>Berikut merupakan laporan tagihan yang telah diberikan oleh sistem kepada user/penyewa kos.</p>
+@extends('email.email_layout')
+@section('pembuka')
+Salam Admin, Berikut ini merupakan laporan dari sistem. Sistem telah mengirimkan tagihan kepada user kost dengan rincian sebagai berikut
+@endsection
 
-<table>
-    <thead>
-        <tr>
+@section('isi')
+<tr>
             <th>Nomor</th>
             <th>Nama</th>
             <th>Kamar</th>
@@ -15,8 +13,6 @@
             <th>deadline Pembayaran</th>
             <th>Harga</th>
         </tr>
-    </thead>
-    <tbody>
 <?php
     foreach ($sukses as $index => $data) {
 ?>
@@ -32,12 +28,8 @@
 <?php
   }
 ?>
-    </tbody>
+@endsection
 
-</table>
-
-<p>apabila admin ingin mematikan fitur auto minta secara spesifik dapat dilakukan pada halaman setting admin</p>
-
-<p><b>BIG REGRADS</b></p><br><br>
-<p><b>THE SYSTEM</b></p>
+@section('penutup')
+Terimakasih Atas perhatian admin semoga sukses :)
 @endsection

@@ -17,10 +17,6 @@ use App\User;
 use App\Kamar;
 use App\Mail\VerifikasiUser;
 
-// MEMASTIKAN MENGGUNAKAN WAKTU WITA
-    date_default_timezone_set(config('global.timezone'));
-// AKHIR
-
 class ProfileController extends Controller
 {
     public function index()

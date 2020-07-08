@@ -168,6 +168,14 @@ class TransaksiController extends Controller
             $transaksi = Transaksi::find($decrypted);
         // AKHIR
 
+        // JIKA TRANSAKSI MERUPAKAN TRANSAKSI MANUAL MAKA AKAN LANGSUNG DI REFRESH SAJA
+            if($transaksi->via == 'manual')
+            {
+                return redirect()->back()->with(['system' => 'success']);
+            }
+        // AKHIR
+        
+
         // MAIN LOGIC MENGAMBIL DATA TERBARU DARI SERVER MIDTRANS
             // CURL EXECUTOR
             $curl = curl_init();

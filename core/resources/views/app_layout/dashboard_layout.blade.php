@@ -125,7 +125,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link text-light" href="#" style="@yield('Wifi')">
+            <a class="nav-link text-light" href="{{ url('/kamar') }}" style="@yield('kamar')">
               Kamar
             </a>
           </li>
