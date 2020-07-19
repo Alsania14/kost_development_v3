@@ -5,7 +5,7 @@
 
 @section('content')
     <div class="d-flex justify-content-center">
-    <form action="{{ url('/register') }}" method="POST" class="w-50">
+    <form action="{{ url('/register') }}" method="POST" class="w-50" autocomplete="off">
         {{csrf_field()}}
         <h2 class="mt-3 text-left text-light">INPUT CREDENTIALS</h2>
         

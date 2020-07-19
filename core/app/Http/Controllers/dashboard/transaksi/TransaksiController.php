@@ -26,7 +26,7 @@ class TransaksiController extends Controller
             $transaksis = DB::select("SELECT tagihans.`user_id` AS USER,tagihans.`id` AS tagihan,transaksis.* FROM tagihans
                                         INNER JOIN users ON users.id = tagihans.`user_id`
                                         INNER JOIN transaksis ON transaksis.`tagihan_id` = tagihans.`id`
-                                        WHERE users.id = ? AND transaksis.deleted_by_user = 0 
+                                        WHERE users.id = ? AND transaksis.deleted_by_user = 0 AND transaksis.deleted_by_admin = 0
                                         GROUP BY transaksis.`id`",array($user->id));
         // AKHIR
 
@@ -274,7 +274,7 @@ class TransaksiController extends Controller
             $transaksis = DB::select("SELECT tagihans.`user_id` AS USER,tagihans.`id` AS tagihan,transaksis.* FROM tagihans
                                         INNER JOIN users ON users.id = tagihans.`user_id`
                                         INNER JOIN transaksis ON transaksis.`tagihan_id` = tagihans.`id`
-                                        WHERE users.id = ? AND transaksis.deleted_by_user = 1 
+                                        WHERE users.id = ? AND transaksis.deleted_by_user = 1 AND transaksis.deleted_by_user = 0
                                         GROUP BY transaksis.`id`",array($user->id));
         // AKHIR
 

@@ -164,5 +164,39 @@ use Illuminate\Support\Facades\Route;
     // AKHIR
 // AKHIR
 
+// ROUTE DASHBOARD ADMIN
+    // MIDDLEWARE ADMIN AUTHENTICATION
+        /*SELAIN ADMIN TIDAK ADA YANG DAPAT MASUK KEDALAM HALAMAN INI */
+        Route::middleware('adminauthentication')->group(function(){
+            // HALAMAN DASHBOARD ADMIN
+                Route::get('/admindashboard','admindashboard\AdminDashboardController@index');
+            // AKHIR
+
+            // HALAMAN PROFIL ADMIN
+                Route::get('/adminprofile','admindashboard\AdminProfileController@index');
+                Route::get('/admineditprofile','admindashboard\AdminProfileController@edit');
+
+                Route::post('/adminpostprofile','admindashboard\AdminProfileController@update');
+            // AKHIR
+
+            // HALAMAN ADMIN NOTIFIKASI
+                Route::get('/adminnotifikasi','admindashboard\AdminNotifikasiController@index');
+
+                Route::patch('/adminmarkall/{id}','admindashboard\AdminNotifikasiController@markall');
+            // AKHIR
+
+            // HALAMAN REPORT ADMIN
+                // HALAMAN TAGIHAN USERS
+                    Route::get('/admintagihan','admindashboard\reportuser\TagihanUserController@index');
+
+
+                    Route::post('/admintariktagihan/{id}','admindashboard\reportuser\TagihanUserController@tariktagihan');
+                // AKHIR
+
+            // AKHIR
+    // AKHIR
+    });
+// AKHIR
+
         
         

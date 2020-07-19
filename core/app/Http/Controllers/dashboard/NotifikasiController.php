@@ -45,11 +45,6 @@ class NotifikasiController extends Controller
 
     public function markall($id)
     {   
-        
-        // MEMASTIKAN MENGGUNAKAN WAKTU ASIA MAKASSAR (WITA)
-            date_default_timezone_set(config('global.timezone'));
-        // AKHIR
-
         // SECURITY LAYER
             try {
                 $decrypted = Crypt::decryptString($id);

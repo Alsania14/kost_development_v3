@@ -9,7 +9,7 @@
 <!-- AWAL CONTAINER -->
 <div class="container-fluid p-0">
     <div class="jumbotron bg-dark pt-5" style="border-top:3px solid orange;">
-    <form action="{{ url('/edit',[Crypt::encryptString($user->id)]) }}" id="myform" enctype="multipart/form-data" method="POST" onsubmit="document.getElementById('subbutton').disabled=true;">
+    <form action="{{ url('/edit',[Crypt::encryptString($user->id)]) }}" id="myform" enctype="multipart/form-data" method="POST" onsubmit="document.getElementById('subbutton').disabled=true;" autocomplete="off">
         {{ csrf_field() }}
         {{ method_field('PUT') }}
         <div class="row d-flex justify-content-center">

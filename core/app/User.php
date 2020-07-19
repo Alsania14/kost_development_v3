@@ -50,6 +50,7 @@ class User extends Authenticatable
                     ->orderBY('status_tagihan')
                     ->orderBy('tgl_awal_sewa','desc')
                     ->where('deleted_by_user',0)
+                    ->where('deleted_by_admin',0)
                     ->get();
     }
 
@@ -65,6 +66,7 @@ class User extends Authenticatable
                     ->orderBY('status_tagihan')
                     ->orderBy('tgl_awal_sewa','desc')
                     ->where('deleted_by_user',1)
+                    ->where('deleted_by_admin',0)
                     ->get();
     }
     

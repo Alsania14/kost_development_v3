@@ -32,9 +32,10 @@ class RegisterController extends Controller
                     'min:4',
                     'max:50',
                 ),
-                'email' => 'required|email|min:4|max:50',
+                'email' => 'required|email|unique:users,email|min:4|max:50',
                 'username' => array(
                     'required',
+                    'unique:users,username',
                     'not_regex:/[*<>^&@;=\/|%]/',
                     'min:4',
                     'max:50',

@@ -7,15 +7,12 @@ use Illuminate\Http\Request;
 use App\Notifications\UserNotification;
 
 use App\Transaksi;
+use App\User;
 
 class NotificationController extends Controller
 {
     public function index(Request $request)
     {   
-        // MEMASTIKAN MENGGUNAKAN ZONA WAKTU WITA
-            date_default_timezone_set(config('global.timezone'));
-        // AKHIR
-
         // SECURITY LAYER
             /* MENGAMBIL DATA YANG MEMILIKI TRANSACTION_ID VALID DARI MIDTRANS
             DAN ORDER ID YANG SAMA DENGAN YANG DIKELUARKAN SISTEM MEMBUAT SIGNATURE KEY
@@ -39,18 +36,19 @@ class NotificationController extends Controller
         // AKHIR
 
         // MENYIMPAN DATA NOTIFIKASI TERAKHIR UNTUK DEVELOPER
-            $transaksi->developer_information_charge = json_encode($request->all());
+            $transaksi->developer_information_last_notification = json_encode($request->all());
         // AKHIR
 
-        // MENCARI USER YANG MEMILIKI TRANSAKSI INI
+        // MENCARI USER YANG MEMILIKI TRANSAKSI INI DAN JUGA ADMIN APLIKASI DAN TAGIHAN DARI TRANSAKSI
             $user = $transaksi->tagihan()->first()->user();
+            $admin = User::where('role','admin')->first();
+            $tagihan = $transaksi->tagihan()->first();
         // AKHIR
 
         // MENYESUAIKAN FORMAT MIDTRANS DENGAN FORMAT STATUS SISTEM
             if($request->transaction_status == 'settlement')
             {
                 $transaksi->status_pembayaran = 'approved';
-                $tagihan = $transaksi->tagihan()->first();
 
                 // MENGUPDATE TABLE TAGIHAN
                     $tagihan->status_tagihan = 'lunas';
@@ -60,10 +58,15 @@ class NotificationController extends Controller
                 $transaksi->developer_information_finish = json_encode($request->all());
                 $tagihan->save();
 
-                // USER NOTIFICATION
+                // USER NOTIFICATION DAN ADMIN
                     $text = '{"title" : "PEMBAYARAN SUCCESS","text" : "Transaksi dengan Order ID '.$request->order_id.'  telah selesai , terimakasih banyak, have a good day","type" : "special"}';
                         
                     $user->notify(new UserNotification($text));
+
+                    $text = '{"title" : "PEMBAYARAN SUCCESS","text" : "User '.$user->username.' telah berhasil melakukan pembayaran terhadap Tagihan dengan nomor ID '.$tagihan->id.'. Transaksi dilakukan dengan order_id '.$request->order_id.' ","type" : "special"}';
+
+                    $admin->notify(new UserNotification($text));
+                    
                 // AKHIR
 
             }
@@ -75,11 +78,19 @@ class NotificationController extends Controller
                     $text = '{"title" : "PEMBAYARAN EXPIRED","text" : "Transaksi dengan Order ID '.$request->order_id.'  Telah Kedaluarsa, Jika anda belum melakukan pembayaran dimohon untuk segera melakukan pembayaran kembali","type" : "common"}';
                             
                     $user->notify(new UserNotification($text));
+
+                    $text = '{"title" : "PEMBAYARAN EXPIRED","text" : "User '.$user->username.' Belum melakukan pembayaran hingga charge yang dibuatnya expired, tolong admin memberikan peringatan, charge yang expired dengan nomor order_id '.$request->order_id.' ","type" : "common"}';
+
+                    $admin->notify(new UserNotification($text));
                 // AKHIR
             }
             elseif($request->transaction_status == 'pending')
             {
                 $transaksi->status_pembayaran = 'pending';
+
+                $text = '{"title" : "CHARGE USER","text" : "User '.$user->username.' telah melakukan charge terhadap tagihan dengan ID '.$tagihan->id.' Status Transaksi saat ini masih PENDING , Charge dibentuk dengan order_id '.$request->order_id.', dimohon untuk admin mengawasi aktifitas transaksi dengan baik ","type" : "common"}';
+
+                $admin->notify(new UserNotification($text));
             }
             else
             {

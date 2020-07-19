@@ -52,13 +52,14 @@ class LoginController extends Controller
                         return redirect('/dashboard');
                     }
                     else
-                    {
+                    {  
+                        Auth::logout();
                         return redirect()->back()->with(['system' => 'denied']);
                     }
                 }
                 elseif(Auth::user()->role == 'admin')
                 {   
-                    return date('Y-m-d h:i:s a');
+                    return redirect('/admindashboard');
                 }
                 else
                 {   

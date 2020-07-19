@@ -6,7 +6,7 @@ return [
 
     'timezone' => "Asia/Makassar",
     
-    'nota' => 'TAC-ALPHA-XII-',
+    'nota' => 'TAC-ALPHA-XX-',
 
     'url_midtrans' => "https://api.sandbox.midtrans.com/v2/charge",
 

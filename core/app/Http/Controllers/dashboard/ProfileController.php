@@ -78,7 +78,15 @@ class ProfileController extends Controller
 
     public function update(Request $request,$id)
     {   
+        // DECRYPT ID USER
+            try {
+                $decrypted = Crypt::decryptString($id);
+            } catch (DecryptException $e) {
+                return redirect('/profile');
+            }
         
+        // AKHIR
+
         // SECURITY LAYER
             // LARAVEL VALIDATION ANTI XSS
             $validator = Validator::make($request->all(),[
@@ -92,14 +100,15 @@ class ProfileController extends Controller
                 ),
                 'username' => array(
                     'required',
+                    'unique:users,username,'.$decrypted,
                     'not_regex:/[*<>^&@;=\/|%?]/',
                     'min:4',
                     'max:20',
                 ),
                 'password' => 'nullable|same:password_confirmation|min:4|max:50',
                 'password_confirmation' => 'nullable|min:4|max:50|',
-                'email' => 'required|email|min:4|max:50',
-                'nomor_hp' => 'required|numeric|digits_between:8,14'
+                'email' => 'required|unique:users,email,'.$decrypted.'|email|min:4|max:50',
+                'nomor_hp' => 'required|unique:users,nomor_hp,'.$decrypted.'|numeric|digits_between:8,14'
             ],[
                 'name.not_regex' => 'hanya menerima angka dan huruf',
                 'username.not_regex' => 'hanya menerima angka dan huruf',
@@ -109,15 +118,6 @@ class ProfileController extends Controller
             {   
                 return redirect()->back()->withErrors($validator->errors());
             }
-        // AKHIR
-
-        // DECRYPT ID USER
-            try {
-                $decrypted = Crypt::decryptString($id);
-            } catch (DecryptException $e) {
-                return redirect('/profile');
-            }
-        
         // AKHIR
 
         // SIMPAN GAMBAR
