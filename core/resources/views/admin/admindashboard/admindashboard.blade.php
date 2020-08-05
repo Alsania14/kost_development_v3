@@ -3,10 +3,23 @@
 <link rel="stylesheet" href="{{ asset('/vendor_app/admindashboard/admindashboard.css') }}">
 @endsection
 @section('dashboard',config('global.active'))
-@section('header','Dashboard Admin')
 
 @section('content')
-<div class="container-fluid p-0">
+<div class="container-fluid p-0 pl-1">
+    
+        <div class="row p-2">
+            <div class="col-md d-flex justify-content-center mb-5" >
+                <div class="col-md d-flex justify-content-center" id="logo" style="border-radius:50%;max-width:400px;">
+                    <img  class="img-fluid mb-3" src="{{ asset('vendor_app/logo/logo.png') }}" alt="SIGNAL BURUK">
+                </div>
+            </div>
+        </div>
+        
+        <div class="row mb-5 p-3">
+            <div class="col-md d-flex justify-content-center">
+                <div class="text-center p-2 w-100" style="font-size:15pt;transition:2s;" id="kata_bijak">{!! $bijak !!}</div>
+            </div>
+        </div>
     
     <div class="jumbotron bg-dark pt-5" style="border-top:3px solid orange;">
         <div class="d-flex flex-column justify-content-center">
@@ -102,4 +115,36 @@
 
 @section('tambahanbawah')
 <script type="text/javascript" src="{{ asset('vendor_app/fontawesome/js/all.min.js') }}"></script>
+
+<script type="text/javascript">
+var block = 'open';
+    $('#logo').on('click', function() {
+    if(block == 'open'){
+        bijaksana(block);
+        block='close';
+        $('#logo').css('animation','mymove2 7s');
+        
+        setTimeout("$('#logo').css('animation','mymove 20s infinite')", 7000);
+        setTimeout("block='open'", 7000);
+        
+    }
+
+    });
+
+function  bijaksana(block)
+{
+    if(block == 'open')
+    {
+    var xhttp = new XMLHttpRequest();
+    
+    xhttp.onreadystatechange = function(){
+        if(this.readyState == 4 && this.status == 200){
+            document.getElementById("kata_bijak").innerHTML=this.responseText;
+        }
+    }
+    xhttp.open("GET","{{ url('/adminbijak') }}");
+    xhttp.send();
+    };
+}
+</script>
 @endsection

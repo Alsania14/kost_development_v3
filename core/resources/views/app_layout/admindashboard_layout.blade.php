@@ -66,7 +66,7 @@
   
   <ul class="navbar-nav px-3">
     <li class="nav-item text-nowrap">
-      <a class="nav-link" href="{{ url('/logout') }}">Sign out</a>
+      <a class="nav-link" href="{{ url('/adminlogout') }}">Sign out</a>
     </li>
   </ul>
 </nav>
@@ -99,15 +99,15 @@
                     <a class="pl-5 nav-link text-light" href="{{ url('/admintagihan') }}" style="cursor:pointer;">
                       Tagihan Users
                     </a>
-                    <a class="pl-5 nav-link text-light" href="{{ url('/transaksi') }}" style="cursor:pointer;">
-                      Transaksi Users
+                    <a class="pl-5 nav-link text-light" href="{{ url('/adminvalidasitransaksi') }}" style="cursor:pointer;">
+                      Validasi Transaksi Manual
                     </a>
-                    <a class="pl-5 nav-link text-light" style="cursor:pointer;">
-                      belum
+                    <a class="pl-5 nav-link text-light" href="{{ url('/adminexportingreport') }}" style="cursor:pointer;">
+                      Exporting Report
                     </a>
           </li>
           <li class="nav-item" id="bawah" >
-            <a class="nav-link text-light" href="{{ url('/laporan') }}" style="@yield('pelaporan')">
+            <a class="nav-link text-light" href="{{ url('/adminlaporan') }}" style="@yield('adminpelaporan')">
               Pelaporan
             </a>
           </li>
@@ -175,6 +175,16 @@
 
             {
                 echo "<script>$('#modaldenied').modal('show');</script>";
+            }
+            elseif($system == 'denied2')
+
+            {
+                echo "<script>$('#modaldenied2').modal('show');</script>";
+            }
+            elseif($system == 'success2')
+
+            {
+                echo "<script>$('#modal2').modal('show');</script>";
             }
         ?>
 

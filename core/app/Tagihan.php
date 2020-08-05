@@ -24,4 +24,5 @@ class Tagihan extends Model
     {
         return $this->hasMany('App\Transaksi','tagihan_id')->withTrashed()->get();
     }
+
 }

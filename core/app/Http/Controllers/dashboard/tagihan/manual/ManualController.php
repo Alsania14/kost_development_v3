@@ -48,7 +48,7 @@ class ManualController extends Controller
             $transaksi_new->tagihan_id = $decrypted;
             $transaksi_new->tgl_awal = $tagihan->tgl_awal_sewa;
             $transaksi_new->tgl_akir = $tagihan->tgl_akhir_sewa;
-            $transaksi_new->nominal = $kamar->harga;
+            $transaksi_new->nominal = $tagihan->nominal_pembayaran;
             $transaksi_new->via = 'manual';
             $transaksi_new->integration_name = 'manual';
             $transaksi_new->status_pembayaran = 'proses';

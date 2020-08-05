@@ -108,10 +108,15 @@ class ProfileController extends Controller
                 'password' => 'nullable|same:password_confirmation|min:4|max:50',
                 'password_confirmation' => 'nullable|min:4|max:50|',
                 'email' => 'required|unique:users,email,'.$decrypted.'|email|min:4|max:50',
-                'nomor_hp' => 'required|unique:users,nomor_hp,'.$decrypted.'|numeric|digits_between:8,14'
+                'nomor_hp' => array(
+                    'required',
+                    'unique:users,nomor_hp,'.$decrypted,
+                    'regex:[\(?(?:\+62)(?:\d{2,3})?\)?[ .-]?\d{2,4}[ .-]?\d{2,4}[ .-]?\d{2,4}]',
+                ),
             ],[
                 'name.not_regex' => 'hanya menerima angka dan huruf',
                 'username.not_regex' => 'hanya menerima angka dan huruf',
+                'nomor_hp.regex' => 'Format Nomor Hp salah ex : +6281246082999',
             ]);
 
             if($validator->fails())

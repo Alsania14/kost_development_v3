@@ -18,9 +18,6 @@ class PelaporanController extends Controller
     {
         // MENCARI DATA LAPORAN USER SEBELUMNYA
             $user = Auth::user();
-
-            $laporan = Laporan::where('user_id',$user->id)
-            ->get();
         // AKHIr
 
         // MENCARI STATUS LAPORAN HARIAN
@@ -29,7 +26,9 @@ class PelaporanController extends Controller
         // AKHIR
 
         // MENGAMBIL DATA LAPORAN USER
-            $laporans = $user->pelaporan()->get();
+            $laporans = $user->pelaporan()
+                                ->where('deleted_by_admin',0)
+                                ->get();
         // AKHIR
 
         // CEK KAMAR

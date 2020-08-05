@@ -95,7 +95,7 @@
 
         <div class="row d-flex justify-content-center pt-2">
             <div class="col-md-5 d-flex justify-content-center">
-                <input type="text" class="w-100" style="background:none;outline:none;border:none;border-bottom:1px solid white;font-size:15pt;" placeholder="Nomor Handphone" value="{{ $user->nomor_hp }}" name="nomor_hp" autocorrect="off" autocapitalize="none" minlength="4" maxlength="14" required>
+                <input type="text" class="w-100" style="background:none;outline:none;border:none;border-bottom:1px solid white;font-size:15pt;" placeholder="Nomor Handphone ex : 6281293827989" value="{{ $user->nomor_hp }}" name="nomor_hp" autocorrect="off" autocapitalize="none" minlength="4" maxlength="14" required>
             </div>
         </div>
         <div class="row">

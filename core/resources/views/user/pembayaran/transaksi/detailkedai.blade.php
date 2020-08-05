@@ -39,7 +39,23 @@
             </div>
 <?php
         }
-        elseif($transaksi->status_pembayaran == 'expired')
+        elseif($transaksi->status_pembayaran == 'approved')
+        {
+?>
+            <div class="border-top border-bottom" style="font-size:20pt;">
+                <b>STATUS PEMBAYARAN</b><br>
+                <div class="w-100 text-center justify-content-center d-flex flex-column flex-wrap">
+                <p class="text-success w-100 h1">APPROVED</p>
+                <div class="d-flex flex-column">
+                    <div>
+                    <label class="bg-success btn text-light">APPROVED</label>
+                    </div>
+                </div>
+                </div>
+            </div>
+<?php
+        }
+        elseif($transaksi->status_pembayaran == 'approved')
         {
 ?>
             <div class="border-top border-bottom" style="font-size:20pt;">

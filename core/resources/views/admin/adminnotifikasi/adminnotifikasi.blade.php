@@ -8,6 +8,7 @@
 {{ csrf_field() }}
 {{ method_field('PATCH') }}
 <button type="submit" class="btn btn-info mb-3">Mark as Read All</button>
+<a href="{{ url('/adminarsipnotifikasi') }}" class="btn btn-info mb-3">Notification Archive</a>
 </form>
 <?php
     

@@ -1,6 +1,6 @@
 @extends('app_layout.admindashboard_layout')
 @section('reportadmin',config('global.active'))
-@section('header','Tagihan Users')
+@section('header','Report User \ Tagihan Users')
 @section('jumlah',$notification)
 
 @section('content')
@@ -173,6 +173,7 @@
                 <td>Kamar {{ $tagihan->nomor_kamar }}</td>
                 <td>{!! $tagihan->tgl_awal_sewa.' <b>s/d</b> '.$tagihan->tgl_akhir_sewa !!}</td>
                 <td>{{ $tagihan->tipe_pembayaran }}</td>
+
 <?php
                 if($tagihan->status_tagihan == 'hutang')
                 {
@@ -196,10 +197,14 @@
                 {
 ?>
                 <a href="{{ url('/adminedittagihan',[$id]) }}">
-                    <label class="btn btn-sm btn-info">EDIT TAGIHAN</label>
+                    <label class="btn btn-sm btn-info" style="width:70px;">EDIT</label>
+                </a>
+                
+                <a href="{{ url('/admintagihantransaksi',[$id]) }}">
+                    <label class="btn btn-sm btn-warning">TRANSAKSI</label>
                 </a>
 
-                <label id="label_peringatan" class="btn btn-sm btn-danger" onclick="peringatan({{ $index }})">TARIK TAGIHAN</label>
+                <label id="label_peringatan" class="btn btn-sm btn-danger" onclick="peringatan({{ $index }})">TARIK</label>
                 <form action="{{ url('/admintariktagihan',[$id]) }}" id="form_{{ $index }}" method="POST" style="display:none;">
                     {{ csrf_field() }}
                 </form>
@@ -208,8 +213,15 @@
                 elseif($tagihan->status_tagihan ==  'lunas')
                 {
 ?>
-                <label class="btn btn-sm btn-secondary" disabled>EDIT TAGIHAN</label>
-                <label id="label_peringatan" class="btn btn-sm btn-secondary" disabled>TARIK TAGIHAN</label>
+                <label class="btn btn-sm btn-success" for="form_struk_{{ $index }}" style="width:70px;">STRUK</label>
+                <form action="{{ url('/adminstruk',[$id]) }}" method="POST" style="display:none;">
+                    {{ csrf_field() }}
+                    <input type="submit" id="form_struk_{{ $index }}">
+                </form>
+                <a href="{{ url('/admintagihantransaksi',[$id]) }}">
+                    <label class="btn btn-sm btn-warning">TRANSAKSI</label>
+                </a>
+                <label id="label_peringatan" class="btn btn-sm btn-secondary" disabled>TARIK</label>
 <?php
                 }
 ?>              
@@ -280,6 +292,7 @@ function disablednull()
         <li class="text-dark">Menarik tagihan yang dilakukan menggunakan sistem pembayaran manual tidak memerlukan request ke pihak midtrans, namun apabila pembayar sudah membayar dan admin melakukan pembatalan maka permasalahan harap diselesaikan dengan user dari pihak admin sendiri</li>
         <li class="text-dark">Tagihan yang telah ditarik admin <b class="text-dark">tidak dapat </b> dikembalikan kembali</li>
         <li class="text-dark">Apabila admin ingin mematikan fitur auto bill aplikasi dapat dilakukan pada halaman sistem</li>
+        <li class="text-danger font-weight-bold">Ingat !!! apabila admin membatalkan tagihan ini maka user tidak dapat membayar tagihan yang sehursnya dibayarkan, apabila setelah menghapus dan admin ingin membuat tagihan untuk user dapat dilakukan pada halaman user</li>
         <li class="text-dark">Apabila terjadi bug mohon untuk segera memberikan laporan</li>
     </ul>
 <p class="text-dark"><b class="text-dark">TERIMAKASI ADMIN,</b> <br> Demi keamanan, untuk melanjutkan tindakan ini admin diharuskan memasukkan password aktif admin</p>

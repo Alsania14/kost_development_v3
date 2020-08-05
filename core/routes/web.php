@@ -170,6 +170,10 @@ use Illuminate\Support\Facades\Route;
         Route::middleware('adminauthentication')->group(function(){
             // HALAMAN DASHBOARD ADMIN
                 Route::get('/admindashboard','admindashboard\AdminDashboardController@index');
+
+                // AJAX
+                    Route::get('/adminbijak','admindashboard\AdminDashboardController@bijak');
+                // AKHIR
             // AKHIR
 
             // HALAMAN PROFIL ADMIN
@@ -183,18 +187,57 @@ use Illuminate\Support\Facades\Route;
                 Route::get('/adminnotifikasi','admindashboard\AdminNotifikasiController@index');
 
                 Route::patch('/adminmarkall/{id}','admindashboard\AdminNotifikasiController@markall');
+
+                Route::get('/adminarsipnotifikasi','admindashboard\AdminNotifikasiController@arsipnotifikasi');
+
             // AKHIR
 
             // HALAMAN REPORT ADMIN
                 // HALAMAN TAGIHAN USERS
                     Route::get('/admintagihan','admindashboard\reportuser\TagihanUserController@index');
-
-
                     Route::post('/admintariktagihan/{id}','admindashboard\reportuser\TagihanUserController@tariktagihan');
+                    Route::get('/adminedittagihan/{id}','admindashboard\reportuser\TagihanUserController@edittagihan');
+                    Route::post('/adminedittagihan/{id}','admindashboard\reportuser\TagihanUserController@updatetagihan');
+
+                    Route::get('/admintagihantransaksi/{id}','admindashboard\reportuser\TagihanUserController@tagihantransaksi');
+
+                    Route::post('/adminrejecttransaksi/{id}','admindashboard\reportuser\TagihanUserController@rejecttransaksi');
+
+                    Route::post('/adminstruk/{id}','dashboard\tagihan\StructController@index');
+                // AKHIR
+
+                // HALAMAN VALIDASI TRANSAKSI MANUAL
+                    Route::get('/adminvalidasitransaksi','admindashboard\reportuser\ValidasiController@index');
+
+                    Route::post('/adminverifikasitransaksi/{id}','admindashboard\reportuser\ValidasiController@verifikasi');
+
+                    Route::post('/adminrejecttransaksi/{id}','admindashboard\reportuser\ValidasiController@rejecttransaksi');
+                // AKHIR
+
+                // HALAMAN EXPORTING REPORT
+                    Route::get('/adminexportingreport','admindashboard\reportuser\ExportingreportController@index');
+
+                    Route::post('/adminexportingtagihan','admindashboard\reportuser\ExportingreportController@tagihanreport');
+
+                    Route::get('/adminpreviewtagihan','admindashboard\reportuser\ExportingreportController@preview');
                 // AKHIR
 
             // AKHIR
-    // AKHIR
+
+            // HALAMAN PELAPORAN ADMIN
+                Route::get('/adminlaporan','admindashboard\AdminPelaporanController@index');
+
+                Route::post('/admintanggapan/{id}','admindashboard\AdminPelaporanController@tanggapan');
+
+                Route::put('/adminhapuslaporan/{id}','admindashboard\AdminPelaporanController@hapuslaporan');
+            
+            // ADMIN LOGOUT
+                Route::get('/adminlogout','login\LoginController@logout');
+            // AKHIR
+
+        // AKHIR
+
+    
     });
 // AKHIR
 

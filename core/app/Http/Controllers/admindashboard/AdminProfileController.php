@@ -19,7 +19,7 @@ class AdminProfileController extends Controller
             $admin = Auth::user();
         // AKHIR
 
-        // CEK NOTIFIKASI USER
+        // CEK NOTIFIKASI ADMIN
             $notification = $admin->unreadNotifications->count();
             if($notification == 0)
             {

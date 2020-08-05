@@ -47,7 +47,7 @@ class IndomaretController extends Controller
             $payload = new class{};
             $payload->payment_type = 'cstore';
             $payload->transaction_details = (object) array(
-                'gross_amount' => $kamar->harga,
+                'gross_amount' => $tagihan->nominal_pembayaran,
                 'order_id' => $nota,
             );
             $payload->cstore = (object) array(
@@ -61,7 +61,7 @@ class IndomaretController extends Controller
             );
             $payload->item_details[] = (object) array(
                 'id' => $kamar->id,
-                'price' => $kamar->harga,
+                'price' => $tagihan->nominal_pembayaran,
                 'quantity' => 1,
                 'name' => 'Tirta Aruna Cottage = Kamar '.$kamar->nomor,
             );
@@ -112,7 +112,7 @@ class IndomaretController extends Controller
             $transaksi_new->tagihan_id = $decrypted;
             $transaksi_new->tgl_awal = $tagihan->tgl_awal_sewa;
             $transaksi_new->tgl_akir = $tagihan->tgl_akhir_sewa;
-            $transaksi_new->nominal = $kamar->harga;
+            $transaksi_new->nominal = $tagihan->nominal_pembayaran;
             $transaksi_new->via = 'kedai';
             $transaksi_new->integration_name = 'indomaret';
             $transaksi_new->status_pembayaran = 'proses';
